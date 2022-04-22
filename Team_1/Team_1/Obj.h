@@ -25,6 +25,9 @@ public:
 
 	inline void Make_POINT(POINT& p) { m_tInfo.fX = (float)p.x; m_tInfo.fY = (float)p.y; }
 
+	float Get_fX(void) { return m_tInfo.fX; }
+	float Get_fY(void) { return m_tInfo.fY; }
+
 protected:
 	void Update_Rect(void);
 
