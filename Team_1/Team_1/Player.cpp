@@ -107,7 +107,7 @@ void CPlayer::Key_Input(void)
 		}
 		else
 		{
-			m_fAngle += 2.f;
+			m_fAngle += 1.f;
 		}
 	}
 
@@ -119,7 +119,7 @@ void CPlayer::Key_Input(void)
 		}
 		else
 		{
-			m_fAngle -= 2.f;
+			m_fAngle -= 1.f;
 		}
 	}
 }
