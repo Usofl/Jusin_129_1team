@@ -7,8 +7,6 @@ CMaingame::CMaingame()
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
 	m_iFPS = 0;
-
-	
 }
 
 
@@ -21,11 +19,9 @@ void CMaingame::Initialize(void)
 {
 	m_hDC = GetDC(g_hWnd);
 
-	CObj* m_pBullet = new CBullet;
-	m_pBullet->Initialize();
-
 	m_pPlayer = new CPlayer;
 	m_pPlayer->Initialize();
+	static_cast<CPlayer*>(m_pPlayer)->Set_BulletList(&m_BulletList);
 
 	m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 65.f));
 	m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 95.f));
@@ -43,8 +39,8 @@ void CMaingame::Update(void)
 	}
 
 	// ÃÑ¾Ë
-	for (std::list<CObj*>::iterator iter = m_pBulletList.begin();
-		iter != m_pBulletList.end();)
+	for (std::list<CObj*>::iterator iter = m_BulletList.begin();
+		iter != m_BulletList.end();)
 	{
 		(*iter)->Update();
 	}
@@ -54,9 +50,10 @@ void CMaingame::Late_Update(void)
 {
 
 	m_pPlayer->Late_Update();
+
 	// ÃÑ¾Ë
-	for (std::list<CObj*>::iterator iter = m_pBulletList.begin();
-		iter != m_pBulletList.end();)
+	for (std::list<CObj*>::iterator iter = m_BulletList.begin();
+		iter != m_BulletList.end();)
 	{
 		(*iter)->Late_Update();
 	}
@@ -90,8 +87,8 @@ void CMaingame::Render(void)
 	}
 
 	// ÃÑ¾Ë
-	for (std::list<CObj*>::iterator iter = m_pBulletList.begin();
-		iter != m_pBulletList.end();)
+	for (std::list<CObj*>::iterator iter = m_BulletList.begin();
+		iter != m_BulletList.end();)
 	{
 		(*iter)->Render(m_hDC);
 	}

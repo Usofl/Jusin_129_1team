@@ -23,8 +23,6 @@ void CMonster::Initialize(void)
 void CMonster::Update(void)
 {
 	Update_Rect();
-
-
 }
 
 void CMonster::Late_Update(void)

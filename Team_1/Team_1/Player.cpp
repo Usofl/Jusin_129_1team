@@ -21,6 +21,9 @@ void CPlayer::Initialize(void)
 	m_fSpeed = 7.f;
 
 	m_fBSize = 50.f;
+
+	m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf((m_fAngle * PI) / 180.f));
+	m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf((m_fAngle * PI) / 180.f));
 }
 
 void CPlayer::Update(void)
@@ -119,5 +122,10 @@ void CPlayer::Key_Input(void)
 		{
 			m_fAngle -= 1.f;
 		}
+	}
+
+	if (GetAsyncKeyState('D'))
+	{
+		m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
 	}
 }
