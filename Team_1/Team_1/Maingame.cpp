@@ -52,6 +52,7 @@ void CMaingame::Update(void)
 	// ÃÑ¾Ë
 	for (std::list<CObj*>::iterator iter = m_BulletList.begin();
 		iter != m_BulletList.end();
+		++iter)
 	{
 		(*iter)->Update();
 	}
@@ -65,7 +66,8 @@ void CMaingame::Late_Update(void)
 
 	// ÃÑ¾Ë
 	for (std::list<CObj*>::iterator iter = m_BulletList.begin();
-		iter != m_BulletList.end();)
+		iter != m_BulletList.end();
+		++iter)
 	{
 		(*iter)->Late_Update();
 	}
@@ -99,7 +101,8 @@ void CMaingame::Render(void)
 
 	// ÃÑ¾Ë
 	for (std::list<CObj*>::iterator iter = m_BulletList.begin();
-		iter != m_BulletList.end();)
+		iter != m_BulletList.end();
+		++iter)
 	{
 		(*iter)->Render(m_hDC);
 	}
