@@ -13,6 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="00.Maingame">
+      <UniqueIdentifier>{db7eb61a-6cbb-4795-875f-1cbd825d2292}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj">
+      <UniqueIdentifier>{1255148e-8542-4d27-9fe4-6447130a2487}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Design">
+      <UniqueIdentifier>{00add6c6-ef0e-4c86-87c4-89328e8b4d52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99.Header">
+      <UniqueIdentifier>{2a8b5c0b-1023-499c-af40-0e7f24952e22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\00.Player">
+      <UniqueIdentifier>{ac2d8260-07e2-46ca-ae80-ddb3a0fcdd4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\01.Bullet">
+      <UniqueIdentifier>{dab1b85a-4bd0-487e-8492-035c8533595e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\02.Monster">
+      <UniqueIdentifier>{5813e615-3bf3-4088-9ff2-ffb0d22c9f8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\03.Item">
+      <UniqueIdentifier>{c7d752df-01d0-4803-93ce-2366d939fb73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Design\00.AbstractFactory">
+      <UniqueIdentifier>{49d50af1-bc78-4c60-80d5-cc9aacd3cb26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Design\01.Collision">
+      <UniqueIdentifier>{2960f580-2ce2-4ee6-94a9-3c8311fb2a4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -30,6 +60,45 @@
     <ClInclude Include="Team_1.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Include.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Functor.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>99.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Obj.h">
+      <Filter>01.Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Maingame.h">
+      <Filter>00.Maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>01.Obj\00.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>01.Obj\01.Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>01.Obj\02.Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>01.Obj\03.Item</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractFactory.h">
+      <Filter>98.Design\00.AbstractFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>98.Design\01.Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -37,6 +106,27 @@
     </ClCompile>
     <ClCompile Include="Team_1.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Obj.cpp">
+      <Filter>01.Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Maingame.cpp">
+      <Filter>00.Maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>01.Obj\00.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>01.Obj\01.Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>01.Obj\02.Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>01.Obj\03.Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>98.Design\01.Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
