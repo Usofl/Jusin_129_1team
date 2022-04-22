@@ -6,6 +6,7 @@ CMaingame::CMaingame()
 	: m_dwTime(GetTickCount())
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
+	ZeroMemory(m_szScore, sizeof(TCHAR) * 64);
 	m_iFPS = 0;
 }
 
@@ -32,6 +33,8 @@ void CMaingame::Render(void)
 {
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
 	Rectangle(m_hDC, GAMESIZE, GAMESIZE, WINCX - GAMESIZE, WINCY - GAMESIZE);
+	swprintf_s(m_szScore, L"Score : %d", m_iScore);
+	TextOutW(m_hDC, 25, 25, m_szScore, lstrlen(m_szScore));
 
 	++m_iFPS;
 
