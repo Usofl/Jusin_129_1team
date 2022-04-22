@@ -21,33 +21,23 @@ CMaingame::~CMaingame()
 void CMaingame::Initialize(void)
 {
 	m_hDC = GetDC(g_hWnd);
-
-	//    몬스터 생성...........
-
-	m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 65.f));
-	m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 95.f));
-	m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 505.f));
-	m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 535.f));
 }
 
 void CMaingame::Update(void)
 {
-
-
-	for (auto& iter : m_Monsterlist)
-	{
-		iter->Update();
-	}
 }
 
 void CMaingame::Late_Update(void)
 {
+	m_pPlayer->Late_Update();
 }
 
 void CMaingame::Render(void)
 {
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
 	Rectangle(m_hDC, GAMESIZE, GAMESIZE, WINCX - GAMESIZE, WINCY - GAMESIZE);
+	swprintf_s(m_szScore, L"Score : %d", m_iScore);
+	TextOutW(m_hDC, 25, 25, m_szScore, lstrlen(m_szScore));
 
 	++m_iFPS;
 

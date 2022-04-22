@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "Include.h"
 #include "Obj.h"
+#include"Player.h"
 
 class CMaingame
 {
@@ -24,7 +25,9 @@ private:
 	int			m_iFPS;
 	DWORD		m_dwTime;
 
+	TCHAR		m_szScore[64];
+	int			m_iScore;
+	CObj* m_pPlayer;
 	std::list<CObj*> m_Monsterlist;
-
 };
 
