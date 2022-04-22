@@ -29,12 +29,15 @@ void CMaingame::Update(void)
 {
 	m_pPlayer->Update();
 
-	if (m_dwTime + 1000 < GetTickCount())   // GetTickCount() 1000분의 1초 //  xxxxx 한번만 1초뒤에 생성할려고 함.
+	if (m_Monsterlist.size() < 4)
 	{
-		m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(WINCX - GAMESIZE - 15.f , 65.f));// 몬스터의 반지름.
-		m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 95.f));
-		m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 505.f));
-		m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 535.f));
+		if (m_dwTime + 1000 < GetTickCount())
+		{
+			m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(WINCX - GAMESIZE - 15.f, 65.f));// 몬스터의 반지름.
+			m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 95.f));
+			m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 505.f));
+			m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 535.f));
+		}
 	}
 
 	for (std::list<CObj*>::iterator iter = m_Monsterlist.begin();
@@ -51,8 +54,7 @@ void CMaingame::Update(void)
 
 	// 총알
 	for (std::list<CObj*>::iterator iter = m_BulletList.begin();
-		iter != m_BulletList.end();
-		++iter)
+		iter != m_BulletList.end();++iter)
 	{
 		(*iter)->Update();
 	}
@@ -66,8 +68,7 @@ void CMaingame::Late_Update(void)
 
 	// 총알
 	for (std::list<CObj*>::iterator iter = m_BulletList.begin();
-		iter != m_BulletList.end();
-		++iter)
+		iter != m_BulletList.end(); ++iter)
 	{
 		(*iter)->Late_Update();
 	}
@@ -101,8 +102,7 @@ void CMaingame::Render(void)
 
 	// 총알
 	for (std::list<CObj*>::iterator iter = m_BulletList.begin();
-		iter != m_BulletList.end();
-		++iter)
+		iter != m_BulletList.end(); ++iter)
 	{
 		(*iter)->Render(m_hDC);
 	}
