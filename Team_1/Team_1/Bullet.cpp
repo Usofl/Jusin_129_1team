@@ -55,8 +55,8 @@ void CBullet::Release(void)
 
 void CBullet::Update_Rect(void)
 {
-	m_tRC.left = (long)m_tInfo.fX - (m_tInfo.fCX * 0.5f);
-	m_tRC.top = (long)m_tInfo.fY - (m_tInfo.fCY * 0.5f);
-	m_tRC.right = (long)m_tInfo.fCX + (m_tInfo.fCX * 0.5f);
-	m_tRC.bottom = (long)m_tInfo.fCY + (m_tInfo.fCY * 0.5f);
+	m_tRC.left = (long)(m_tInfo.fX - (m_tInfo.fCX * 0.5f));
+	m_tRC.top = (long)(m_tInfo.fY - (m_tInfo.fCY * 0.5f));
+	m_tRC.right = (long)(m_tInfo.fCX + (m_tInfo.fCX * 0.5f));
+	m_tRC.bottom = (long)(m_tInfo.fCY + (m_tInfo.fCY * 0.5f));
 }
