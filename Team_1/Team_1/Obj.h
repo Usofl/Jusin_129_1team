@@ -9,12 +9,14 @@ public:
 	virtual void Initialize(void) PURE;
 	virtual void Update(void) PURE;
 	virtual void Late_Update(void) PURE;
-	virtual void Render(HDC _hdc) PURE;
+	virtual void Render(HDC _hDC) PURE;
 	virtual void Release(void) PURE;
 
-	inline const RECT& Get_Rect() { return m_tRC; }
-	inline const int& Get_HP() { return m_iHP; }
-	inline void  Hit_Obj() { --m_iHP; }
+public:
+	
+
+protected:
+	void Update_Rect(void);
 
 protected:
 	void Update_Rect(void);
@@ -28,16 +30,13 @@ public:
 		m_tInfo.fX = p.x;
 		m_tInfo.fY = p.y;
 	}
-
-
-protected:
+private:
 	INFO m_tInfo;
 	RECT m_tRC;
+	POINT m_tPoint;// ÁÂÇ¥ longÅ¸ÀÔ.
+
 	int m_iHP;// ÃÑ¾Ë Ã¼·Â 1
 	float m_fSpeed;
 	float m_fAngle;
-	POINT m_tPoint;// ÁÂÇ¥ longÅ¸ÀÔ.
-
-
 };
 

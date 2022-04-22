@@ -23,7 +23,7 @@ void CBullet::Late_Update(void)
 {
 }
 
-void CBullet::Render(HDC _hdc)
+void CBullet::Render(HDC _hDC)
 {
 }
 
