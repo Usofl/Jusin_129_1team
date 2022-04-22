@@ -1,21 +1,19 @@
 #pragma once
-#include "Obj.h"
-class CMonster :
-	public CObj
+#include "Monster.h"
+
+class CMonster_A : public CMonster
 {
 public:
-	CMonster();
-	virtual ~CMonster();
+	CMonster_A();
+	~CMonster_A();
 
-	// Inherited via CObj
+public:
 	virtual void Initialize(void) override;
 	virtual void Update(void) override;
 	virtual void Late_Update(void) override;
-	virtual void Render(HDC _hdc) override;
+	virtual void Render(void) override;
 	virtual void Release(void) override;
 
-public:
-	void Move_Monster(void);
 
 };
 

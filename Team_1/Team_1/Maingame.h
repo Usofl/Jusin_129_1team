@@ -1,4 +1,8 @@
 #pragma once
+#include "stdafx.h"
+#include "Include.h"
+#include "Obj.h"
+
 class CMaingame
 {
 public:
@@ -20,7 +24,7 @@ private:
 	int			m_iFPS;
 	DWORD		m_dwTime;
 
-	TCHAR		m_szScore[64];
-	int			m_iScore;
+	std::list<CObj*> m_Monsterlist;
+
 };
 
