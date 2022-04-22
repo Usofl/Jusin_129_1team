@@ -48,7 +48,7 @@ void CMaingame::Render(void)
 
 	++m_iFPS;
 
-	if (m_dwTime + 1000 < GetTickCount())   //        ???????????
+	if (m_dwTime + 1000 < GetTickCount())
 	{
 		swprintf_s(m_szFPS, L"FPS : %d", m_iFPS);
 		SetWindowText(g_hWnd, m_szFPS);
