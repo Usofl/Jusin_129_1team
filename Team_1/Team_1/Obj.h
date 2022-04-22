@@ -30,4 +30,3 @@ protected:
 	float m_fSpeed;
 	float m_fAngle;
 };
-

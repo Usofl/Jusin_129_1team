@@ -22,9 +22,9 @@ public:
 		return pObj;
 	}
 
-	static CObj*	Create(float fA,float fB)
+	static CObj*    Create(float fA, float fB)
 	{
-		CObj*	pObj = new T;
+		CObj*    pObj = new T;
 		pObj->Initialize();
 
 		POINT p;
@@ -35,4 +35,3 @@ public:
 		return pObj;
 	}
 };
-

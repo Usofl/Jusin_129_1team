@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "Player.h"
 
-//testtest
-
 CPlayer::CPlayer()
 {
 }
@@ -115,7 +113,7 @@ void CPlayer::Key_Input(void)
 	{
 		if (-8 >= m_fAngle)
 		{
-		m_fAngle = -8.f;
+			m_fAngle = -8.f;
 		}
 		else
 		{

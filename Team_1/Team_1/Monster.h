@@ -18,4 +18,3 @@ public:
 	void Move_Monster(void);
 
 };
-
