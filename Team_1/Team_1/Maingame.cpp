@@ -6,7 +6,6 @@ CMaingame::CMaingame()
 	: m_dwTime(GetTickCount())
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
-	ZeroMemory(m_szScore, sizeof(TCHAR) * 64);
 	m_iFPS = 0;
 }
 
@@ -19,22 +18,27 @@ CMaingame::~CMaingame()
 void CMaingame::Initialize(void)
 {
 	m_hDC = GetDC(g_hWnd);
+
+	m_pPlayer = new CPlayer;
+	m_pPlayer->Initialize();
 }
 
 void CMaingame::Update(void)
 {
+	m_pPlayer->Update();
 }
 
 void CMaingame::Late_Update(void)
 {
+	m_pPlayer->Late_Update();
 }
 
 void CMaingame::Render(void)
 {
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
 	Rectangle(m_hDC, GAMESIZE, GAMESIZE, WINCX - GAMESIZE, WINCY - GAMESIZE);
-	swprintf_s(m_szScore, L"Score : %d", m_iScore);
-	TextOutW(m_hDC, 25, 25, m_szScore, lstrlen(m_szScore));
+
+	m_pPlayer->Render(m_hDC);
 
 	++m_iFPS;
 

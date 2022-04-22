@@ -22,7 +22,7 @@ void CMonster::Late_Update(void)
 {
 }
 
-void CMonster::Render(HDC _hdc)
+void CMonster::Render(HDC _hDC)
 {
 }
 

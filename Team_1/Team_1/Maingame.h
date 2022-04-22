@@ -1,4 +1,7 @@
 #pragma once
+
+#include"Player.h"
+
 class CMaingame
 {
 public:
@@ -20,7 +23,6 @@ private:
 	int			m_iFPS;
 	DWORD		m_dwTime;
 
-	TCHAR		m_szScore[64];
-	int			m_iScore;
+	CObj* m_pPlayer;
 };
 
