@@ -27,11 +27,10 @@ private:
 	int			m_iFPS;
 	DWORD		m_dwTime;
 
-	TCHAR        m_szScore[64];
-	int            m_iScore;
+	TCHAR       m_szScore[64];
+	int         m_iScore;
 
 	CObj* m_pPlayer;
 	std::list<CObj*> m_Monsterlist;
-
 	std::list<CObj*> m_pBulletList; // ÃÑ¾Ë ¸®½ºÆ®
 };

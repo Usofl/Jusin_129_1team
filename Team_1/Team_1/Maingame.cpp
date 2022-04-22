@@ -1,16 +1,14 @@
 #include "stdafx.h"
 #include "Maingame.h"
 
-
 CMaingame::CMaingame()
 	: m_dwTime(GetTickCount())
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
+	ZeroMemory(m_szScore, sizeof(TCHAR) * 64);
+
 	m_iFPS = 0;
-
-	
 }
-
 
 CMaingame::~CMaingame()
 {
@@ -81,7 +79,6 @@ void CMaingame::Render(void)
 		m_iFPS = 0;
 		m_dwTime = GetTickCount();
 	}
-
 
 	//몬스터 출력
 	for (auto& iter : m_Monsterlist)
