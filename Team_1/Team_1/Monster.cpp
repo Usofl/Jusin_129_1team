@@ -7,6 +7,11 @@ CMonster::CMonster()
 {
 }
 
+CMonster::CMonster(CObj * _player)
+	: m_pPlayer2(_player)
+{
+}
+
 CMonster::~CMonster()
 {
 }
@@ -16,6 +21,8 @@ void CMonster::Initialize(void)
 
 	m_tInfo.fCX = 30.f;
 	m_tInfo.fCY = 30.f;
+
+	m_iHP = 2;
 
 	m_fSpeed = 10.f;
 }

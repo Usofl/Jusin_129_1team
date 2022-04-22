@@ -5,6 +5,7 @@ class CMonster :
 {
 public:
 	CMonster();
+	CMonster(CObj* _player);
 	virtual ~CMonster();
 
 	// Inherited via CObj

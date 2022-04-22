@@ -12,15 +12,17 @@ CPlayer::~CPlayer()
 
 void CPlayer::Initialize(void)
 {
-	m_tInfo.fX = 100.f;
-	m_tInfo.fY = 300.f;
+	m_tInfo.fX = PLAYER_START_X;
+	m_tInfo.fY = PLAYER_START_Y;
 
-	m_tInfo.fCX = 50.f;
-	m_tInfo.fCY = 50.f;
+	m_tInfo.fCX = PLAYERCX;
+	m_tInfo.fCY = PLAYERCY;
 
 	m_fSpeed = 7.f;
 
 	m_fBSize = 50.f;
+
+	m_iHP = 100;
 
 	m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf((m_fAngle * PI) / 180.f));
 	m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf((m_fAngle * PI) / 180.f));
@@ -57,16 +59,14 @@ void CPlayer::Key_Input(void)
 	{
 		if (GetAsyncKeyState(VK_UP))
 		{
-			m_tInfo.fX -= m_fSpeed / sqrtf(2.f);
-			m_tInfo.fY -= m_fSpeed / sqrtf(2.f);
+			m_tInfo.fX -= m_fSpeed / nLog;
+			m_tInfo.fY -= m_fSpeed / nLog;
 		}
-
 		else if (GetAsyncKeyState(VK_DOWN))
 		{
-			m_tInfo.fX -= m_fSpeed / sqrtf(2.f);
-			m_tInfo.fY += m_fSpeed / sqrtf(2.f);
+			m_tInfo.fX -= m_fSpeed / nLog;
+			m_tInfo.fY += m_fSpeed / nLog;
 		}
-
 		else
 		{
 			m_tInfo.fX -= m_fSpeed;
@@ -76,16 +76,14 @@ void CPlayer::Key_Input(void)
 	{
 		if (GetAsyncKeyState(VK_UP))
 		{
-			m_tInfo.fX += m_fSpeed / sqrtf(2.f);
-			m_tInfo.fY -= m_fSpeed / sqrtf(2.f);
+			m_tInfo.fX += m_fSpeed / nLog;
+			m_tInfo.fY -= m_fSpeed / nLog;
 		}
-
 		else if (GetAsyncKeyState(VK_DOWN))
 		{
-			m_tInfo.fX += m_fSpeed / sqrtf(2.f);
-			m_tInfo.fY += m_fSpeed / sqrtf(2.f);
+			m_tInfo.fX += m_fSpeed / nLog;
+			m_tInfo.fY += m_fSpeed / nLog;
 		}
-
 		else
 		{
 			m_tInfo.fX += m_fSpeed;

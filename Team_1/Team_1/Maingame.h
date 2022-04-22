@@ -6,6 +6,7 @@
 #include "Monster.h"
 #include "Bullet.h"
 #include "AbstractFactory.h"
+#include "Collision.h"
 
 class CMaingame
 {
@@ -31,6 +32,9 @@ private:
 	int         m_iScore;
 
 	CObj* m_pPlayer;
+	std::list<CObj*> m_Objlist[OBJ_END];
+	std::vector<POINT>  m_tMonsterPoint;
+
 	std::list<CObj*> m_Monsterlist;
 	std::list<CObj*> m_BulletList; // ÃÑ¾Ë ¸®½ºÆ®
 };
