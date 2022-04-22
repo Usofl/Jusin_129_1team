@@ -30,3 +30,38 @@ void CCollision::Collision_Rect(std::list<CObj*> _lObjList, std::list<CObj*> _rO
 		}
 	}
 }
+
+void CCollision::Collision_Sphere(std::list<CObj*> _lObjList, std::list<CObj*> _rObjList)
+{
+	for (auto& Dest : _lObjList)
+	{
+		for (auto& Sour : _rObjList)
+		{
+			if (Check_Sphere(Dest, Sour))
+			{
+				Dest->Hit_Obj();
+				Sour->Hit_Obj();
+			}
+		}
+	}
+}
+
+bool CCollision::Check_Sphere(CObj * pDest, CObj * pSour)
+{
+	if (0 != pDest->Get_HP() && 0 != pSour->Get_HP())
+	{
+		return false;
+	}
+
+	float fWidth = abs(pDest->Get_Info().fX - pSour->Get_Info().fX); // 두 좌표의 넓이
+	float fHeight = abs(pDest->Get_Info().fY - pSour->Get_Info().fY); // 두 좌표의 높이
+
+	float fDiagonal = sqrtf((fWidth * fWidth) + (fHeight * fHeight)); // 두 좌표의 거리
+
+	if (fDiagonal < ((pDest->Get_Info().fCX * 0.5) + (pSour->Get_Info().fCX * 0.5)))
+	{
+		return true;
+	}
+
+	return false;
+}
