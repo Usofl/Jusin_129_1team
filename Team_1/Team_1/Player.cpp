@@ -20,7 +20,7 @@ void CPlayer::Initialize(void)
 	m_tInfo.fCX = 50.f;
 	m_tInfo.fCY = 50.f;
 
-	m_fSpeed = 10.f;
+	m_fSpeed = 7.f;
 
 	m_fBSize = 50.f;
 }
@@ -101,25 +101,25 @@ void CPlayer::Key_Input(void)
 
 	if (GetAsyncKeyState('W'))
 	{
-		if (10 <= m_fAngle)
+		if (8 <= m_fAngle)
 		{
-			m_fAngle = 10.f;
+			m_fAngle = 8.f;
 		}
 		else
 		{
-			m_fAngle += 2.f;
+			m_fAngle += 1.f;
 		}
 	}
 
 	if (GetAsyncKeyState('S'))
 	{
-		if (-10 >= m_fAngle)
+		if (-8 >= m_fAngle)
 		{
-		m_fAngle = -10.f;
+		m_fAngle = -8.f;
 		}
 		else
 		{
-			m_fAngle -= 2.f;
+			m_fAngle -= 1.f;
 		}
 	}
 }
