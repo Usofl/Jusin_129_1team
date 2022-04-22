@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 
+//testtest
 
 CPlayer::CPlayer()
 {
@@ -70,7 +71,6 @@ void CPlayer::Key_Input(void)
 			m_tInfo.fX -= m_fSpeed;
 		}
 	}
-
 	else if (GetAsyncKeyState(VK_RIGHT))
 	{
 		if (GetAsyncKeyState(VK_UP))
@@ -90,25 +90,21 @@ void CPlayer::Key_Input(void)
 			m_tInfo.fX += m_fSpeed;
 		}
 	}
-
 	else if (GetAsyncKeyState(VK_UP))
 	{
 		m_tInfo.fY -= m_fSpeed;
 	}
-
 	else if (GetAsyncKeyState(VK_DOWN))
 	{
 		m_tInfo.fY += m_fSpeed;
 	}
 
-
 	if (GetAsyncKeyState('W'))
 	{
-		if (15 <= m_fAngle)
+		if (10 <= m_fAngle)
 		{
-			m_fAngle = 15.f;
+			m_fAngle = 10.f;
 		}
-
 		else
 		{
 			m_fAngle += 2.f;
@@ -117,15 +113,13 @@ void CPlayer::Key_Input(void)
 
 	if (GetAsyncKeyState('S'))
 	{
-		if (-15 >= m_fAngle)
+		if (-10 >= m_fAngle)
 		{
-		m_fAngle = -15.f;
+		m_fAngle = -10.f;
 		}
-
 		else
 		{
 			m_fAngle -= 2.f;
 		}
-		//test
 	}
 }
