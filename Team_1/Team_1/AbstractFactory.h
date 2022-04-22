@@ -28,8 +28,8 @@ public:
 		pObj->Initialize();
 
 		POINT p;
-		p.x = fA;
-		p.y = fB;
+		p.x = (long)fA;
+		p.y = (long)fB;
 		pObj->Make_POINT(p);
 
 		return pObj;
