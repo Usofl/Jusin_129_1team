@@ -23,7 +23,7 @@ void CItem::Late_Update(void)
 {
 }
 
-void CItem::Render(void)
+void CItem::Render(HDC _hdc)
 {
 }
 

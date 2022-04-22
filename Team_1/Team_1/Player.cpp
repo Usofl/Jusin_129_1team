@@ -23,7 +23,7 @@ void CPlayer::Late_Update(void)
 {
 }
 
-void CPlayer::Render(void)
+void CPlayer::Render(HDC _hdc)
 {
 }
 
