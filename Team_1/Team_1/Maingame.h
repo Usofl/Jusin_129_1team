@@ -32,5 +32,5 @@ private:
 
 	CObj* m_pPlayer;
 	std::list<CObj*> m_Monsterlist;
-	std::list<CObj*> m_pBulletList; // ÃÑ¾Ë ¸®½ºÆ®
+	std::list<CObj*> m_BulletList; // ÃÑ¾Ë ¸®½ºÆ®
 };
