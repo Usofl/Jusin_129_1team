@@ -33,7 +33,7 @@ void CMonster::Late_Update(void)
 
 void CMonster::Render(HDC _hDC)
 {
-	Rectangle(_hdc, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
+	Rectangle(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
 }
 
 void CMonster::Release(void)

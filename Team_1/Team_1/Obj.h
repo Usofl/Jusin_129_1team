@@ -13,9 +13,9 @@ public:
 	virtual void Release(void) PURE;
 
 	inline POINT Get_POINT(void) { return m_tPoint; }
-	inline void Set_POINT(const POINT& p) { m_tPoint = p; }
+	inline void Set_POINT(POINT& p) { m_tPoint = p; }
 	// Set_Pos ÇÔ¼ö
-	inline void Make_POINT(const POINT& p) { m_tInfo.fX = p.x; m_tInfo.fY = p.y; }
+	inline void Make_POINT(POINT& p) { m_tInfo.fX = p.x; m_tInfo.fY = p.y; }
 
 protected:
 	void Update_Rect(void);
