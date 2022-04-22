@@ -1,5 +1,4 @@
 #pragma once
-
 class CObj abstract
 {
 public:
@@ -10,18 +9,24 @@ public:
 	virtual void Initialize(void) PURE;
 	virtual void Update(void) PURE;
 	virtual void Late_Update(void) PURE;
-	virtual void Render(HDC _hdc) PURE;
+	virtual void Render(HDC _hDC) PURE;
 	virtual void Release(void) PURE;
 
+	inline POINT Get_POINT(void) { return m_tPoint; }
+	inline void Set_POINT(const POINT& p) { m_tPoint = p; }
+	// Set_Pos ÇÔ¼ö
+	inline void Make_POINT(POINT& p) { m_tInfo.fX = p.x; m_tInfo.fY = p.y; }
+
+protected:
+	void Update_Rect(void);
 
 protected:
 	INFO m_tInfo;
 	RECT m_tRC;
-	int m_iHP;// ÃÑ¾Ë Ã¼·Â 1
-	float m_fSpeed;
-	float m_fAngle;
 	POINT m_tPoint;// ÁÂÇ¥ longÅ¸ÀÔ.
 
+	int m_iHP;// ÃÑ¾Ë Ã¼·Â 1
 
+	float m_fSpeed;
+	float m_fAngle;
 };
-
