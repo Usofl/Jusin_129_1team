@@ -17,6 +17,9 @@ CMaingame::~CMaingame()
 void CMaingame::Initialize(void)
 {
 	m_hDC = GetDC(g_hWnd);
+
+	m_pPlayer = new CPlayer;
+	m_pPlayer->Initialize();
 	
 	m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 65.f));
 	m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 95.f));
@@ -26,7 +29,7 @@ void CMaingame::Initialize(void)
 
 void CMaingame::Update(void)
 {
-
+	m_pPlayer->Update();
 
 	for (auto& iter : m_Monsterlist)
 	{
@@ -45,6 +48,8 @@ void CMaingame::Render(void)
 	Rectangle(m_hDC, GAMESIZE, GAMESIZE, WINCX - GAMESIZE, WINCY - GAMESIZE);
 	swprintf_s(m_szScore, L"Score : %d", m_iScore);
 	TextOutW(m_hDC, 25, 25, m_szScore, lstrlen(m_szScore));
+
+	m_pPlayer->Render(m_hDC);
 
 	++m_iFPS;
 
