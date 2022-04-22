@@ -16,3 +16,5 @@
 #define nLog sqrtf(2.f)
 
 extern HWND g_hWnd;
+
+#define Monster_C 30.f
