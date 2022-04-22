@@ -9,7 +9,7 @@ public:
 	virtual void Initialize(void) PURE;
 	virtual void Update(void) PURE;
 	virtual void Late_Update(void) PURE;
-	virtual void Render(void) PURE;
+	virtual void Render(HDC _hdc) PURE;
 	virtual void Release(void) PURE;
 
 
