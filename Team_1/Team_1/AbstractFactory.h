@@ -1,14 +1,18 @@
 #pragma once
+template<typename T>
 class CAbstractFactory
 {
 public:
+	CAbstractFactory() {}
+	~CAbstractFactory() {}
 
-	CAbstractFactory()
+public:
+	static CObj*	Create(void)
 	{
-	}
+		CObj*	pObj = new T;
+		pObj->Initialize();
 
-	~CAbstractFactory()
-	{
+		return pObj;
 	}
 };
 

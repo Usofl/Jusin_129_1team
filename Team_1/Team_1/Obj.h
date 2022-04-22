@@ -12,6 +12,9 @@ public:
 	virtual void Render(HDC _hdc) PURE;
 	virtual void Release(void) PURE;
 
+	inline const RECT& Get_Rect() { return m_tRC; }
+	inline const int& Get_HP() { return m_iHP; }
+	inline void  Hit_Obj() { --m_iHP; }
 
 private:
 	INFO m_tInfo;
