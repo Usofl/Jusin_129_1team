@@ -79,10 +79,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 		else
 		{
-			//Maingame작동.
-			Maingame.Update();
-			Maingame.Late_Update();
-			Maingame.Render();
+			if (dwOldTime + 10 < GetTickCount())
+			{
+				//Maingame작동.
+				Maingame.Update();
+				Maingame.Late_Update();
+				Maingame.Render();
+
+				dwOldTime = GetTickCount();
+			}
 		}
 	}
 
@@ -138,7 +143,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      0, 0,
+      400, 150,
 	  rc.right - rc.left,
 	  rc.bottom - rc.top, 
 	  nullptr, nullptr, hInstance, nullptr);
