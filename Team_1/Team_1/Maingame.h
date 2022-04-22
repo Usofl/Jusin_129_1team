@@ -1,6 +1,11 @@
 #pragma once
+#include "stdafx.h"
+#include "Include.h"
 #include "Obj.h"
+#include "Player.h"
+#include "Monster.h"
 #include "Bullet.h"
+#include "AbstractFactory.h"
 
 class CMaingame
 {
@@ -22,6 +27,11 @@ private:
 	int			m_iFPS;
 	DWORD		m_dwTime;
 
+	TCHAR        m_szScore[64];
+	int            m_iScore;
+
+	CObj* m_pPlayer;
+	std::list<CObj*> m_Monsterlist;
+
 	std::list<CObj*> m_pBulletList; // ÃÑ¾Ë ¸®½ºÆ®
 };
-
