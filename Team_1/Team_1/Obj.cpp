@@ -3,7 +3,12 @@
 
 
 CObj::CObj()
-	: m_iHP(0), m_fSpeed(0.f), m_fAngle(0.f)
+	: m_iHP(0)
+	, m_fSpeed(0.f)
+	, m_fAngle(0.f)
+	, m_tInfo({0,0,0,0})
+	, m_tRC({ 0,0,0,0 })
+	, m_tPoint({0,0})
 {
 }
 

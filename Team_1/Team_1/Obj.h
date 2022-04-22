@@ -14,7 +14,12 @@ public:
 
 	inline POINT Get_POINT(void) { return m_tPoint; }
 	inline void Set_POINT(const POINT& p) { m_tPoint = p; }
-	// Set_Pos ÇÔ¼ö
+	inline void Set_Pos(float _fX, float _fY)
+	{
+		m_tInfo.fX = _fX;
+		m_tInfo.fY = _fY;
+	}
+	inline void Set_Angle(float _fAngle) { m_fAngle = _fAngle; }
 	inline void Make_POINT(POINT& p) { m_tInfo.fX = (float)p.x; m_tInfo.fY = (float)p.y; }
 
 	float Get_fX(void) { return m_tInfo.fX; }

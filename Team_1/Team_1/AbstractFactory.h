@@ -34,4 +34,18 @@ public:
 
 		return pObj;
 	}
+
+	static CObj*    Create(float fA, float fB, float fAngle)
+	{
+		CObj*    pObj = new T;
+		pObj->Initialize();
+
+		POINT p;
+		p.x = (long)fA;
+		p.y = (long)fB;
+		pObj->Make_POINT(p);
+		pObj->Set_Angle(fAngle);
+
+		return pObj;
+	}
 };

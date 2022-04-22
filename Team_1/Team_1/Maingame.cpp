@@ -1,16 +1,14 @@
 #include "stdafx.h"
 #include "Maingame.h"
 
-
 CMaingame::CMaingame()
 	: m_dwTime(GetTickCount())
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
+	ZeroMemory(m_szScore, sizeof(TCHAR) * 64);
+
 	m_iFPS = 0;
-
-	
 }
-
 
 CMaingame::~CMaingame()
 {
@@ -21,11 +19,9 @@ void CMaingame::Initialize(void)
 {
 	m_hDC = GetDC(g_hWnd);
 
-	CObj* m_pBullet = new CBullet;
-	m_pBullet->Initialize();
-
 	m_pPlayer = new CPlayer;
 	m_pPlayer->Initialize();
+	static_cast<CPlayer*>(m_pPlayer)->Set_BulletList(&m_BulletList);
 
 }
 
@@ -54,8 +50,8 @@ void CMaingame::Update(void)
 	}
 
 	// ÃÑ¾Ë
-	for (std::list<CObj*>::iterator iter = m_pBulletList.begin();
-		iter != m_pBulletList.end();)
+	for (std::list<CObj*>::iterator iter = m_BulletList.begin();
+		iter != m_BulletList.end(); ++iter)
 	{
 		(*iter)->Update();
 	}
@@ -66,9 +62,10 @@ void CMaingame::Late_Update(void)
 {
 
 	m_pPlayer->Late_Update();
+
 	// ÃÑ¾Ë
-	for (std::list<CObj*>::iterator iter = m_pBulletList.begin();
-		iter != m_pBulletList.end();)
+	for (std::list<CObj*>::iterator iter = m_BulletList.begin();
+		iter != m_BulletList.end(); ++iter)
 	{
 		(*iter)->Late_Update();
 	}
@@ -94,7 +91,6 @@ void CMaingame::Render(void)
 		m_dwTime = GetTickCount();
 	}
 
-
 	//¸ó½ºÅÍ Ãâ·Â
 	for (auto& iter : m_Monsterlist)
 	{
@@ -102,8 +98,8 @@ void CMaingame::Render(void)
 	}
 
 	// ÃÑ¾Ë
-	for (std::list<CObj*>::iterator iter = m_pBulletList.begin();
-		iter != m_pBulletList.end();)
+	for (std::list<CObj*>::iterator iter = m_BulletList.begin();
+		iter != m_BulletList.end(); ++iter)
 	{
 		(*iter)->Render(m_hDC);
 	}
