@@ -1,9 +1,5 @@
 #include "stdafx.h"
 #include "Maingame.h"
-#include "AbstractFactory.h"
-#include "Monster.h"
-#include "Obj.h"
-
 
 CMaingame::CMaingame()
 	: m_dwTime(GetTickCount())

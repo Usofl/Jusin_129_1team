@@ -2,7 +2,9 @@
 #include "stdafx.h"
 #include "Include.h"
 #include "Obj.h"
-#include"Player.h"
+#include "Player.h"
+#include "Monster.h"
+#include "AbstractFactory.h"
 
 class CMaingame
 {
@@ -27,6 +29,7 @@ private:
 
 	TCHAR		m_szScore[64];
 	int			m_iScore;
+
 	CObj* m_pPlayer;
 	std::list<CObj*> m_Monsterlist;
 };
