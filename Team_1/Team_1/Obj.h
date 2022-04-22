@@ -14,6 +14,13 @@ public:
 
 
 private:
+	INFO m_tInfo;
+	RECT m_tRC;
+	int m_iHP;// 총알 체력 1
+	float m_fSpeed;
+	float m_fAngle;
+	POINT m_tPoint;// 좌표 long타입.
+
 
 };
 

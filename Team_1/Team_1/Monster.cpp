@@ -6,7 +6,6 @@ CMonster::CMonster()
 {
 }
 
-
 CMonster::~CMonster()
 {
 }
