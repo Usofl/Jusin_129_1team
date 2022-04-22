@@ -21,10 +21,21 @@ CMaingame::~CMaingame()
 void CMaingame::Initialize(void)
 {
 	m_hDC = GetDC(g_hWnd);
+	
+	m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 65.f));
+	m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 95.f));
+	m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 505.f));
+	m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 535.f));
 }
 
 void CMaingame::Update(void)
 {
+
+
+	for (auto& iter : m_Monsterlist)
+	{
+		iter->Update();
+	}
 }
 
 void CMaingame::Late_Update(void)
