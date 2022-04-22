@@ -10,3 +10,5 @@
 #define PI 3.1415926535
 
 extern HWND g_hWnd;
+
+#define Monster_C 30.f

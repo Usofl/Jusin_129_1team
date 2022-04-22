@@ -33,10 +33,10 @@ void CMaingame::Update(void)
 	{
 		if (m_dwTime + 1000 < GetTickCount())
 		{
-			m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(WINCX - GAMESIZE - 15.f, 65.f));// 몬스터의 반지름.
-			m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 95.f));
-			m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 505.f));
-			m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(735.f, 535.f));
+			m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(WINCX - GAMESIZE - 0.5 * Monster_C, GAMESIZE + 0.5 * Monster_C));
+			m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(WINCX - GAMESIZE - 0.5 * Monster_C, GAMESIZE + 3.5 * Monster_C));
+			m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(WINCX - GAMESIZE - 0.5 * Monster_C, 600.f - GAMESIZE - 3.5 * Monster_C));
+			m_Monsterlist.push_back(CAbstractFactory<CMonster>::Create(WINCX - GAMESIZE - 0.5 * Monster_C, 600.f - GAMESIZE - 0.5 * Monster_C));
 		}
 	}
 
