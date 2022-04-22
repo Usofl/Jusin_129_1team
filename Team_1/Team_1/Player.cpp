@@ -20,7 +20,7 @@ void CPlayer::Initialize(void)
 	m_tInfo.fCX = 50.f;
 	m_tInfo.fCY = 50.f;
 
-	m_fSpeed = 10.f;
+	m_fSpeed = 7.f;
 
 	m_fBSize = 50.f;
 }
