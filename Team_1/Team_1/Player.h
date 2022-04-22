@@ -1,6 +1,6 @@
 #pragma once
-
 #include "Obj.h"
+#include "Bullet.h"
 
 class CPlayer :
 	public CObj
@@ -9,17 +9,16 @@ public:
 	CPlayer();
 	virtual ~CPlayer();
 
-public:
+	// Inherited via CObj
 	virtual void Initialize(void) override;
 	virtual void Update(void) override;
 	virtual void Late_Update(void) override;
-	virtual void Render(HDC _hDC) override;
+	virtual void Render(HDC _hdc) override;
 	virtual void Release(void) override;
 
-public:
-	void Key_Input(void);
+	void Set_pBulletList(std::list<CObj*>* _pBulletList) { m_pBulletList = _pBulletList; }
 
 private:
-	float m_fBSize; // √—Ω≈ ±Ê¿Ã
+	std::list<CObj*>* m_pBulletList;
 };
 
