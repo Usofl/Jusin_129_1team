@@ -3,6 +3,7 @@
 
 CPlayer::CPlayer()
 	: m_GetItem(0)
+	, m_pBulletList(nullptr)
 {
 }
 
