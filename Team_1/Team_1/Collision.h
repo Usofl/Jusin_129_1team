@@ -12,4 +12,6 @@ public:
 	static bool Cheak_Circle(CObj* _Temp, CObj* _Dest);
 	static void Collision_Circle(std::list<CObj*> _Temp, std::list<CObj*> _Dest);
 
+	static void Collision_Player(std::list<CObj*> _Monster, std::list<CObj*> _Player);
+
 };

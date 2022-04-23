@@ -75,3 +75,25 @@ void CCollision::Collision_Circle(std::list<CObj*> _Temp, std::list<CObj*> _Dest
 	}
 }
 
+void CCollision::Collision_Player(std::list<CObj*> _Monster, std::list<CObj*> _Player)
+{
+	for (auto& Monster : _Monster)
+	{
+		for (auto& Player : _Player)
+		{
+			if (0 < Player->Get_HP())
+			{
+				if (Cheak_Circle(Monster, Player))
+				{
+					Player->Hit_Obj();
+
+					if (0 >= Player->Get_HP())
+					{
+						return;
+					}
+				}
+			}
+		}
+	}
+}
+
