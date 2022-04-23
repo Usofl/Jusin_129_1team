@@ -24,14 +24,12 @@ void CBullet::Update(void)
 {
 	m_tInfo.fX += m_fSpeed * cosf(m_fAngle * DEGREE);
 	m_tInfo.fY -= m_fSpeed * sinf(m_fAngle * DEGREE);
-
 	
 	Update_Rect();
 }
 
 void CBullet::Late_Update(void)
 {
-
 	// 총알 충돌 처리 
 }
 

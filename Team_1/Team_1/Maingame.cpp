@@ -4,11 +4,11 @@
 
 CMaingame::CMaingame()
 	: m_dwTime(GetTickCount())
+	, m_iFPS(0)
+	, m_iScore(0)
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
 	ZeroMemory(m_szScore, sizeof(TCHAR) * 64);
-
-	m_iFPS = 0;
 }
 
 CMaingame::~CMaingame()
@@ -38,8 +38,6 @@ void CMaingame::Initialize(void)
 
 void CMaingame::Update(void)
 {
-	//m_pPlayer->Update();
-
 	if (m_Objlist[OBJ_MONSTER].size() < 4)
 	{
 		if (m_dwTime + 1000 < GetTickCount())
@@ -51,14 +49,24 @@ void CMaingame::Update(void)
 		}
 	}
 
-	for (auto& list_iter : m_Objlist)
+	for (int i = OBJ_PLAYER; i < OBJ_END; ++i)
 	{
-		for (auto iter = list_iter.begin(); iter != list_iter.end();)
+		for (auto iter = m_Objlist[i].begin(); iter != m_Objlist[i].end();)
 		{
 			if (0 >= (*iter)->Get_HP())
 			{
+				if (i == OBJ_MONSTER) // 삭제되는 OBJ가 몬스터일 경우 score 증가
+				{
+					m_iScore += 10;
+				}
+
+				if (i == OBJ_ITEM)
+				{
+					static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Item(*iter);
+				}
+
 				Safe_Delete<CObj*>(*iter);
-				iter = list_iter.erase(iter);
+				iter = m_Objlist[i].erase(iter);
 			}
 
 			else
@@ -68,30 +76,12 @@ void CMaingame::Update(void)
 			}
 		}
 	}
-
-	//for (std::list<CObj*>::iterator iter = m_Monsterlist.begin();
-	//	iter != m_Monsterlist.end();++iter)
-	//{
-	//	dynamic_cast<CMonster*>(*iter)->Set_Player(m_pPlayer);
-	//	(*iter)->Update();
-	//}
-
-	//// 총알
-	//for (std::list<CObj*>::iterator iter = m_BulletList.begin();
-	//	iter != m_BulletList.end();++iter)
-	//{
-	//	(*iter)->Update();
-	//}
-
 }
 
 void CMaingame::Late_Update(void)
 {
-
-	//m_pPlayer->Late_Update();
-
-	//CCollision::Collision_Rect(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_BULLET]);
 	CCollision::Collision_Circle(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_BULLET]);
+	CCollision::Collision_Circle(m_Objlist[OBJ_PLAYER], m_Objlist[OBJ_ITEM]);
 
 	for (auto& list_iter : m_Objlist)
 	{
@@ -100,13 +90,6 @@ void CMaingame::Late_Update(void)
 			iter->Late_Update();
 		}
 	}
-
-	//// 총알
-	//for (std::list<CObj*>::iterator iter = m_BulletList.begin();
-	//	iter != m_BulletList.end();++iter)
-	//{
-	//	(*iter)->Late_Update();
-	//}
 }
 
 void CMaingame::Render(void)
@@ -116,8 +99,6 @@ void CMaingame::Render(void)
 	swprintf_s(m_szScore, L"Score : %d", m_iScore);
 	TextOutW(m_hDC, GAMESIZE, OUTGAMESIZE, m_szScore, lstrlen(m_szScore));
 
-	//m_pPlayer->Render(m_hDC);
-
 	for (auto& list_iter : m_Objlist)
 	{
 		for (auto& iter : list_iter)
@@ -125,19 +106,6 @@ void CMaingame::Render(void)
 			iter->Render(m_hDC);
 		}
 	}
-
-	////몬스터 출력
-	//for (auto& iter : m_Monsterlist)
-	//{
-	//	iter->Render(m_hDC);
-	//}
-
-	//// 총알
-	//for (std::list<CObj*>::iterator iter = m_BulletList.begin();
-	//	iter != m_BulletList.end();++iter)
-	//{
-	//	(*iter)->Render(m_hDC);
-	//}
 
 	++m_iFPS;
 
