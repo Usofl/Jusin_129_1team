@@ -18,6 +18,8 @@ public:
 	inline const RECT& Get_Rect(void) { return m_tRC; }
 	inline const int& Get_HP(void) { return m_iHP; }
 
+	//inline const int& Get_Life(void) { return m_iLife; } // 플레이어 목숨
+
 	inline const void Hit_Obj(void) { --m_iHP; }
 
 	inline void Set_POINT(const POINT& p) { m_tPoint = p; }
@@ -38,6 +40,8 @@ protected:
 	POINT m_tPoint;// 좌표 long타입.
 
 	int m_iHP;// 총알 체력 1
+
+	//int m_iLife; // 플레이어 목숨
 
 	float m_fSpeed;
 	float m_fAngle;

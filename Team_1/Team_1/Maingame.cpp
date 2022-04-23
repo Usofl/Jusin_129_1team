@@ -72,6 +72,13 @@ void CMaingame::Update(void)
 
 				Safe_Delete<CObj*>(*iter);
 				iter = m_Objlist[i].erase(iter);
+
+				if (m_Objlist[OBJ_PLAYER].empty())
+				{
+					m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
+					m_Objlist[OBJ_PLAYER].front()->Initialize();
+					static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+				}
 			}
 
 			else
@@ -87,6 +94,7 @@ void CMaingame::Late_Update(void)
 {
 	CCollision::Collision_Circle(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_BULLET]);
 	CCollision::Collision_Circle(m_Objlist[OBJ_PLAYER], m_Objlist[OBJ_ITEM]);
+	CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]);
 
 	for (auto& list_iter : m_Objlist)
 	{
