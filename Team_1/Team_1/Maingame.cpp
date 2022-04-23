@@ -121,10 +121,13 @@ void CMaingame::Update(void)
 				{
 					if (0 < m_iLife)
 					{
-						--m_iLife;
-						m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
-						m_Objlist[OBJ_PLAYER].front()->Initialize();
-						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+						if (GetAsyncKeyState('R')) 
+						{
+							--m_iLife;
+							m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
+							m_Objlist[OBJ_PLAYER].front()->Initialize();
+							static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+						}
 					}
 					else
 					{
