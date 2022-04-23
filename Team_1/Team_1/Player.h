@@ -21,7 +21,7 @@ public:
 
 public:
 	void Key_Input(void);
-	void Collision_Wall(void);
+	void Collision_Wall(void); // 벽에 충돌시 이벤트 변경하려면 여기로
 
 private:
 	float m_fBSize; // 총신 길이
