@@ -3,6 +3,7 @@ class CObj abstract
 {
 public:
 	CObj();
+	CObj(const CObj& _rObj);
 	virtual ~CObj();
 
 public:

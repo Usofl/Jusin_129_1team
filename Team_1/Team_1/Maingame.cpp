@@ -23,6 +23,12 @@ void CMaingame::Initialize(void)
 	m_Objlist[OBJ_PLAYER].front()->Initialize();
 	static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
 
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
+		m_Objlist[OBJ_PLAYER].front()->Get_fX(), m_Objlist[OBJ_PLAYER].front()->Get_fY()));
+
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_SHIELD,
+		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 100.f)));
+
 	m_tMonsterPoint.push_back({ WINCX - GAMESIZE - 15, 65 });
 	m_tMonsterPoint.push_back({ 735, 95 });
 	m_tMonsterPoint.push_back({ 735, 505 });
@@ -99,17 +105,6 @@ void CMaingame::Render(void)
 
 	//m_pPlayer->Render(m_hDC);
 
-	++m_iFPS;
-
-	if (m_dwTime + 1000 < GetTickCount())   // GetTickCount() 1000분의 1초
-	{
-		swprintf_s(m_szFPS, L"FPS : %d", m_iFPS);
-		SetWindowText(g_hWnd, m_szFPS);
-
-		m_iFPS = 0;
-		m_dwTime = GetTickCount();
-	}
-
 	for (auto& list_iter : m_Objlist)
 	{
 		for (auto& iter : list_iter)
@@ -130,6 +125,17 @@ void CMaingame::Render(void)
 	//{
 	//	(*iter)->Render(m_hDC);
 	//}
+
+	++m_iFPS;
+
+	if (m_dwTime + 1000 < GetTickCount())   // GetTickCount() 1000분의 1초
+	{
+		swprintf_s(m_szFPS, L"FPS : %d", m_iFPS);
+		SetWindowText(g_hWnd, m_szFPS);
+
+		m_iFPS = 0;
+		m_dwTime = GetTickCount();
+	}
 }
 	
 void CMaingame::Release(void)

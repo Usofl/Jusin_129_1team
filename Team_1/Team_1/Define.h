@@ -13,6 +13,7 @@
 #define PURE =0
 
 #define PI 3.1415926535f
+#define DEGREE (PI / 180.f)
 #define nLog sqrtf(2.f)
 
 extern HWND g_hWnd;

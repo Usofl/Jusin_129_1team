@@ -22,8 +22,8 @@ void CBullet::Initialize(void)
 
 void CBullet::Update(void)
 {
-	m_tInfo.fX += m_fSpeed * cosf((m_fAngle * PI) / 180.f);
-	m_tInfo.fY -= m_fSpeed * sinf((m_fAngle * PI) / 180.f);
+	m_tInfo.fX += m_fSpeed * cosf(m_fAngle * DEGREE);
+	m_tInfo.fY -= m_fSpeed * sinf(m_fAngle * DEGREE);
 
 	
 	Update_Rect();

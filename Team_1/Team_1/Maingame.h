@@ -6,6 +6,7 @@
 #include "Monster.h"
 #include "Bullet.h"
 #include "AbstractFactory.h"
+#include "ItemFactory.h"
 #include "Collision.h"
 
 class CMaingame
