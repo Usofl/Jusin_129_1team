@@ -171,7 +171,7 @@ void CPlayer::Key_Input(void)
 		}
 	}
 
-	if (GetAsyncKeyState('R'))
+	if (GetAsyncKeyState('E'))
 	{
 		if (m_dwTime + 100 < GetTickCount())
 		{
