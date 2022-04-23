@@ -57,13 +57,13 @@ void CMaingame::Update(void)
 		}
 	}
 
-	if (nullptr == m_Objlist[OBJ_PLAYER].front())
-	{
-		for (auto iter : m_Objlist[OBJ_MONSTER])
-		{
-			static_cast<CMonster*>(iter)->Set_Speed(0.f); // 모든 몬스터 멈춤.xxxxxxxxxxxxx
-		}
-	}
+	//if (nullptr == m_Objlist[OBJ_PLAYER].front())
+	//{
+	//	for (auto iter : m_Objlist[OBJ_MONSTER])
+	//	{
+	//		static_cast<CMonster*>(iter)->Set_Speed(0.f); // 모든 몬스터 멈춤.xxxxxxxxxxxxx
+	//	}
+	//}
 
 	for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
 		static_cast<CMonster*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);
@@ -88,13 +88,6 @@ void CMaingame::Update(void)
 						delete *iter;
 						iter = m_Objlist[ITEM_ROLLBOT].erase(iter);
 					}
-
-					/*for (auto iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end();++iter)
-					{
-						iter
-
-					}*/
-
 				}
 
 				if (i == OBJ_MONSTER) // 삭제되는 OBJ가 몬스터일 경우 score 증가
@@ -148,6 +141,10 @@ void CMaingame::Update(void)
 					}
 					else
 					{
+						for (auto iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
+						{
+							static_cast<CMonster*>(*iter)->Set_Speed(0.f); // 캐릭터가 죽었을때 몬스터의 속도를 0으로.
+						}
 						return;
 					}
 				}
