@@ -44,11 +44,10 @@ void CBullet::Update(void)
 void CBullet::Late_Update(void)
 {
 	// ¸Ê Ãæµ¹Ã³¸®
-	if (50 >= m_tRC.left || WINCX - 50 >= m_tRC.right || 50 >= m_tRC.top
-		|| WINCY - 50 >= m_tRC.bottom)
+	if (50 >= m_tRC.left || WINCX - 50 <= m_tRC.right 
+		|| 50 >= m_tRC.top	|| WINCY - 50 <= m_tRC.bottom)
 	{
 		m_iHP = 0;
-		
 	}
 }
 
