@@ -114,7 +114,6 @@ void CMaingame::Update(void)
 						m_Objlist[OBJ_ROLLBOT].push_back(rollBot);
 					}
 				}
-
 				Safe_Delete<CObj*>(*iter);
 				iter = m_Objlist[i].erase(iter);
 
@@ -129,11 +128,10 @@ void CMaingame::Update(void)
 					}
 					else
 					{
-						return;
+
 					}
 				}
 			}
-
 			else
 			{
 				(*iter)->Update();

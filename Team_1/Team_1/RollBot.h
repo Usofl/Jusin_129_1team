@@ -2,6 +2,7 @@
 #include "Obj.h"
 #include "Bullet.h"
 #include "AbstractFactory.h"
+#include "Player.h"
 
 class CRollBot :
 	public CObj
