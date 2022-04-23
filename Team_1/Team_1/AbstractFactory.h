@@ -35,6 +35,16 @@ public:
 		return pObj;
 	}
 
+	static CObj*    Create(POINT& _tPoint, CObj* _player)
+	{
+		CObj*    pObj = new T(_player);
+		pObj->Initialize();
+
+		pObj->Make_POINT(_tPoint);
+
+		return pObj;
+	}
+
 	static CObj*    Create(float fA, float fB, float fAngle)
 	{
 		CObj*    pObj = new T;
