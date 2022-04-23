@@ -17,8 +17,9 @@ public:
 	inline const INFO& Get_Info(void) { return m_tInfo; }
 	inline const RECT& Get_Rect(void) { return m_tRC; }
 	inline const int& Get_HP(void) { return m_iHP; }
-
-	//inline const int& Get_Life(void) { return m_iLife; } // 플레이어 목숨
+	inline const float& Get_Angle(void) { return m_fAngle; }
+	inline const float& Get_fX(void) { return m_tInfo.fX; }
+	inline const float& Get_fY(void) { return m_tInfo.fY; }
 
 	inline const void Hit_Obj(void) { --m_iHP; }
 
@@ -28,8 +29,6 @@ public:
 
 	inline void Make_POINT(POINT& p) { m_tInfo.fX = (float)p.x; m_tInfo.fY = (float)p.y; }
 
-	float Get_fX(void) { return m_tInfo.fX; }
-	float Get_fY(void) { return m_tInfo.fY; }
 
 protected:
 	void Update_Rect(void);
@@ -40,8 +39,6 @@ protected:
 	POINT m_tPoint;// 좌표 long타입.
 
 	int m_iHP;// 총알 체력 1
-
-	//int m_iLife; // 플레이어 목숨
 
 	float m_fSpeed;
 	float m_fAngle;
