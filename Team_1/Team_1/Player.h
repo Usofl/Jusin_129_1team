@@ -32,4 +32,5 @@ private:
 
 	float m_fBSize; // √—Ω≈ ±Ê¿Ã
 	std::list<CObj*>* m_pBulletList;
+	DWORD m_dwTime;
 };

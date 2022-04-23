@@ -157,15 +157,30 @@ void CPlayer::Key_Input(void)
 
 	if (GetAsyncKeyState('D'))
 	{
-		m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
+		if (m_dwTime + 100 < GetTickCount())
+		{
+			if (m_Item_List.empty())
+			{
+				m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
+			}
+			for (int i = 0; i < m_Item_List.size(); ++i)
+			{
+				m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
+			}
+			m_dwTime = GetTickCount();
+		}
 	}
 
 	if (GetAsyncKeyState('R'))
 	{
-		m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle -6));
-		m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle -2));
-		m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle + 2));
-		m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle + 6));
+		if (m_dwTime + 100 < GetTickCount())
+		{
+			m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle - 3));
+			m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle - 1));
+			m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle + 1));
+			m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle + 3));
+			m_dwTime = GetTickCount();
+		}
 	}
 }
 
