@@ -14,10 +14,8 @@ CBullet::~CBullet()
 
 void CBullet::Initialize(void)
 {
-	// 총알 크기, 스피드, 체력 초기화
-	m_tInfo.fCX = 30.f;
-	m_tInfo.fCY = 30.f;
-
+	m_tInfo.fCX = 10.f;
+	m_tInfo.fCY = 10.f;
 	m_fSpeed = 5.f;
 	m_iHP = 1;
 }
@@ -27,11 +25,13 @@ void CBullet::Update(void)
 	m_tInfo.fX += m_fSpeed * cosf((m_fAngle * PI) / 180.f);
 	m_tInfo.fY -= m_fSpeed * sinf((m_fAngle * PI) / 180.f);
 
+	
 	Update_Rect();
 }
 
 void CBullet::Late_Update(void)
 {
+
 	// 총알 충돌 처리 
 }
 
