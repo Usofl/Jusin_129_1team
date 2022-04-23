@@ -153,6 +153,7 @@
     <ClInclude Include="Functor.h" />
     <ClInclude Include="Include.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemFactory.h" />
     <ClInclude Include="Maingame.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Obj.h" />
