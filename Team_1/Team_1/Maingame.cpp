@@ -138,6 +138,12 @@ void CMaingame::Update(void)
 						m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
 						m_Objlist[OBJ_PLAYER].front()->Initialize();
 						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+
+						for (auto iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
+						{
+							static_cast<CMonster*>(*iter)->Set_Player(m_Objlist[OBJ_PLAYER].front());
+						}
+						return;
 					}
 					else
 					{

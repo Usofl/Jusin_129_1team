@@ -69,12 +69,12 @@ void CMonster::Move_Monster(void)
 		
 		if (!(m_pPlayer == nullptr))
 		{
-			if (0.6 * PLAYERCX < abs(m_tInfo.fX - m_pPlayer->Get_fX()))
+			if (0.5 * PLAYERCX < abs(m_tInfo.fX - m_pPlayer->Get_fX()))
 			{
 				m_fAngle = Find_MonPlr_CosAngle();
 				m_tInfo.fX -= 0.2 * m_fSpeed * cos(m_fAngle);
 			}
-			if (0.6 * PLAYERCY < abs(m_tInfo.fY - m_pPlayer->Get_fY()))
+			if (0.5 * PLAYERCY < abs(m_tInfo.fY - m_pPlayer->Get_fY()))
 			{
 				m_fAngle = Find_MonPlr_SinAngle();
 				m_tInfo.fY -= 0.2 * m_fSpeed * sin(m_fAngle);
