@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Maingame.h"
+#include "Collision.h"
 
 CMaingame::CMaingame()
 	: m_dwTime(GetTickCount())
@@ -22,6 +23,12 @@ void CMaingame::Initialize(void)
 	m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
 	m_Objlist[OBJ_PLAYER].front()->Initialize();
 	static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
+		m_Objlist[OBJ_PLAYER].front()->Get_fX(), m_Objlist[OBJ_PLAYER].front()->Get_fY()));
+
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_SHIELD,
+		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 100.f)));
 
 	m_tMonsterPoint.push_back({ WINCX - GAMESIZE - 15, 65 });
 	m_tMonsterPoint.push_back({ 735, 95 });
@@ -46,9 +53,19 @@ void CMaingame::Update(void)
 
 	for (auto& list_iter : m_Objlist)
 	{
-		for (auto& iter : list_iter)
+		for (auto iter = list_iter.begin(); iter != list_iter.end();)
 		{
-			iter->Update();
+			if (0 >= (*iter)->Get_HP())
+			{
+				Safe_Delete<CObj*>(*iter);
+				iter = list_iter.erase(iter);
+			}
+
+			else
+			{
+				(*iter)->Update();
+				++iter;
+			}
 		}
 	}
 
@@ -73,12 +90,14 @@ void CMaingame::Late_Update(void)
 
 	//m_pPlayer->Late_Update();
 
-	for (int i = OBJ_PLAYER; i < OBJ_END; ++i)
+	//CCollision::Collision_Rect(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_BULLET]);
+	CCollision::Collision_Circle(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_BULLET]);
+
+	for (auto& list_iter : m_Objlist)
 	{
-		for (auto iter = m_Objlist[i].begin(); iter != m_Objlist[i].end();)
+		for (auto& iter : list_iter)
 		{
-			(*iter)->Late_Update();
-			++iter;
+			iter->Late_Update();
 		}
 	}
 
@@ -95,20 +114,9 @@ void CMaingame::Render(void)
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
 	Rectangle(m_hDC, GAMESIZE, GAMESIZE, WINCX - GAMESIZE, WINCY - GAMESIZE);
 	swprintf_s(m_szScore, L"Score : %d", m_iScore);
-	TextOutW(m_hDC, 25, 25, m_szScore, lstrlen(m_szScore));
+	TextOutW(m_hDC, GAMESIZE, OUTGAMESIZE, m_szScore, lstrlen(m_szScore));
 
 	//m_pPlayer->Render(m_hDC);
-
-	++m_iFPS;
-
-	if (m_dwTime + 1000 < GetTickCount())   // GetTickCount() 1000분의 1초
-	{
-		swprintf_s(m_szFPS, L"FPS : %d", m_iFPS);
-		SetWindowText(g_hWnd, m_szFPS);
-
-		m_iFPS = 0;
-		m_dwTime = GetTickCount();
-	}
 
 	for (auto& list_iter : m_Objlist)
 	{
@@ -130,8 +138,19 @@ void CMaingame::Render(void)
 	//{
 	//	(*iter)->Render(m_hDC);
 	//}
-}
 
+	++m_iFPS;
+
+	if (m_dwTime + 1000 < GetTickCount())   // GetTickCount() 1000분의 1초
+	{
+		swprintf_s(m_szFPS, L"FPS : %d", m_iFPS);
+		SetWindowText(g_hWnd, m_szFPS);
+
+		m_iFPS = 0;
+		m_dwTime = GetTickCount();
+	}
+}
+	
 void CMaingame::Release(void)
 {
 	delete m_pPlayer;
