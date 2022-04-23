@@ -75,31 +75,10 @@ void CMaingame::Late_Update(void)
 
 	for (int i = OBJ_PLAYER; i < OBJ_END; ++i)
 	{
-		for (int j = i + 1; j < OBJ_END; ++j)
-		{
-			if ((i == OBJ_PLAYER) && (j == OBJ_BULLET))
-			{
-				continue;
-			}
-
-			if (i != j)
-			{
-				CCollision::Collision_Rect(m_Objlist[i], m_Objlist[j]);
-			}
-		}
-
 		for (auto iter = m_Objlist[i].begin(); iter != m_Objlist[i].end();)
 		{
-			if ((*iter)->Get_HP())
-			{
-				(*iter)->Late_Update();
-				++iter;
-			}
-			else
-			{
-				delete *iter;
-				iter = m_Objlist[i].erase(iter);
-			}
+			(*iter)->Late_Update();
+			++iter;
 		}
 	}
 
