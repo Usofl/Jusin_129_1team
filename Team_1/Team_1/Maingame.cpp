@@ -144,7 +144,7 @@ void CMaingame::Update(void)
 						for (auto iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
 						{
 							static_cast<CMonster*>(*iter)->Set_Speed(0.f); // 캐릭터가 죽었을때 몬스터의 속도를 0으로.
-						}
+						}                                                  // 부활했을때 같은 코드를 부활한 시점에서 몬스터에게 속도 부여해주기.
 						return;
 					}
 				}
