@@ -93,7 +93,7 @@ void CMaingame::Update(void)
 void CMaingame::Late_Update(void)
 {
 	CCollision::Collision_Circle(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_BULLET]);
-	CCollision::Collision_Circle(m_Objlist[OBJ_PLAYER], m_Objlist[OBJ_ITEM]);
+	CCollision::Collision_Item(m_Objlist[OBJ_ITEM], m_Objlist[OBJ_PLAYER]);
 	CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]);
 
 	for (auto& list_iter : m_Objlist)
