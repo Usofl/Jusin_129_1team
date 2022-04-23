@@ -40,6 +40,11 @@ void CMaingame::Update(void)
 {
 	//m_pPlayer->Update();
 
+	if (GetAsyncKeyState('R'))
+	{
+		m_iLife = 999;
+	}
+
 	srand(unsigned(time(NULL)));
 
 
@@ -126,17 +131,14 @@ void CMaingame::Update(void)
 				{
 					if (0 < m_iLife)
 					{
-						if (GetAsyncKeyState('R')) 
-						{
-							--m_iLife;
-							m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
-							m_Objlist[OBJ_PLAYER].front()->Initialize();
-							static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
-						}
+						--m_iLife;
+						m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
+						m_Objlist[OBJ_PLAYER].front()->Initialize();
+						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
 					}
 					else
 					{
-
+						PostQuitMessage(0);
 					}
 				}
 			}
