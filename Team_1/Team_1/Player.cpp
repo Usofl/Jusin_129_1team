@@ -2,6 +2,7 @@
 #include "Player.h"
 
 CPlayer::CPlayer()
+	: m_GetItem(0)
 {
 }
 
@@ -24,8 +25,8 @@ void CPlayer::Initialize(void)
 
 	m_iHP = 100;
 
-	m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf((m_fAngle * PI) / 180.f));
-	m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf((m_fAngle * PI) / 180.f));
+	m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf(m_fAngle * DEGREE));
+	m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf(m_fAngle * DEGREE));
 }
 
 void CPlayer::Update(void)
@@ -37,8 +38,8 @@ void CPlayer::Update(void)
 
 void CPlayer::Late_Update(void)
 {
-	 m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf((m_fAngle * PI) / 180.f));
-	m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf((m_fAngle * PI) / 180.f));
+	m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf(m_fAngle * DEGREE));
+	m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf(m_fAngle * DEGREE));
 }
 
 void CPlayer::Render(HDC _hDC)
@@ -47,10 +48,35 @@ void CPlayer::Render(HDC _hDC)
 
 	MoveToEx(_hDC, (int)m_tInfo.fX, (int)m_tInfo.fY, nullptr);
 	LineTo(_hDC, (int)m_tPoint.x, (int)m_tPoint.y);
+
+	for (auto& iter : m_Item_List)
+	{
+		iter->Render(_hDC);
+	}
 }
 
 void CPlayer::Release(void)
 {
+	for (auto iter = m_Item_List.begin(); iter != m_Item_List.end();)
+	{
+		if (*iter != nullptr)
+		{
+			delete *iter;
+			*iter = nullptr;
+		}
+
+		iter = m_Item_List.erase(iter);
+	}
+}
+
+void CPlayer::Pick_Up_Item(CObj * _Item)
+{
+	CItem* item = new CItem(*static_cast<CItem*>(_Item));
+	item->Pick_Up_Set(m_GetItem);
+	
+	m_GetItem += 25;
+
+	m_Item_List.push_back(item);
 }
 
 void CPlayer::Key_Input(void)

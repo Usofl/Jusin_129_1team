@@ -27,9 +27,7 @@ public:
 		CObj*    pObj = new T;
 		pObj->Initialize();
 
-		POINT p;
-		p.x = (long)fA;
-		p.y = (long)fB;
+		POINT p{ (long)fA, (long)fB };
 		pObj->Make_POINT(p);
 
 		return pObj;
@@ -51,9 +49,7 @@ public:
 		CObj*    pObj = new T;
 		pObj->Initialize();
 
-		POINT p;
-		p.x = (long)fA;
-		p.y = (long)fB;
+		POINT p{ (long)fA, (long)fB };
 		pObj->Make_POINT(p);
 		pObj->Set_Angle(fAngle);
 
