@@ -19,5 +19,6 @@ public:
 private:
 	float m_fBulletAngle;
 	DWORD m_dwTime;
+
 };
 
