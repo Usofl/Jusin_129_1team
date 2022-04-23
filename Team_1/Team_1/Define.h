@@ -6,10 +6,12 @@
 #define OUTGAMESIZE 25
 #define GAMESIZE 50
 
-#define PLAYER_START_X 100.f
+#define PLAYER_START_X 200.f
 #define PLAYER_START_Y 300.f
 #define PLAYERCX 50.f
 #define PLAYERCY 50.f
+
+#define SHILED_INTERVAL 30.f
 
 #define PURE =0
 

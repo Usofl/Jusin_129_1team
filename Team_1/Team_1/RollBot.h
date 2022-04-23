@@ -1,17 +1,16 @@
 #pragma once
 #include "Obj.h"
 #include "Bullet.h"
-#include "Item.h"
 #include "AbstractFactory.h"
 
-class CPlayer :
+class CRollBot :
 	public CObj
 {
 public:
-	CPlayer();
-	virtual ~CPlayer();
+	CRollBot();
+	~CRollBot();
 
-public:
+	// CObj을(를) 통해 상속됨
 	virtual void Initialize(void) override;
 	virtual void Update(void) override;
 	virtual void Late_Update(void) override;
@@ -19,17 +18,12 @@ public:
 	virtual void Release(void) override;
 
 	inline void Set_BulletList(std::list<CObj*>* _pBulletList) { m_pBulletList = _pBulletList; }
-
-	void Pick_Up_Item(CObj* _Item);
-
-public:
-	void Key_Input(void);
-	void Collision_Wall(void); // 벽에 충돌시 이벤트 변경하려면 여기로
+	inline void Set_Player(CObj*& _player) { m_pPlayer = _player; }
 
 private:
-	std::list<CObj*> m_Item_List;
-	int m_GetItem;
+	static DWORD m_lTime;
 
-	float m_fBSize; // 총신 길이
+	CObj* m_pPlayer;
 	std::list<CObj*>* m_pBulletList;
 };
+

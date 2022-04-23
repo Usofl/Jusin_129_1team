@@ -3,6 +3,7 @@
 
 CPlayer::CPlayer()
 	: m_GetItem(0)
+	, m_pBulletList(nullptr)
 {
 }
 
@@ -23,7 +24,7 @@ void CPlayer::Initialize(void)
 
 	m_fBSize = 50.f;
 
-	m_iHP = 100;
+	m_iHP = 1;
 
 	m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf(m_fAngle * DEGREE));
 	m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf(m_fAngle * DEGREE));
@@ -40,6 +41,8 @@ void CPlayer::Late_Update(void)
 {
 	m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf(m_fAngle * DEGREE));
 	m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf(m_fAngle * DEGREE));
+
+	Collision_Wall();
 }
 
 void CPlayer::Render(HDC _hDC)
@@ -81,12 +84,16 @@ void CPlayer::Pick_Up_Item(CObj * _Item)
 
 void CPlayer::Key_Input(void)
 {
-	if (GetAsyncKeyState(VK_LEFT))
+	RECT rc{};
+	RECT LeftWall{ GAMESIZE - 10, GAMESIZE, GAMESIZE, WINCY - GAMESIZE };
+	RECT RightWall{ WINCX - GAMESIZE, GAMESIZE, WINCX - GAMESIZE + 10, WINCY - GAMESIZE };
+
+	if (GetAsyncKeyState(VK_LEFT) && (!IntersectRect(&rc, &LeftWall, &m_tRC)))
 	{
 		if (GetAsyncKeyState(VK_UP))
 		{
-			m_tInfo.fX -= m_fSpeed / nLog;
-			m_tInfo.fY -= m_fSpeed / nLog;
+				m_tInfo.fX -= m_fSpeed / nLog;
+				m_tInfo.fY -= m_fSpeed / nLog;
 		}
 		else if (GetAsyncKeyState(VK_DOWN))
 		{
@@ -98,7 +105,7 @@ void CPlayer::Key_Input(void)
 			m_tInfo.fX -= m_fSpeed;
 		}
 	}
-	else if (GetAsyncKeyState(VK_RIGHT))
+	else if (GetAsyncKeyState(VK_RIGHT) && (!IntersectRect(&rc, &RightWall, &m_tRC)))
 	{
 		if (GetAsyncKeyState(VK_UP))
 		{
@@ -159,5 +166,27 @@ void CPlayer::Key_Input(void)
 		m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle -2));
 		m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle + 2));
 		m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle + 6));
+	}
+}
+
+void CPlayer::Collision_Wall(void)
+{
+	RECT rc{};
+	RECT TopWall{ GAMESIZE, GAMESIZE - 10, WINCX - GAMESIZE, GAMESIZE };
+	RECT BottomWall{ GAMESIZE, WINCY - GAMESIZE, WINCX - GAMESIZE, WINCY - GAMESIZE + 10 };
+
+	if (IntersectRect(&rc, &TopWall, &m_tRC))
+	{
+		m_tInfo.fY = (WINCY - GAMESIZE) - (PLAYERCY / 2.f);
+
+		m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf(m_fAngle * DEGREE));
+		m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf(m_fAngle * DEGREE));
+	}
+	if (IntersectRect(&rc, &BottomWall, &m_tRC))
+	{
+		m_tInfo.fY = (GAMESIZE)+(PLAYERCY / 2.f);
+
+		m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf(m_fAngle * DEGREE));
+		m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf(m_fAngle * DEGREE));
 	}
 }

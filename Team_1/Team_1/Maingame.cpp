@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Maingame.h"
-#include "Collision.h"
 
 CMaingame::CMaingame()
 	: m_dwTime(GetTickCount())
@@ -23,6 +22,7 @@ void CMaingame::Initialize(void)
 	m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
 	m_Objlist[OBJ_PLAYER].front()->Initialize();
 	static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+	m_iLife = 3;
 
 	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
 		m_Objlist[OBJ_PLAYER].front()->Get_fX(), m_Objlist[OBJ_PLAYER].front()->Get_fY()));
@@ -30,21 +30,29 @@ void CMaingame::Initialize(void)
 	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_SHIELD,
 		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 100.f)));
 
-	m_tMonsterPoint.push_back({ WINCX - GAMESIZE - 15, 65 });
-	m_tMonsterPoint.push_back({ 735, 95 });
-	m_tMonsterPoint.push_back({ 735, 505 });
-	m_tMonsterPoint.push_back({ 735, 535 });
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ROLLBOT,
+		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 200.f)));
+
+	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 1.6 * Monster_C), (LONG)(GAMESIZE + 0.5 * Monster_C + 1) });
+	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 3.6 * Monster_C), (LONG)(GAMESIZE + 3.5 * Monster_C) });
+	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 3.6 * Monster_C), (LONG)(WINCY - GAMESIZE - 3.5 * Monster_C) });
+	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 1.6 * Monster_C), (LONG)(WINCY - GAMESIZE - 0.5 * Monster_C - 1) });
 }
 
 void CMaingame::Update(void)
 {
+	//m_pPlayer->Update();
+
+	srand(unsigned(time(NULL)));
+
 	if (m_Objlist[OBJ_MONSTER].size() < 4)
 	{
 		if (m_dwTime + 1000 < GetTickCount())
 		{
+			int MON_TYPE = rand() % 2 + 1;
 			for (int i = 0; i < 4; ++i)
 			{
-				m_Objlist[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front()));
+				m_Objlist[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front(), MON_TYPE));
 			}
 		}
 	}
@@ -55,6 +63,21 @@ void CMaingame::Update(void)
 		{
 			if (0 >= (*iter)->Get_HP())
 			{
+				if (i == OBJ_PLAYER)
+				{
+					for (auto iter = m_Objlist[OBJ_SHIELD].begin(); iter != m_Objlist[OBJ_SHIELD].end();)
+					{
+						delete *iter;
+						iter = m_Objlist[OBJ_SHIELD].erase(iter);
+					}
+
+					for (auto iter = m_Objlist[ITEM_ROLLBOT].begin(); iter != m_Objlist[ITEM_ROLLBOT].end();)
+					{
+						delete *iter;
+						iter = m_Objlist[ITEM_ROLLBOT].erase(iter);
+					}
+				}
+
 				if (i == OBJ_MONSTER) // 삭제되는 OBJ가 몬스터일 경우 score 증가
 				{
 					m_iScore += 10;
@@ -62,11 +85,53 @@ void CMaingame::Update(void)
 
 				if (i == OBJ_ITEM)
 				{
-					static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Item(*iter);
+					if(ITEM_BULLET == static_cast<CItem*>(*iter)->Get_Item_ID())
+					{
+						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Item(*iter);
+					}
+					else if (ITEM_SHIELD == static_cast<CItem*>(*iter)->Get_Item_ID())
+					{
+						CObj* shield = CAbstractFactory<CShield>::Create();
+						shield->Initialize();
+						if (!m_Objlist[OBJ_SHIELD].empty())
+						{
+							shield->Set_Angle(m_Objlist[OBJ_SHIELD].back()->Get_Angle() + SHILED_INTERVAL);
+						}
+						static_cast<CShield*>(shield)->Set_Player(m_Objlist[OBJ_PLAYER].front());
+
+						m_Objlist[OBJ_SHIELD].push_back(shield);
+					}
+					else if (ITEM_ROLLBOT == static_cast<CItem*>(*iter)->Get_Item_ID())
+					{
+						CObj* rollBot = CAbstractFactory<CRollBot>::Create();
+						if (!m_Objlist[OBJ_ROLLBOT].empty())
+						{
+							rollBot->Set_Angle(m_Objlist[OBJ_ROLLBOT].back()->Get_Angle() + SHILED_INTERVAL);
+						}
+						static_cast<CRollBot*>(rollBot)->Set_Player(m_Objlist[OBJ_PLAYER].front());
+						static_cast<CRollBot*>(rollBot)->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+
+						m_Objlist[OBJ_ROLLBOT].push_back(rollBot);
+					}
 				}
 
 				Safe_Delete<CObj*>(*iter);
 				iter = m_Objlist[i].erase(iter);
+
+				if (m_Objlist[OBJ_PLAYER].empty())
+				{
+					if (0 < m_iLife)
+					{
+						--m_iLife;
+						m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
+						m_Objlist[OBJ_PLAYER].front()->Initialize();
+						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+					}
+					else
+					{
+						return;
+					}
+				}
 			}
 
 			else
@@ -81,7 +146,9 @@ void CMaingame::Update(void)
 void CMaingame::Late_Update(void)
 {
 	CCollision::Collision_Circle(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_BULLET]);
-	CCollision::Collision_Circle(m_Objlist[OBJ_PLAYER], m_Objlist[OBJ_ITEM]);
+	CCollision::Collision_Circle(m_Objlist[OBJ_SHIELD], m_Objlist[OBJ_MONSTER]);
+	CCollision::Collision_Item(m_Objlist[OBJ_ITEM], m_Objlist[OBJ_PLAYER]);
+	CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]);
 
 	for (auto& list_iter : m_Objlist)
 	{
@@ -98,6 +165,8 @@ void CMaingame::Render(void)
 	Rectangle(m_hDC, GAMESIZE, GAMESIZE, WINCX - GAMESIZE, WINCY - GAMESIZE);
 	swprintf_s(m_szScore, L"Score : %d", m_iScore);
 	TextOutW(m_hDC, GAMESIZE, OUTGAMESIZE, m_szScore, lstrlen(m_szScore));
+	swprintf_s(m_szLife, L"Life : %d", m_iLife);
+	TextOutW(m_hDC, GAMESIZE + 100, OUTGAMESIZE, m_szLife, lstrlen(m_szLife));
 
 	for (auto& list_iter : m_Objlist)
 	{

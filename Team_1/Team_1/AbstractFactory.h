@@ -33,10 +33,11 @@ public:
 		return pObj;
 	}
 
-	static CObj*    Create(POINT& _tPoint, CObj* _player)
+	static CObj*    Create(POINT& _tPoint, CObj* _player, int TYPE) // type Ãß°¡
 	{
 		CObj*    pObj = new T(_player);
 		pObj->Initialize();
+		dynamic_cast<CMonster*>(pObj)->Set_Mon_Type((MONSTERTYPE)TYPE);
 
 		pObj->Make_POINT(_tPoint);
 

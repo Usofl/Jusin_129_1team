@@ -5,6 +5,8 @@
 #include "Player.h"
 #include "Monster.h"
 #include "Bullet.h"
+#include "Shield.h"
+#include "RollBot.h"
 #include "AbstractFactory.h"
 #include "ItemFactory.h"
 #include "Collision.h"
@@ -32,10 +34,10 @@ private:
 	TCHAR       m_szScore[64];
 	int         m_iScore;
 
+	TCHAR m_szLife[64];
+	int m_iLife; // 플레이어 목숨
+
 	CObj* m_pPlayer;
 	std::list<CObj*> m_Objlist[OBJ_END];
 	std::vector<POINT>  m_tMonsterPoint;
-
-	std::list<CObj*> m_Monsterlist;
-	std::list<CObj*> m_BulletList; // 총알 리스트
 };
