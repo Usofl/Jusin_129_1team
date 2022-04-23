@@ -66,7 +66,7 @@ void CMaingame::Update(void)
 				}
 
 				Safe_Delete<CObj*>(*iter);
-				iter = list_iter.erase(iter);
+				iter = m_Objlist[i].erase(iter);
 
 				if (m_Objlist[OBJ_PLAYER].empty())
 				{
