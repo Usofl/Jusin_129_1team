@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Maingame.h"
+#include "Collision.h"
 
 CMaingame::CMaingame()
 	: m_dwTime(GetTickCount())
@@ -46,9 +47,19 @@ void CMaingame::Update(void)
 
 	for (auto& list_iter : m_Objlist)
 	{
-		for (auto& iter : list_iter)
+		for (auto iter = list_iter.begin(); iter != list_iter.end();)
 		{
-			iter->Update();
+			if (0 >= (*iter)->Get_HP())
+			{
+				Safe_Delete<CObj*>(*iter);
+				iter = list_iter.erase(iter);
+			}
+
+			else
+			{
+				(*iter)->Update();
+				++iter;
+			}
 		}
 	}
 
@@ -73,12 +84,14 @@ void CMaingame::Late_Update(void)
 
 	//m_pPlayer->Late_Update();
 
-	for (int i = OBJ_PLAYER; i < OBJ_END; ++i)
+	//CCollision::Collision_Rect(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_BULLET]);
+	CCollision::Collision_Circle(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_BULLET]);
+
+	for (auto& list_iter : m_Objlist)
 	{
-		for (auto iter = m_Objlist[i].begin(); iter != m_Objlist[i].end();)
+		for (auto& iter : list_iter)
 		{
-			(*iter)->Late_Update();
-			++iter;
+			iter->Late_Update();
 		}
 	}
 
