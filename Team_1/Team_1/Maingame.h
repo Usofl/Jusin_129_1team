@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Monster.h"
 #include "Bullet.h"
+#include "Shield.h"
 #include "AbstractFactory.h"
 #include "ItemFactory.h"
 #include "Collision.h"
@@ -35,7 +36,4 @@ private:
 	CObj* m_pPlayer;
 	std::list<CObj*> m_Objlist[OBJ_END];
 	std::vector<POINT>  m_tMonsterPoint;
-
-	std::list<CObj*> m_Monsterlist;
-	std::list<CObj*> m_BulletList; // ÃÑ¾Ë ¸®½ºÆ®
 };

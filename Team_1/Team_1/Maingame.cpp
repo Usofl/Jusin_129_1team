@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Maingame.h"
-#include "Collision.h"
 
 CMaingame::CMaingame()
 	: m_dwTime(GetTickCount())
@@ -60,6 +59,15 @@ void CMaingame::Update(void)
 		{
 			if (0 >= (*iter)->Get_HP())
 			{
+				if (i == OBJ_PLAYER)
+				{
+					for (auto iter = m_Objlist[OBJ_SHIELD].begin(); iter != m_Objlist[OBJ_SHIELD].end();)
+					{
+						delete *iter;
+						iter = m_Objlist[OBJ_SHIELD].erase(iter);
+					}
+				}
+
 				if (i == OBJ_MONSTER) // 삭제되는 OBJ가 몬스터일 경우 score 증가
 				{
 					m_iScore += 10;
@@ -67,7 +75,22 @@ void CMaingame::Update(void)
 
 				if (i == OBJ_ITEM)
 				{
-					static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Item(*iter);
+					if(ITEM_BULLET == static_cast<CItem*>(*iter)->Get_Item_ID())
+					{
+						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Item(*iter);
+					}
+					else if (ITEM_SHIELD == static_cast<CItem*>(*iter)->Get_Item_ID())
+					{
+						CObj* shield = CAbstractFactory<CShield>::Create();
+						shield->Initialize();
+						if (!m_Objlist[OBJ_SHIELD].empty())
+						{
+							shield->Set_Angle(m_Objlist[OBJ_SHIELD].back()->Get_Angle() + SHILED_INTERVAL);
+						}
+						static_cast<CShield*>(shield)->Set_Player(m_Objlist[OBJ_PLAYER].front());
+
+						m_Objlist[OBJ_SHIELD].push_back(shield);
+					}
 				}
 
 				Safe_Delete<CObj*>(*iter);
@@ -93,6 +116,7 @@ void CMaingame::Update(void)
 void CMaingame::Late_Update(void)
 {
 	CCollision::Collision_Circle(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_BULLET]);
+	CCollision::Collision_Circle(m_Objlist[OBJ_SHIELD], m_Objlist[OBJ_MONSTER]);
 	CCollision::Collision_Item(m_Objlist[OBJ_ITEM], m_Objlist[OBJ_PLAYER]);
 	CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]);
 
