@@ -27,19 +27,18 @@ void CRollBot::Update(void)
 	m_tInfo.fX = m_pPlayer->Get_fX() + (75.f * cos(m_fAngle * DEGREE));
 	m_tInfo.fY = m_pPlayer->Get_fY() - (75.f * sin(m_fAngle * DEGREE));
 
-	if (m_lTime + 1000 < GetTickCount())
-	{
-		m_lTime = GetTickCount();
-
-		m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, m_fAngle));
-		--m_iHP;
-	}
-
 	Update_Rect();
 }
 
 void CRollBot::Late_Update(void)
 {
+	if (m_lTime + 1000 < GetTickCount())
+	{
+		m_lTime = GetTickCount();
+
+		m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, 0.f));
+		--m_iHP;
+	}
 }
 
 void CRollBot::Render(HDC _hDC)
