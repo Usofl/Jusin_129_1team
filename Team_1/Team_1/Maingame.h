@@ -24,6 +24,10 @@ public:
 	void Render(void);
 	void Release(void);
 
+public:
+	void Get_MONPOINT(void);
+
+
 private:
 	HDC		m_hDC;
 
