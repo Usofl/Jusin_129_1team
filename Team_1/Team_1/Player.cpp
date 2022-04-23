@@ -22,7 +22,7 @@ void CPlayer::Initialize(void)
 
 	m_fBSize = 50.f;
 
-	m_iHP = 100;
+	m_iHP = 1;
 
 	m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf((m_fAngle * PI) / 180.f));
 	m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf((m_fAngle * PI) / 180.f));
@@ -39,6 +39,23 @@ void CPlayer::Late_Update(void)
 {
 	 m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf((m_fAngle * PI) / 180.f));
 	m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf((m_fAngle * PI) / 180.f));
+
+	if (GAMESIZE >= m_tRC.left)
+	{
+		m_tInfo.fX += m_fSpeed;
+	}
+	if (WINCX - GAMESIZE <= m_tRC.right)
+	{
+		m_tInfo.fX -= m_fSpeed;
+	}
+	if (GAMESIZE >= m_tRC.top)
+	{
+		m_tInfo.fY += m_fSpeed;
+	}
+	if (WINCY - GAMESIZE <= m_tRC.bottom)
+	{
+		m_tInfo.fY -= m_fSpeed;
+	}
 }
 
 void CPlayer::Render(HDC _hDC)
@@ -59,8 +76,8 @@ void CPlayer::Key_Input(void)
 	{
 		if (GetAsyncKeyState(VK_UP))
 		{
-			m_tInfo.fX -= m_fSpeed / nLog;
-			m_tInfo.fY -= m_fSpeed / nLog;
+				m_tInfo.fX -= m_fSpeed / nLog;
+				m_tInfo.fY -= m_fSpeed / nLog;
 		}
 		else if (GetAsyncKeyState(VK_DOWN))
 		{
