@@ -4,7 +4,9 @@
 #include "Obj.h"
 #include "Player.h"
 #include "Monster.h"
+#include "Bullet.h"
 #include "AbstractFactory.h"
+#include "Collision.h"
 
 class CMaingame
 {
@@ -19,7 +21,6 @@ public:
 	void Render(void);
 	void Release(void);
 
-
 private:
 	HDC		m_hDC;
 
@@ -27,10 +28,13 @@ private:
 	int			m_iFPS;
 	DWORD		m_dwTime;
 
-	TCHAR		m_szScore[64];
-	int			m_iScore;
+	TCHAR       m_szScore[64];
+	int         m_iScore;
 
 	CObj* m_pPlayer;
-	std::list<CObj*> m_Monsterlist;
-};
+	std::list<CObj*> m_Objlist[OBJ_END];
+	std::vector<POINT>  m_tMonsterPoint;
 
+	std::list<CObj*> m_Monsterlist;
+	std::list<CObj*> m_BulletList; // ÃÑ¾Ë ¸®½ºÆ®
+};

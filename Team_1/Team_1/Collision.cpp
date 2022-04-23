@@ -10,3 +10,4 @@ CCollision::CCollision()
 CCollision::~CCollision()
 {
 }
+
