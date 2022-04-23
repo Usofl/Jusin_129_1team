@@ -17,8 +17,9 @@ public:
 	virtual void Render(HDC _hDC) override;
 	virtual void Release(void) override;
 
+public:
 	void Set_BulletList(std::list<CObj*>* _pBulletList) { m_pBulletList = _pBulletList; }
-
+	
 public:
 	void Key_Input(void);
 

@@ -6,6 +6,4 @@ class CCollision
 public:
 	CCollision();
 	~CCollision();
-
-public:
 };
