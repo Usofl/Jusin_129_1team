@@ -42,14 +42,18 @@ void CMaingame::Update(void)
 
 	srand(unsigned(time(NULL)));
 
-	if (m_Objlist[OBJ_MONSTER].size() < 4)
+
+	if (!m_Objlist[OBJ_PLAYER].empty())
 	{
-		if (m_dwTime + 1000 < GetTickCount())
+		if (m_Objlist[OBJ_MONSTER].size() < 4)
 		{
-			int MON_TYPE = rand() % 2 + 1;
-			for (int i = 0; i < 4; ++i)
+			if (m_dwTime + 1000 < GetTickCount())
 			{
-				m_Objlist[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front(), MON_TYPE));
+				int MON_TYPE = rand() % 2 + 1;
+				for (int i = 0; i < 4; ++i)
+				{
+					m_Objlist[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front(), MON_TYPE));
+				}
 			}
 		}
 	}
@@ -114,6 +118,7 @@ void CMaingame::Update(void)
 						m_Objlist[OBJ_ROLLBOT].push_back(rollBot);
 					}
 				}
+
 				Safe_Delete<CObj*>(*iter);
 				iter = m_Objlist[i].erase(iter);
 
