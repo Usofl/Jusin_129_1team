@@ -72,4 +72,6 @@ void CMaingame::Render(void)
 
 void CMaingame::Release(void)
 {
+	delete m_pPlayer;
+	m_pPlayer = nullptr;
 }
