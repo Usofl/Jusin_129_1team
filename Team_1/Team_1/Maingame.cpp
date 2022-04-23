@@ -23,23 +23,26 @@ void CMaingame::Initialize(void)
 	m_Objlist[OBJ_PLAYER].front()->Initialize();
 	static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
 
-	m_tMonsterPoint.push_back({ WINCX - GAMESIZE - 15, 65 });
-	m_tMonsterPoint.push_back({ 735, 95 });
-	m_tMonsterPoint.push_back({ 735, 505 });
-	m_tMonsterPoint.push_back({ 735, 535 });
+	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 1.6 * Monster_C), (LONG)(GAMESIZE + 0.5 * Monster_C + 1)});
+	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 3.6 * Monster_C), (LONG)(GAMESIZE + 3.5 * Monster_C)});
+	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 3.6 * Monster_C), (LONG)(WINCY - GAMESIZE - 3.5 * Monster_C)});
+	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 1.6 * Monster_C), (LONG)(WINCY - GAMESIZE - 0.5 * Monster_C - 1)});
 }
 
 void CMaingame::Update(void)
 {
 	//m_pPlayer->Update();
 
+	srand(unsigned(time(NULL)));
+
 	if (m_Objlist[OBJ_MONSTER].size() < 4)
 	{
 		if (m_dwTime + 1000 < GetTickCount())
 		{
+			int MON_TYPE = rand() % 2 + 1;
 			for (int i = 0; i < 4; ++i)
 			{
-				m_Objlist[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front()));
+				m_Objlist[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front(), MON_TYPE));
 			}
 		}
 	}
