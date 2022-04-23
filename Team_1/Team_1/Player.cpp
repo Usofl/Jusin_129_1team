@@ -37,7 +37,7 @@ void CPlayer::Update(void)
 
 void CPlayer::Late_Update(void)
 {
-	m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf((m_fAngle * PI) / 180.f));
+	 m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf((m_fAngle * PI) / 180.f));
 	m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf((m_fAngle * PI) / 180.f));
 }
 

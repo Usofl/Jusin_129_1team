@@ -144,7 +144,7 @@ void CMaingame::Render(void)
 	//	(*iter)->Render(m_hDC);
 	//}
 }
-
+	
 void CMaingame::Release(void)
 {
 	delete m_pPlayer;
