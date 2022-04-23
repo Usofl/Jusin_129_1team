@@ -43,6 +43,9 @@
     <Filter Include="98.Design\01.Collision">
       <UniqueIdentifier>{2960f580-2ce2-4ee6-94a9-3c8311fb2a4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Obj\04.Shield">
+      <UniqueIdentifier>{e06872db-0b02-44e4-b087-2a855a10623e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -102,6 +105,9 @@
     <ClInclude Include="ItemFactory.h">
       <Filter>98.Design\00.AbstractFactory</Filter>
     </ClInclude>
+    <ClInclude Include="Shield.h">
+      <Filter>01.Obj\04.Shield</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -130,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>98.Design\01.Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Shield.cpp">
+      <Filter>01.Obj\04.Shield</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
