@@ -42,11 +42,11 @@ void CMaingame::Update(void)
 
 	srand(unsigned(time(NULL)));
 
-	if (m_Objlist[OBJ_MONSTER].size() < 3)
+	if (m_Objlist[OBJ_MONSTER].size() < 2)
 	{
 		if (m_dwTime + 1000 < GetTickCount())
 		{
-			int MON_TYPE = rand() % 2 + 1;
+			int MON_TYPE = rand() % 3 + 1;
 			for (int i = 0; i < 4; ++i)
 			{
 				if (nullptr != m_Objlist[OBJ_PLAYER].front())
@@ -56,14 +56,6 @@ void CMaingame::Update(void)
 			}
 		}
 	}
-
-	//if (nullptr == m_Objlist[OBJ_PLAYER].front())
-	//{
-	//	for (auto iter : m_Objlist[OBJ_MONSTER])
-	//	{
-	//		static_cast<CMonster*>(iter)->Set_Speed(0.f); // ∏µÁ ∏ÛΩ∫≈Õ ∏ÿ√„.xxxxxxxxxxxxx
-	//	}
-	//}
 
 	for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
 		static_cast<CMonster*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);

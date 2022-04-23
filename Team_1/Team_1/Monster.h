@@ -19,7 +19,7 @@ public:
 	virtual void Release(void) override;
 
 public:
-	void Set_Mon_Type(MONSTERTYPE _type) { m_MonType = _type; }
+	void Set_Mon_Type(MONSTERTYPE _type) { m_MonType = _type; }	
 
 	void Move_Monster(void);
 	float Find_MonPlr_CosAngle(void);

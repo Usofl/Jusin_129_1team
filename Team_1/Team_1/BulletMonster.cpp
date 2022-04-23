@@ -20,8 +20,25 @@ void CBulletMonster::Initialize(void)
 
 void CBulletMonster::Update(void)
 {
-	m_tInfo.fX -= m_fSpeed * cosf((m_fAngle * PI) / 180.f);
-	m_tInfo.fY += m_fSpeed * sinf((m_fAngle * PI) / 180.f);
+	if (m_TYPE == MONSTERTYPE_B)
+	{
+		m_tInfo.fX -= m_fSpeed * cosf((m_fAngle * PI) / 180.f);
+		m_tInfo.fY += m_fSpeed * sinf((m_fAngle * PI) / 180.f);
+	}
+	else if (m_TYPE == MONSTERTYPE_C)
+	{
+		if (0.5 * WINCY > m_Ypos)
+		{
+			m_tInfo.fX -= 0.1*m_fSpeed * 2.5;
+			m_tInfo.fY += 0.1*m_fSpeed * 0.1*m_fSpeed * 3;
+		}
+		else if (0.5 * WINCY < m_Ypos)
+		{
+			m_tInfo.fX -= 0.1*m_fSpeed * 2.5;
+			m_tInfo.fY -= 0.1*m_fSpeed * 0.1*m_fSpeed * 3;
+		}
+	
+	}
 
 	Update_Rect();
 }
