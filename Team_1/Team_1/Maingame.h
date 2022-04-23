@@ -22,6 +22,10 @@ public:
 	void Render(void);
 	void Release(void);
 
+public:
+	void Get_MONPOINT(void);
+
+
 private:
 	HDC		m_hDC;
 
@@ -35,7 +39,4 @@ private:
 	CObj* m_pPlayer;
 	std::list<CObj*> m_Objlist[OBJ_END];
 	std::vector<POINT>  m_tMonsterPoint;
-
-	std::list<CObj*> m_Monsterlist;
-	std::list<CObj*> m_BulletList; // ÃÑ¾Ë ¸®½ºÆ®
 };
