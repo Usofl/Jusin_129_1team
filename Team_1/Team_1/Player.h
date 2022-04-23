@@ -21,6 +21,7 @@ public:
 
 public:
 	void Key_Input(void);
+	void Collision_Wall(void);
 
 private:
 	float m_fBSize; // √—Ω≈ ±Ê¿Ã

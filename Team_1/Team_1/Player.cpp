@@ -40,22 +40,7 @@ void CPlayer::Late_Update(void)
 	m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf((m_fAngle * PI) / 180.f));
 	m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf((m_fAngle * PI) / 180.f));
 
-	if (GAMESIZE >= m_tRC.left)
-	{
-		m_tInfo.fX += m_fSpeed;
-	}
-	if (WINCX - GAMESIZE <= m_tRC.right)
-	{
-		m_tInfo.fX -= m_fSpeed;
-	}
-	if (GAMESIZE >= m_tRC.top)
-	{
-		m_tInfo.fY += m_fSpeed;
-	}
-	if (WINCY - GAMESIZE <= m_tRC.bottom)
-	{
-		m_tInfo.fY -= m_fSpeed;
-	}
+	Collision_Wall();
 }
 
 void CPlayer::Render(HDC _hDC)
@@ -142,5 +127,31 @@ void CPlayer::Key_Input(void)
 	if (GetAsyncKeyState('D'))
 	{
 		m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
+	}
+}
+
+void CPlayer::Collision_Wall(void)
+{
+	RECT rc{};
+	RECT LeftWall{ GAMESIZE - 10, GAMESIZE, GAMESIZE, WINCY - GAMESIZE };
+	RECT RightWall{ WINCX - GAMESIZE, GAMESIZE, WINCX - GAMESIZE + 10, WINCY - GAMESIZE };
+	RECT TopWall{ GAMESIZE, GAMESIZE - 10, WINCX - GAMESIZE, GAMESIZE };
+	RECT BottomWall{ GAMESIZE, WINCY - GAMESIZE, WINCX - GAMESIZE, WINCY - GAMESIZE + 10 };
+
+	if (IntersectRect(&rc, &LeftWall, &m_tRC))
+	{
+		--m_iHP;
+	}
+	if (IntersectRect(&rc, &RightWall, &m_tRC))
+	{
+		--m_iHP;
+	}
+	if (IntersectRect(&rc, &TopWall, &m_tRC))
+	{
+		--m_iHP;
+	}
+	if (IntersectRect(&rc, &BottomWall, &m_tRC))
+	{
+		--m_iHP;
 	}
 }
