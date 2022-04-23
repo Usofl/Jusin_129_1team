@@ -46,6 +46,9 @@
     <Filter Include="01.Obj\04.Shield">
       <UniqueIdentifier>{e06872db-0b02-44e4-b087-2a855a10623e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Obj\05.RollBot">
+      <UniqueIdentifier>{64115fe9-9c2b-4bef-94a8-eef1ab80d95c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -108,6 +111,9 @@
     <ClInclude Include="Shield.h">
       <Filter>01.Obj\04.Shield</Filter>
     </ClInclude>
+    <ClInclude Include="RollBot.h">
+      <Filter>01.Obj\05.RollBot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -139,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="Shield.cpp">
       <Filter>01.Obj\04.Shield</Filter>
+    </ClCompile>
+    <ClCompile Include="RollBot.cpp">
+      <Filter>01.Obj\05.RollBot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
