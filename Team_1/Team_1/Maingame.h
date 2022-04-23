@@ -33,6 +33,9 @@ private:
 	TCHAR       m_szScore[64];
 	int         m_iScore;
 
+	TCHAR m_szLife[64];
+	int m_iLife; // 플레이어 목숨
+
 	CObj* m_pPlayer;
 	std::list<CObj*> m_Objlist[OBJ_END];
 	std::vector<POINT>  m_tMonsterPoint;

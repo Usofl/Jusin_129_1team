@@ -22,6 +22,7 @@ void CMaingame::Initialize(void)
 	m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
 	m_Objlist[OBJ_PLAYER].front()->Initialize();
 	static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+	m_iLife = 3;
 
 	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
 		m_Objlist[OBJ_PLAYER].front()->Get_fX(), m_Objlist[OBJ_PLAYER].front()->Get_fY()));
@@ -98,9 +99,17 @@ void CMaingame::Update(void)
 
 				if (m_Objlist[OBJ_PLAYER].empty())
 				{
-					m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
-					m_Objlist[OBJ_PLAYER].front()->Initialize();
-					static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+					if (0 < m_iLife)
+					{
+						--m_iLife;
+						m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
+						m_Objlist[OBJ_PLAYER].front()->Initialize();
+						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+					}
+					else
+					{
+						return;
+					}
 				}
 			}
 
@@ -135,6 +144,8 @@ void CMaingame::Render(void)
 	Rectangle(m_hDC, GAMESIZE, GAMESIZE, WINCX - GAMESIZE, WINCY - GAMESIZE);
 	swprintf_s(m_szScore, L"Score : %d", m_iScore);
 	TextOutW(m_hDC, GAMESIZE, OUTGAMESIZE, m_szScore, lstrlen(m_szScore));
+	swprintf_s(m_szLife, L"Life : %d", m_iLife);
+	TextOutW(m_hDC, GAMESIZE + 100, OUTGAMESIZE, m_szLife, lstrlen(m_szLife));
 
 	for (auto& list_iter : m_Objlist)
 	{
