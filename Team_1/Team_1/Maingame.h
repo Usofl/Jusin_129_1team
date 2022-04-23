@@ -6,6 +6,7 @@
 #include "Monster.h"
 #include "Bullet.h"
 #include "Shield.h"
+#include "RollBot.h"
 #include "AbstractFactory.h"
 #include "ItemFactory.h"
 #include "Collision.h"

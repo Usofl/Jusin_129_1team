@@ -14,7 +14,7 @@ void CShield::Initialize(void)
 {
 	m_tInfo.fCX = 30.f;
 	m_tInfo.fCY = 30.f;
-	m_fSpeed = 10.f;
+	m_fSpeed = 7.f;
 	m_iHP = 1;
 }
 
