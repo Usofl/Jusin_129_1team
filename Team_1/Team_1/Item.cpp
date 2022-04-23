@@ -76,3 +76,11 @@ void CItem::Render(HDC _hDC)
 void CItem::Release(void)
 {
 }
+
+void CItem::Pick_Up_Set(int _GetItem)
+{
+	POINT p{ GAMESIZE + _GetItem, WINCY - OUTGAMESIZE };
+	Make_POINT(p);
+
+	Update_Rect();
+}

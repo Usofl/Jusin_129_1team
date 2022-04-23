@@ -27,6 +27,7 @@ public:
 
 private:
 	std::list<CObj*> m_Item_List;
+	int m_GetItem;
 
 	float m_fBSize; // √—Ω≈ ±Ê¿Ã
 	std::list<CObj*>* m_pBulletList;
