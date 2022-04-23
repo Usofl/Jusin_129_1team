@@ -65,35 +65,43 @@ void CMonster::Move_Monster(void)
 	switch (m_MonType)
 	{
 	case MONSTERTYPE_A:
-		// 플레이어를 따라가는 움직임(자폭..?). 몬스터 타입 : A
+		// 플레이어를 따라가는 움직임. 몬스터 타입 : A
+		
+		if (!(m_pPlayer == nullptr))
+		{
+			if (0.6 * PLAYERCX < abs(m_tInfo.fX - m_pPlayer->Get_fX()))
+			{
+				m_fAngle = Find_MonPlr_CosAngle();
+				m_tInfo.fX -= 0.2 * m_fSpeed * cos(m_fAngle);
+			}
+			if (0.6 * PLAYERCY < abs(m_tInfo.fY - m_pPlayer->Get_fY()))
+			{
+				m_fAngle = Find_MonPlr_SinAngle();
+				m_tInfo.fY -= 0.2 * m_fSpeed * sin(m_fAngle);
+			}
 
-		if (0.6 * PLAYERCX < abs(m_tInfo.fX - m_pPlayer->Get_fX()))
-		{
-			m_fAngle = Find_MonPlr_CosAngle();
-			m_tInfo.fX -= 0.2 * m_fSpeed * cos(m_fAngle);
-		}
-		if (0.6 * PLAYERCY < abs(m_tInfo.fY - m_pPlayer->Get_fY()))
-		{
-			m_fAngle = Find_MonPlr_SinAngle();
-			m_tInfo.fY -= 0.2 * m_fSpeed * sin(m_fAngle);
-		}
+			if ((m_tInfo.fY + 0.5*Monster_C) >= (WINCY - GAMESIZE)) // 몬스터가 프레임 밖으로 벗어나지 못하게 함.
+			{
+				m_tInfo.fY = WINCY - GAMESIZE - 0.5*Monster_C;
+			}
+			if ((m_tInfo.fY - 0.5*Monster_C) <= GAMESIZE)
+			{
+				m_tInfo.fY = GAMESIZE + 0.5*Monster_C;
+			}
+			if ((m_tInfo.fX + 0.5*Monster_C) >= (WINCX - GAMESIZE))
+			{
+				m_tInfo.fX = WINCX - GAMESIZE - 0.5*Monster_C;
+			}
+			if ((m_tInfo.fX - 0.5*Monster_C) <= GAMESIZE)
+			{
+				m_tInfo.fX = GAMESIZE + 0.5*Monster_C;
+			}
 
-		if ((m_tInfo.fY + 0.5*Monster_C) >= (WINCY - GAMESIZE)) // 몬스터가 프레임 밖으로 벗어나지 못하게 함.
-		{
-			m_tInfo.fY = WINCY - GAMESIZE - 0.5*Monster_C;
 		}
-		if ((m_tInfo.fY - 0.5*Monster_C) <= GAMESIZE)
+		/*else if (m_pPlayer == nullptr)
 		{
-		    m_tInfo.fY = GAMESIZE + 0.5*Monster_C;
-		}
-		if ((m_tInfo.fX + 0.5*Monster_C) >= (WINCX - GAMESIZE))
-		{
-			m_tInfo.fX = WINCX - GAMESIZE - 0.5*Monster_C;
-		}
-		if ((m_tInfo.fX - 0.5*Monster_C) <= GAMESIZE)
-		{
-			m_tInfo.fX = GAMESIZE + 0.5*Monster_C;
-		}
+			m_tInfo.fX = 0.5*WINCX;
+		}*/
 
 		break;
 
@@ -121,12 +129,13 @@ void CMonster::Move_Monster(void)
 	}
 
 	//   플레이어가 죽은 뒤 몬스터의 움직임.
-	/*if (m_pPlayer2 == nullptr)
+	/*if (m_pPlayer == nullptr)
 	{
-		if (m_tInfo.fX < 600)
+		if (m_tInfo.fX < 0.5* WINCX)
 		{
 			m_tInfo.fX += 100;
 			m_tInfo.fY -= 100 * sin((10 * PI) / 180);
+			m_fSpeed = 0;
 		}
 	}*/
 }

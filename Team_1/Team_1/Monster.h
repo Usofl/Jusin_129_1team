@@ -29,6 +29,7 @@ public:
 
 	//몬스터 총알에 관한 함수.
 	inline void Set_BulletList_Mon(std::list<CObj*>* _pBulletList) { Mon_Bulletlist = _pBulletList; }
+	inline void Set_Speed(float _speed) { m_fSpeed = _speed; }
 
 private:
 	CObj* m_pPlayer;

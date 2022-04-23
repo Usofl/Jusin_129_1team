@@ -44,28 +44,3 @@ void CBulletMonster::Render(HDC _hDC)
 void CBulletMonster::Release(void)
 {
 }
-
-
-//void CMonster::Move_Mon_Bullet(void)
-//{
-//	//몬스터가 총알을 생성.(1. 총알이 몬스터 위치얻음 2. 그리기)
-//	//총알이 플레이어 방향만 얻어옴.(1. 방향변환은 없음: ㄱ. 플레이어 순간 좌표 1번만 대입)
-//	//총알 생성시 각도 라디안각->디그리각도 바꾸기.
-//
-//	/*float m_MonPlr_Angle =0.f;
-//
-//	if (m_MonPlr_Angle == 0.f)
-//	{
-//	m_MonPlr_Angle = Find_MonPlr_CosAngle() * 180 / PI;
-//	}
-//
-//	if (m_MonType == MONSTERTYPE_B)
-//	{
-//	Mon_Bulletlist->push_back(CAbstractFactory<CBullet>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, m_MonPlr_Angle));
-//	for (auto& iter : (*Mon_Bulletlist))
-//	{
-//	iter->Update();
-//	}
-//	}*/
-//
-//}

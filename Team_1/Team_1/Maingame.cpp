@@ -42,15 +42,26 @@ void CMaingame::Update(void)
 
 	srand(unsigned(time(NULL)));
 
-	if (m_Objlist[OBJ_MONSTER].size() < 4)
+	if (m_Objlist[OBJ_MONSTER].size() < 3)
 	{
 		if (m_dwTime + 1000 < GetTickCount())
 		{
 			int MON_TYPE = rand() % 2 + 1;
 			for (int i = 0; i < 4; ++i)
 			{
-				m_Objlist[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front(), MON_TYPE));
+				if (nullptr != m_Objlist[OBJ_PLAYER].front())
+				{
+					m_Objlist[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front(), MON_TYPE));
+				}
 			}
+		}
+	}
+
+	if (nullptr == m_Objlist[OBJ_PLAYER].front())
+	{
+		for (auto iter : m_Objlist[OBJ_MONSTER])
+		{
+			static_cast<CMonster*>(iter)->Set_Speed(0.f); // 모든 몬스터 멈춤.xxxxxxxxxxxxx
 		}
 	}
 
@@ -69,6 +80,7 @@ void CMaingame::Update(void)
 					{
 						delete *iter;
 						iter = m_Objlist[OBJ_SHIELD].erase(iter);
+
 					}
 
 					for (auto iter = m_Objlist[ITEM_ROLLBOT].begin(); iter != m_Objlist[ITEM_ROLLBOT].end();)
@@ -76,6 +88,13 @@ void CMaingame::Update(void)
 						delete *iter;
 						iter = m_Objlist[ITEM_ROLLBOT].erase(iter);
 					}
+
+					/*for (auto iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end();++iter)
+					{
+						iter
+
+					}*/
+
 				}
 
 				if (i == OBJ_MONSTER) // 삭제되는 OBJ가 몬스터일 경우 score 증가
