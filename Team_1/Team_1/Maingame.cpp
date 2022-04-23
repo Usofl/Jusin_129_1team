@@ -101,7 +101,7 @@ void CMaingame::Render(void)
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
 	Rectangle(m_hDC, GAMESIZE, GAMESIZE, WINCX - GAMESIZE, WINCY - GAMESIZE);
 	swprintf_s(m_szScore, L"Score : %d", m_iScore);
-	TextOutW(m_hDC, 25, 25, m_szScore, lstrlen(m_szScore));
+	TextOutW(m_hDC, GAMESIZE, OUTGAMESIZE, m_szScore, lstrlen(m_szScore));
 
 	//m_pPlayer->Render(m_hDC);
 

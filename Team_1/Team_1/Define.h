@@ -3,6 +3,7 @@
 #define WINCX 800
 #define WINCY 600
 
+#define OUTGAMESIZE 25
 #define GAMESIZE 50
 
 #define PLAYER_START_X 100.f
