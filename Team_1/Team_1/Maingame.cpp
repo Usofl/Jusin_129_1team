@@ -30,6 +30,9 @@ void CMaingame::Initialize(void)
 	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_SHIELD,
 		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 100.f)));
 
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ROLLBOT,
+		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 200.f)));
+
 	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 1.6 * Monster_C), (LONG)(GAMESIZE + 0.5 * Monster_C + 1) });
 	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 3.6 * Monster_C), (LONG)(GAMESIZE + 3.5 * Monster_C) });
 	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 3.6 * Monster_C), (LONG)(WINCY - GAMESIZE - 3.5 * Monster_C) });
@@ -67,6 +70,12 @@ void CMaingame::Update(void)
 						delete *iter;
 						iter = m_Objlist[OBJ_SHIELD].erase(iter);
 					}
+
+					for (auto iter = m_Objlist[ITEM_ROLLBOT].begin(); iter != m_Objlist[ITEM_ROLLBOT].end();)
+					{
+						delete *iter;
+						iter = m_Objlist[ITEM_ROLLBOT].erase(iter);
+					}
 				}
 
 				if (i == OBJ_MONSTER) // 삭제되는 OBJ가 몬스터일 경우 score 증가
@@ -91,6 +100,18 @@ void CMaingame::Update(void)
 						static_cast<CShield*>(shield)->Set_Player(m_Objlist[OBJ_PLAYER].front());
 
 						m_Objlist[OBJ_SHIELD].push_back(shield);
+					}
+					else if (ITEM_ROLLBOT == static_cast<CItem*>(*iter)->Get_Item_ID())
+					{
+						CObj* rollBot = CAbstractFactory<CRollBot>::Create();
+						if (!m_Objlist[OBJ_ROLLBOT].empty())
+						{
+							rollBot->Set_Angle(m_Objlist[OBJ_ROLLBOT].back()->Get_Angle() + SHILED_INTERVAL);
+						}
+						static_cast<CRollBot*>(rollBot)->Set_Player(m_Objlist[OBJ_PLAYER].front());
+						static_cast<CRollBot*>(rollBot)->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+
+						m_Objlist[OBJ_ROLLBOT].push_back(rollBot);
 					}
 				}
 

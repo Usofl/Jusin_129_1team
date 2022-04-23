@@ -62,7 +62,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// 1 / 1000초의 DWORD 정수값으로 반환(밀리 세컨드 단위)
 	DWORD		dwOldTime = GetTickCount();
 
-
 	while (true)
 	{
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
