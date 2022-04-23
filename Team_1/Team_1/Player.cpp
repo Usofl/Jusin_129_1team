@@ -21,12 +21,12 @@ void CPlayer::Initialize(void)
 
 	m_fSpeed = 7.f;
 
-	m_fBSize = 50.f;
+	m_fBallet_Size = 50.f;
 
 	m_iHP = 100;
 
-	m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf(m_fAngle * DEGREE));
-	m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf(m_fAngle * DEGREE));
+	m_tPoint.x = (long)(m_tInfo.fX + m_fBallet_Size * cosf(m_fAngle * DEGREE));
+	m_tPoint.y = (long)(m_tInfo.fY - m_fBallet_Size * sinf(m_fAngle * DEGREE));
 }
 
 void CPlayer::Update(void)
@@ -38,8 +38,8 @@ void CPlayer::Update(void)
 
 void CPlayer::Late_Update(void)
 {
-	m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf(m_fAngle * DEGREE));
-	m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf(m_fAngle * DEGREE));
+	m_tPoint.x = (long)(m_tInfo.fX + m_fBallet_Size * cosf(m_fAngle * DEGREE));
+	m_tPoint.y = (long)(m_tInfo.fY - m_fBallet_Size * sinf(m_fAngle * DEGREE));
 }
 
 void CPlayer::Render(HDC _hDC)

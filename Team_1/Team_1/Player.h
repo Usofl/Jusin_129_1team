@@ -29,6 +29,8 @@ private:
 	std::list<CObj*> m_Item_List;
 	int m_GetItem;
 
-	float m_fBSize; // √—Ω≈ ±Ê¿Ã
+	float m_Shield_Size;
+
+	float m_fBallet_Size; // √—Ω≈ ±Ê¿Ã
 	std::list<CObj*>* m_pBulletList;
 };
