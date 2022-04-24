@@ -49,12 +49,12 @@ void CItem::Late_Update(void)
 {
 	if (GAMESIZE >= m_tRC.top || WINCY - GAMESIZE <= m_tRC.bottom)
 	{
-		m_Y_Reverse *= -1;
+		m_Y_Reverse *= -1.f;
 	}
 
 	if (GAMESIZE >= m_tRC.left || WINCX - GAMESIZE <= m_tRC.right)
 	{
-		m_X_Reverse *= -1;
+		m_X_Reverse *= -1.f;
 	}
 }
 

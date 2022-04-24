@@ -19,7 +19,7 @@ public:
 	virtual void Release(void) override;
 
 public:
-	void Set_Mon_Type(MONSTERTYPE _type) { m_MonType = _type; }
+	void Set_Mon_Type(MONSTERTYPE _type) { m_MonType = _type; }	
 
 	void Move_Monster(void);
 	float Find_MonPlr_CosAngle(void);
@@ -29,15 +29,18 @@ public:
 
 	//몬스터 총알에 관한 함수.
 	inline void Set_BulletList_Mon(std::list<CObj*>* _pBulletList) { Mon_Bulletlist = _pBulletList; }
+	inline void Set_Speed(float _speed) { m_fSpeed = _speed; }
 
 private:
 	CObj* m_pPlayer;
 
 	std::list<CObj*>* Mon_Bulletlist;
 
-	int dwTime = 0;
-	int dwTime_bullet = 0;
+	DWORD dwTime = 0;
+	DWORD dwTime_bullet = 0;
 	float theta = 0.f;
+
+	int m_iReverse;
 
 	MONSTERTYPE m_MonType;
 };

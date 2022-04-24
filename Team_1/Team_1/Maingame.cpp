@@ -3,11 +3,14 @@
 
 CMaingame::CMaingame()
 	: m_dwTime(GetTickCount())
+	, m_dwPlayer(GetTickCount())
 	, m_iFPS(0)
 	, m_iScore(0)
+	, m_iLife(0)
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
 	ZeroMemory(m_szScore, sizeof(TCHAR) * 64);
+	ZeroMemory(m_szLife, sizeof(TCHAR) * 64);
 }
 
 CMaingame::~CMaingame()
@@ -45,8 +48,13 @@ void CMaingame::Update(void)
 		m_iLife = 999;
 	}
 
+	
+	
+	CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]);
+
 	srand(unsigned(time(NULL)));
 
+	
 
 	if (!m_Objlist[OBJ_PLAYER].empty())
 	{
@@ -74,10 +82,16 @@ void CMaingame::Update(void)
 			{
 				if (i == OBJ_PLAYER)
 				{
+					for (auto& iter : m_Objlist[OBJ_MONSTER])
+					{
+						static_cast<CMonster*>(iter)->Set_Player(nullptr);
+					}
+
 					for (auto iter = m_Objlist[OBJ_SHIELD].begin(); iter != m_Objlist[OBJ_SHIELD].end();)
 					{
 						delete *iter;
 						iter = m_Objlist[OBJ_SHIELD].erase(iter);
+
 					}
 
 					for (auto iter = m_Objlist[ITEM_ROLLBOT].begin(); iter != m_Objlist[ITEM_ROLLBOT].end();)
@@ -135,10 +149,24 @@ void CMaingame::Update(void)
 						m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
 						m_Objlist[OBJ_PLAYER].front()->Initialize();
 						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+
+						for (auto iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
+						{
+							static_cast<CMonster*>(*iter)->Set_Player(m_Objlist[OBJ_PLAYER].front());
+						}
+						return;
 					}
 					else
 					{
-						PostQuitMessage(0);
+						/*RECT rcTemp { 300,200,500,400 };
+						DrawText(m_hDC, L"GameOver", 8, &rcTemp, DT_CENTER);*/
+
+						// 플레이어가 가만히 있으면 죽지 않음.
+
+						if (GetAsyncKeyState('Q'))
+						{
+							PostQuitMessage(0);
+						}
 					}
 				}
 			}
@@ -154,9 +182,8 @@ void CMaingame::Update(void)
 void CMaingame::Late_Update(void)
 {
 	CCollision::Collision_Circle(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_BULLET]);
-	CCollision::Collision_Circle(m_Objlist[OBJ_SHIELD], m_Objlist[OBJ_MONSTER]);
+	CCollision::Collision_Circle(m_Objlist[OBJ_SHIELD], m_Objlist[OBJ_MONSTER]); // 총알에는 실드가 없어지지 않지만, 몬스터와 충돌했을 경우 실드가 사라지도록 수정
 	CCollision::Collision_Item(m_Objlist[OBJ_ITEM], m_Objlist[OBJ_PLAYER]);
-	CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]);
 	CCollision::Collision_Player(m_Objlist[OBJ_BULLETMONSTER], m_Objlist[OBJ_PLAYER]);
 
 	for (auto& list_iter : m_Objlist)

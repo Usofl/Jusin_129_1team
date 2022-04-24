@@ -55,4 +55,18 @@ public:
 
 		return pObj;
 	}
+
+	static CObj*    Create(float fA, float fB, float fAngle, MONSTERTYPE _type)
+	{
+		CObj*    pObj = new T;
+		pObj->Initialize();
+
+		POINT p{ (long)fA, (long)fB };
+		pObj->Make_POINT(p);
+		pObj->Set_Angle(fAngle);
+		static_cast<CBulletMonster*>(pObj)->Set_Monster_Type(_type);
+		static_cast<CBulletMonster*>(pObj)->Set_Monster_FirstYPos(fB);
+
+		return pObj;
+	}
 };
