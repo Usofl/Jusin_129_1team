@@ -27,6 +27,7 @@ public:
 
 public:
 	void Get_MONPOINT(void);
+	void Create_Item(void);
 
 
 private:
