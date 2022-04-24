@@ -1,10 +1,9 @@
 #include "stdafx.h"
 #include "RollBot.h"
 
-DWORD CRollBot::m_lTime = GetTickCount();
-
 CRollBot::CRollBot()
 	: m_pBulletList(nullptr)
+	, m_dwTime(GetTickCount())
 {
 }
 
@@ -33,9 +32,9 @@ void CRollBot::Update(void)
 
 void CRollBot::Late_Update(void)
 {
-	if (m_lTime + 650 < GetTickCount())
+	if (m_dwTime + 650 < GetTickCount())
 	{
-		m_lTime = GetTickCount();
+		m_dwTime = GetTickCount();
 
 		m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, 0.f));
 		--m_iHP;

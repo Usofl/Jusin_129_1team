@@ -11,7 +11,7 @@
 #define PLAYERCX 50.f
 #define PLAYERCY 50.f
 
-#define SHILED_INTERVAL 30.f
+#define SHILED_INTERVAL 45.f
 
 #define PURE =0
 

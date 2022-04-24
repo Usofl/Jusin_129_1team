@@ -22,7 +22,7 @@ public:
 	inline void Set_Player(CObj*& _player) { m_pPlayer = _player; }
 
 private:
-	static DWORD m_lTime;
+	DWORD m_dwTime;
 
 	CObj* m_pPlayer;
 	std::list<CObj*>* m_pBulletList;
