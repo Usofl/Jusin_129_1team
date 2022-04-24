@@ -77,6 +77,12 @@ void CItem::Render(HDC _hDC)
 		Ellipse(_hDC, m_tRC.left - 2, m_tRC.top - 2, m_tRC.right + 1, m_tRC.bottom + 1);
 		DrawText(_hDC, L"R", 1, &m_tRC, DT_CENTER);
 	}
+
+	if (ITEM_ULTIMATE == m_eItemID)
+	{
+		Rectangle(_hDC, m_tRC.left - 2, m_tRC.top - 2, m_tRC.right + 1, m_tRC.bottom + 1);
+		DrawText(_hDC, L"U", 1, &m_tRC, DT_CENTER);
+	}
 }
 
 void CItem::Release(void)

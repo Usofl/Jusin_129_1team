@@ -7,6 +7,7 @@
 #include "Bullet.h"
 #include "Shield.h"
 #include "RollBot.h"
+#include "Ultimate.h"
 #include "AbstractFactory.h"
 #include "ItemFactory.h"
 #include "Collision.h"
@@ -43,7 +44,8 @@ private:
 	DWORD		m_dwPlayer; // 플레이어 무적 시간 부여를 위한 멤버
 	bool		m_bCheak; // 플레이어 무적 시간 부여를 위한 멤버
 
-	CObj* m_pPlayer;
+	/*CObj* m_pPlayer;
+	CObj* m_pUlt;*/
 	std::list<CObj*> m_Objlist[OBJ_END];
 	std::vector<POINT>  m_tMonsterPoint;
 };

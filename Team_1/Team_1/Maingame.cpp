@@ -37,6 +37,9 @@ void CMaingame::Initialize(void)
 	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ROLLBOT,
 		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 200.f)));
 
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ULTIMATE,
+		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+
 	Get_MONPOINT();
 }
 
@@ -44,14 +47,9 @@ void CMaingame::Update(void)
 {
 	//m_pPlayer->Update();
 
-	if (GetAsyncKeyState('R'))
-	{
-		m_iLife = 999;
-	}
+	// 일시정지, 키인풋 함수, 이니셜라이즈에 게임 메인화면 출력
 
 	srand(unsigned(time(NULL)));
-
-	
 
 	if (!m_Objlist[OBJ_PLAYER].empty())
 	{
@@ -128,6 +126,10 @@ void CMaingame::Update(void)
 
 						m_Objlist[OBJ_ROLLBOT].push_back(rollBot);
 					}
+					else if (ITEM_ULTIMATE == static_cast<CItem*>(*iter)->Get_Item_ID())
+					{
+						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Item(*iter);
+					}
 				}
 
 				Safe_Delete<CObj*>(*iter);
@@ -150,6 +152,7 @@ void CMaingame::Update(void)
 						}
 						return;
 					}
+
 					else
 					{
 						if (GetAsyncKeyState('Q'))
@@ -166,6 +169,21 @@ void CMaingame::Update(void)
 			}
 		}
 	}
+
+	if (GetAsyncKeyState('R')) // 라이프 카운트 추가
+	{
+		++m_iLife;
+	}
+	if (GetAsyncKeyState(VK_SPACE)) // 얼티메이트 사용 데미지 50
+	{
+		if (!m_Objlist[ITEM_ULTIMATE].empty())
+		{
+			m_Objlist[OBJ_ULTIMATE].push_back(new CUltimate);
+			m_Objlist[OBJ_ULTIMATE].front()->Initialize();
+
+			// ITEM_ULTIMATE 첫번째거 지우기
+		}
+	}
 }
 
 void CMaingame::Late_Update(void)
@@ -175,7 +193,7 @@ void CMaingame::Late_Update(void)
 		if (m_dwPlayer + 2000 < GetTickCount())
 		{
 			m_dwPlayer = GetTickCount();
-			CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]); // 플레이어 사망 시 점수 깎기. 0.7배 정도.
+			CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]);
 			CCollision::Collision_Circle(m_Objlist[OBJ_BULLETMONSTER], m_Objlist[OBJ_PLAYER]);
 			m_bCheak = false;
 		}
@@ -185,8 +203,16 @@ void CMaingame::Late_Update(void)
 		CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]);
 		CCollision::Collision_Circle(m_Objlist[OBJ_BULLETMONSTER], m_Objlist[OBJ_PLAYER]);
 	}
+
+	if (!m_Objlist[OBJ_ULTIMATE].empty()) // 얼티메이트 충돌 검사
+	{
+		CCollision::Collision_Ult(m_Objlist[OBJ_ULTIMATE], m_Objlist[OBJ_MONSTER]);
+		CCollision::Collision_Ult(m_Objlist[OBJ_ULTIMATE], m_Objlist[OBJ_BULLETMONSTER]);
+	}
+
 	CCollision::Collision_Circle(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_BULLET]);
-	CCollision::Collision_Circle(m_Objlist[OBJ_SHIELD], m_Objlist[OBJ_MONSTER]); // 총알에는 실드가 없어지지 않지만, 몬스터와 충돌했을 경우 실드가 사라지도록 수정
+	CCollision::Collision_Circle(m_Objlist[OBJ_SHIELD], m_Objlist[OBJ_MONSTER]);
+	CCollision::Collision_Player(m_Objlist[OBJ_SHIELD], m_Objlist[OBJ_BULLETMONSTER]);
 	CCollision::Collision_Item(m_Objlist[OBJ_ITEM], m_Objlist[OBJ_PLAYER]);
 
 	for (auto& list_iter : m_Objlist)
@@ -229,8 +255,6 @@ void CMaingame::Render(void)
 	
 void CMaingame::Release(void)
 {
-	delete m_pPlayer;
-	m_pPlayer = nullptr;
 }
 
 void CMaingame::Get_MONPOINT(void)

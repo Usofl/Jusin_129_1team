@@ -49,8 +49,11 @@
     <Filter Include="01.Obj\05.RollBot">
       <UniqueIdentifier>{64115fe9-9c2b-4bef-94a8-eef1ab80d95c}</UniqueIdentifier>
     </Filter>
-	<Filter Include="01.Obj\04.Bullet_Monster">
+    <Filter Include="01.Obj\04.Bullet_Monster">
       <UniqueIdentifier>{e355c760-7e1f-44f6-bdae-2a663858b4e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\06.Ultimate">
+      <UniqueIdentifier>{ab704782-9003-4db4-a87f-9f06d919444d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -117,8 +120,11 @@
     <ClInclude Include="RollBot.h">
       <Filter>01.Obj\05.RollBot</Filter>
     </ClInclude>
-	<ClInclude Include="BulletMonster.h">
+    <ClInclude Include="BulletMonster.h">
       <Filter>01.Obj\04.Bullet_Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Ultimate.h">
+      <Filter>01.Obj\06.Ultimate</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -155,8 +161,11 @@
     <ClCompile Include="RollBot.cpp">
       <Filter>01.Obj\05.RollBot</Filter>
     </ClCompile>
-	<ClCompile Include="BulletMonster.cpp">
+    <ClCompile Include="BulletMonster.cpp">
       <Filter>01.Obj\04.Bullet_Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Ultimate.cpp">
+      <Filter>01.Obj\06.Ultimate</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

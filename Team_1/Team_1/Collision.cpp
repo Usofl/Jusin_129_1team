@@ -38,6 +38,30 @@ void CCollision::Collision_Rect(std::list<CObj*> _Temp, std::list<CObj*> _Dest)
 	}
 }
 
+void CCollision::Collision_Ult(std::list<CObj*> _Ult, std::list<CObj*> _Temp)
+{
+	RECT rc{};
+
+	for (auto& Ult : _Ult)
+	{
+		for (auto& Temp : _Temp)
+		{
+			if (0 < Temp->Get_HP())
+			{
+				if (IntersectRect(&rc, &(Ult->Get_Rect()), &(Temp->Get_Rect())))
+				{
+					Temp->Set_Hit_Ult();
+
+					if (0 >= Ult->Get_HP())
+					{
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+
 bool CCollision::Cheak_Circle(CObj * _Temp, CObj * _Dest)
 {
 	float fWidth = fabs(_Temp->Get_fX() - _Dest->Get_fX());
