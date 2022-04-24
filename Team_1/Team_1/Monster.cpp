@@ -177,29 +177,3 @@ void CMonster::Move_Monster(void)
 	}
 	
 }
-
-float CMonster::Find_MonPlr_CosAngle(void)
-{
-	float fAngle;
-	float fXX = 0.f, fYY = 0.f;
-	
-	fXX = m_tInfo.fX - (*m_pPlayer).Get_fX();
-	fYY = m_tInfo.fY - (*m_pPlayer).Get_fY();
-
-	fAngle = acos(fXX / sqrtf(fXX*fXX + fYY*fYY));
-
-	return fAngle;
-}
-
-float CMonster::Find_MonPlr_SinAngle(void)
-{
-	float fAngle;
-	float fXX = 0.f, fYY = 0.f;
-
-	fXX = m_tInfo.fX - (*m_pPlayer).Get_fX();
-	fYY = m_tInfo.fY - (*m_pPlayer).Get_fY();
-
-	fAngle = asin(fYY / sqrtf(fXX*fXX + fYY*fYY));
-
-	return fAngle;
-}

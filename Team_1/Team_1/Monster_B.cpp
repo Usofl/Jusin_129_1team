@@ -54,7 +54,18 @@ void CMonster_B::Update(void)
 
 void CMonster_B::Render(HDC _hDC)
 {
-	Rectangle(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
+	Ellipse(_hDC, m_tRC.left + (15 * m_iReverse), m_tRC.top, m_tRC.right, m_tRC.bottom - 15);
+
+	MoveToEx(_hDC, m_tRC.left + (22 * m_iReverse), m_tRC.bottom - 15, nullptr);
+	LineTo(_hDC, m_tRC.left + (22 * m_iReverse), m_tRC.bottom - 3);
+	LineTo(_hDC, m_tRC.left + (15 * m_iReverse), m_tRC.bottom);
+	MoveToEx(_hDC, m_tRC.left + (22 * m_iReverse), m_tRC.bottom - 3, nullptr);
+	LineTo(_hDC, m_tRC.right, m_tRC.bottom);
+
+	MoveToEx(_hDC, m_tRC.left + (22 * m_iReverse), m_tInfo.fY, nullptr);
+	LineTo(_hDC, m_tRC.left + (3 * m_iReverse), m_tInfo.fY);
+	MoveToEx(_hDC, m_tRC.left + (22 * m_iReverse), m_tInfo.fY + 5, nullptr);
+	LineTo(_hDC, m_tRC.left + (8 * m_iReverse), m_tInfo.fY);
 }
 
 void CMonster_B::Release(void)
