@@ -110,6 +110,8 @@ const bool CPlayer::Use_Ult(void)
 			m_Ult_List.pop_back();
 		}
 
+		m_fGetUlt -= 25.f;
+
 		return bEmpty;
 	}
 }

@@ -28,6 +28,7 @@ public:
 
 public:
 	void Get_MONPOINT(void);
+	void Create_Item(const float& _fA, const float& _fB);
 
 
 private:

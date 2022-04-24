@@ -3,7 +3,6 @@
 #define WINCX 800
 #define WINCY 600
 
-
 #define ULT_START_X 75.f
 #define ULT_START_Y 300.f
 #define ULTCX 50.f
@@ -24,8 +23,6 @@
 #define PI 3.1415926535f
 #define DEGREE (PI / 180.f)
 #define nLog sqrtf(2.f)
-
-extern HWND g_hWnd;
 
 #define Monster_C 30.f
 
