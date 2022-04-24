@@ -62,7 +62,7 @@ void CMaingame::Update(void)
 		{
 			if (m_dwTime + 1000 < GetTickCount())
 			{
-				int MON_TYPE = rand() % 2 + 1;
+				int MON_TYPE = rand() % 3 + 1;
 				for (int i = 0; i < 4; ++i)
 				{
 					m_Objlist[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front(), MON_TYPE));
