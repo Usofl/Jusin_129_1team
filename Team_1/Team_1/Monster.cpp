@@ -24,12 +24,17 @@ void CMonster::Initialize(void)
 
 	m_iHP = 2;
 
+	m_iReverse = 1;
+
 	m_fSpeed = 10.f;
 }
 
 void CMonster::Update(void)
 {
-	Move_Monster();      // 몬스터가 움직임.
+	if (m_pPlayer != nullptr)
+	{
+		Move_Monster();      // 몬스터가 움직임.
+	}
 
 	//B 타입 몬스터가 총알을 쏨. 1초 뒤에.
 	if (m_MonType == MONSTERTYPE_B)
@@ -62,11 +67,69 @@ void CMonster::Update(void)
 
 void CMonster::Late_Update(void)
 {
+	if (m_pPlayer != nullptr)
+	{
+		if (0 < m_pPlayer->Get_fX() - m_tInfo.fX)
+		{
+			LONG temp = m_tRC.left;
+			m_tRC.left = m_tRC.right;
+			m_tRC.right = temp;
+
+			m_iReverse = -1;
+		}
+		else
+		{
+			m_iReverse = 1;
+		}
+	}
 }
 
 void CMonster::Render(HDC _hDC)
 {
-	Rectangle(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
+	if (MONSTERTYPE_A == m_MonType)
+	{
+		Ellipse(_hDC, m_tRC.left + (15 * m_iReverse), m_tRC.top + 10, m_tRC.right - (5 * m_iReverse), m_tRC.bottom - 10);
+
+		MoveToEx(_hDC, m_tRC.left, m_tRC.top + 10, nullptr);
+		LineTo(_hDC, m_tRC.left + (10 * m_iReverse), m_tRC.top + 10);
+		LineTo(_hDC, m_tRC.left + (10 * m_iReverse), m_tRC.top - 7);
+		LineTo(_hDC, m_tRC.left + (15 * m_iReverse), m_tRC.top - 7);
+		LineTo(_hDC, m_tRC.left + (15 * m_iReverse), m_tRC.top + 10);
+
+		LineTo(_hDC, m_tRC.right + (5 * m_iReverse), m_tRC.top + 10);
+		LineTo(_hDC, m_tRC.right + (10 * m_iReverse), m_tRC.top + 5);
+		LineTo(_hDC, m_tRC.right + (10 * m_iReverse), m_tRC.bottom - 5);
+		LineTo(_hDC, m_tRC.right + (5 * m_iReverse), m_tRC.bottom - 10);
+
+		LineTo(_hDC, m_tRC.left + (15 * m_iReverse), m_tRC.bottom - 10);
+		LineTo(_hDC, m_tRC.left + (15 * m_iReverse), m_tRC.bottom + 7);
+		LineTo(_hDC, m_tRC.left + (10 * m_iReverse), m_tRC.bottom + 7);
+		LineTo(_hDC, m_tRC.left + (10 * m_iReverse), m_tRC.bottom - 10);
+		LineTo(_hDC, m_tRC.left, m_tRC.bottom - 10);
+		LineTo(_hDC, m_tRC.left, m_tRC.top + 10);
+
+	}
+
+	else if (MONSTERTYPE_B == m_MonType)
+	{
+		Ellipse(_hDC, m_tRC.left + (15 * m_iReverse), m_tRC.top, m_tRC.right, m_tRC.bottom - 15);
+
+		MoveToEx(_hDC, m_tRC.left + (22 * m_iReverse), m_tRC.bottom - 15, nullptr);
+		LineTo(_hDC, m_tRC.left + (22 * m_iReverse), m_tRC.bottom - 3);
+		LineTo(_hDC, m_tRC.left + (15 * m_iReverse), m_tRC.bottom);
+		MoveToEx(_hDC, m_tRC.left + (22 * m_iReverse), m_tRC.bottom - 3, nullptr);
+		LineTo(_hDC, m_tRC.right, m_tRC.bottom);
+
+		MoveToEx(_hDC, m_tRC.left + (22 * m_iReverse), m_tInfo.fY, nullptr);
+		LineTo(_hDC, m_tRC.left + (3 * m_iReverse), m_tInfo.fY);
+		MoveToEx(_hDC, m_tRC.left + (22 * m_iReverse), m_tInfo.fY + 5, nullptr);
+		LineTo(_hDC, m_tRC.left + (8 * m_iReverse), m_tInfo.fY);
+	}
+
+	else if (MONSTERTYPE_C == m_MonType)
+	{
+		Rectangle(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
+	}
 }
 
 void CMonster::Release(void)

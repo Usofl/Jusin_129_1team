@@ -40,5 +40,7 @@ private:
 	DWORD dwTime_bullet = 0;
 	float theta = 0.f;
 
+	int m_iReverse;
+
 	MONSTERTYPE m_MonType;
 };
