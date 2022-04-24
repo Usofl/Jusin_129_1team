@@ -157,6 +157,10 @@
     <ClInclude Include="ItemFactory.h" />
     <ClInclude Include="Maingame.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterFactory.h" />
+    <ClInclude Include="Monster_A.h" />
+    <ClInclude Include="Monster_B.h" />
+    <ClInclude Include="Monster_C.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
@@ -175,6 +179,9 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Maingame.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Monster_A.cpp" />
+    <ClCompile Include="Monster_B.cpp" />
+    <ClCompile Include="Monster_C.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RollBot.cpp" />

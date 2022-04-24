@@ -21,18 +21,14 @@ CMaingame::~CMaingame()
 
 void CMaingame::Initialize(void)
 {
+	srand((unsigned int)time((nullptr)));
+
 	m_hDC = GetDC(g_hWnd);
 
 	m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
 	m_Objlist[OBJ_PLAYER].front()->Initialize();
 	static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
 	m_iLife = 3;
-
-	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
-		m_Objlist[OBJ_PLAYER].front()->Get_fX(), m_Objlist[OBJ_PLAYER].front()->Get_fY()));
-
-	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
-		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 100.f)));
 
 	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
 		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 200.f)));
@@ -57,17 +53,31 @@ void CMaingame::Update(void)
 		{
 			if (m_dwTime + 1000 < GetTickCount())
 			{
-				int MON_TYPE = rand() % 2 + 1;
+				int MON_TYPE = rand() % 4 + 1;
 				for (int i = 0; i < 4; ++i)
 				{
-					m_Objlist[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front(), MON_TYPE));
+					//  몬스터 타입에 따라 즉 0~3까지에 따라 스위치 해서 부동한 몬스터 생성.
+					switch (MON_TYPE)
+					{
+					case MONSTERTYPE_A:
+						m_Objlist[OBJ_MONSTER].push_back(CMonsterFactory::Create_Mon_A(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front()));
+						break;
+
+					case MONSTERTYPE_B:
+						m_Objlist[OBJ_MONSTER].push_back(CMonsterFactory::Create_Mon_B(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front()));
+						break;
+
+					case MONSTERTYPE_C:
+						m_Objlist[OBJ_MONSTER].push_back(CMonsterFactory::Create_Mon_C(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front()));
+						break;
+					}
 				}
 			}
 		}
 	}
 
 	for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
-		static_cast<CMonster*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);
+		static_cast<CMonster_B*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);
 
 	for (int i = OBJ_PLAYER; i < OBJ_END; ++i)
 	{
@@ -96,9 +106,10 @@ void CMaingame::Update(void)
 					}
 				}
 
-				if (i == OBJ_MONSTER) // 삭제되는 OBJ가 몬스터일 경우 score 증가
+				if (i == OBJ_MONSTER) // 삭제되는 OBJ가 몬스터일 경우
 				{
-					m_iScore += 10;
+					Create_Item((*iter)->Get_fX(), (*iter)->Get_fY()); // 아이템 생성
+					m_iScore += 10; // score 증가
 				}
 
 				if (i == OBJ_ITEM)
@@ -122,6 +133,7 @@ void CMaingame::Update(void)
 					else if (ITEM_ROLLBOT == static_cast<CItem*>(*iter)->Get_Item_ID())
 					{
 						CObj* rollBot = CAbstractFactory<CRollBot>::Create();
+						rollBot->Initialize();
 						if (!m_Objlist[OBJ_ROLLBOT].empty())
 						{
 							rollBot->Set_Angle(m_Objlist[OBJ_ROLLBOT].back()->Get_Angle() + SHILED_INTERVAL);
@@ -146,7 +158,7 @@ void CMaingame::Update(void)
 					{
 						--m_iLife; // 라이프 스코어 감소
 						m_bCheak = true; // 사망시 무적 시간 부여를 위한 bool 변수
-						m_iScore = (m_iScore * 0.8); // 사망시 점수 감소
+						m_iScore = (int)(m_iScore * 0.8); // 사망시 점수 감소
 						m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
 						m_Objlist[OBJ_PLAYER].front()->Initialize();
 						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
@@ -181,10 +193,13 @@ void CMaingame::Update(void)
 	}
 	if (GetAsyncKeyState(VK_SPACE)) // 얼티메이트 사용 데미지 50
 	{
-		if (!static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Use_Ult())
+		if (m_dwTime + 1000 < GetTickCount())
 		{
-			m_Objlist[OBJ_ULTIMATE].push_back(new CUltimate);
-			m_Objlist[OBJ_ULTIMATE].front()->Initialize();
+			if (!static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Use_Ult())
+			{
+				m_Objlist[OBJ_ULTIMATE].push_back(new CUltimate);
+				m_Objlist[OBJ_ULTIMATE].front()->Initialize();
+			}
 		}
 	}
 }
@@ -266,4 +281,38 @@ void CMaingame::Get_MONPOINT(void)
 	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 3.6 * Monster_C), (LONG)(GAMESIZE + 3.5 * Monster_C) });
 	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 3.6 * Monster_C), (LONG)(WINCY - GAMESIZE - 3.5 * Monster_C) });
 	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 1.6 * Monster_C), (LONG)(WINCY - GAMESIZE - 0.5 * Monster_C - 1) });
+}
+
+void CMaingame::Create_Item(const float& _fA, const float& _fB)
+{
+	int iRanDrop = rand() % 100 + 1;
+	int iRanItem = rand() % 100 + 1;
+
+	switch (iRanDrop % 20) // 랜덤한 확률로 아이템 발생
+	{
+	case 1:
+	{
+		if(0 < iRanItem && 30 >= iRanItem)
+		{
+			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
+				_fA, _fB));
+		}
+		else if(30 < iRanItem && 60 >= iRanItem)
+		{
+			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_SHIELD,
+				_fA, _fB));
+		}
+		else if(60 < iRanItem && 90 >= iRanItem)
+		{
+			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ROLLBOT,
+				_fA, _fB));
+		}
+		else
+		{
+			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ULTIMATE,
+				_fA, _fB));
+		}
+	}
+	break;
+	}
 }

@@ -33,16 +33,16 @@ public:
 		return pObj;
 	}
 
-	static CObj*    Create(POINT& _tPoint, CObj* _player, int TYPE) // type 추가
-	{
-		CObj*    pObj = new T(_player);
-		pObj->Initialize();
-		dynamic_cast<CMonster*>(pObj)->Set_Mon_Type((MONSTERTYPE)TYPE);
+	//static CObj*    Create(POINT& _tPoint, CObj* _player, int TYPE) // type 추가
+	//{
+	//	CObj*    pObj = new T(_player);
+	//	pObj->Initialize();
+	//	dynamic_cast<CMonster*>(pObj)->Set_Mon_Type((MONSTERTYPE)TYPE);
 
-		pObj->Make_POINT(_tPoint);
+	//	pObj->Make_POINT(_tPoint);
 
-		return pObj;
-	}
+	//	return pObj;
+	//}
 
 	static CObj*    Create(float fA, float fB, float fAngle)
 	{

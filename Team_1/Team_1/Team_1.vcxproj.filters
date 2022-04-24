@@ -34,9 +34,6 @@
     <Filter Include="01.Obj\02.Monster">
       <UniqueIdentifier>{5813e615-3bf3-4088-9ff2-ffb0d22c9f8a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Obj\03.Item">
-      <UniqueIdentifier>{c7d752df-01d0-4803-93ce-2366d939fb73}</UniqueIdentifier>
-    </Filter>
     <Filter Include="98.Design\00.AbstractFactory">
       <UniqueIdentifier>{49d50af1-bc78-4c60-80d5-cc9aacd3cb26}</UniqueIdentifier>
     </Filter>
@@ -52,7 +49,19 @@
     <Filter Include="01.Obj\04.Bullet_Monster">
       <UniqueIdentifier>{e355c760-7e1f-44f6-bdae-2a663858b4e7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Obj\06.Ultimate">
+    <Filter Include="01.Obj\02.Monster\02.Monster_A">
+      <UniqueIdentifier>{8559d5fe-b64f-4a72-a78a-287dd8041340}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\02.Monster\03.Monster_B">
+      <UniqueIdentifier>{fe3bdac8-0d48-4fbe-a453-3b7f277d68d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\02.Monster\04.Monster_C">
+      <UniqueIdentifier>{da77e7de-a511-4629-923e-db9f2e0dce9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\03.Item">
+      <UniqueIdentifier>{c7d752df-01d0-4803-93ce-2366d939fb73}</UniqueIdentifier>
+    </Filter>
+	<Filter Include="01.Obj\06.Ultimate">
       <UniqueIdentifier>{ab704782-9003-4db4-a87f-9f06d919444d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -126,6 +135,18 @@
     <ClInclude Include="Ultimate.h">
       <Filter>01.Obj\06.Ultimate</Filter>
     </ClInclude>
+    <ClInclude Include="MonsterFactory.h">
+      <Filter>98.Design\00.AbstractFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_A.h">
+      <Filter>01.Obj\02.Monster\02.Monster_A</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_B.h">
+      <Filter>01.Obj\02.Monster\03.Monster_B</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_C.h">
+      <Filter>01.Obj\02.Monster\04.Monster_C</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -166,6 +187,15 @@
     </ClCompile>
     <ClCompile Include="Ultimate.cpp">
       <Filter>01.Obj\06.Ultimate</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_A.cpp">
+      <Filter>01.Obj\02.Monster\02.Monster_A</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_B.cpp">
+      <Filter>01.Obj\02.Monster\03.Monster_B</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_C.cpp">
+      <Filter>01.Obj\02.Monster\04.Monster_C</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
