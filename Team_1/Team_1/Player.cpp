@@ -73,7 +73,9 @@ void CPlayer::Render(HDC _hDC)
 	MoveToEx(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY + (m_tInfo.fCY * 0.5f)), nullptr);
 	LineTo(_hDC, (int)m_tPoint.x, (int)m_tPoint.y);
 
-	Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
+	Ellipse(_hDC, m_tPoint.x - (m_tInfo.fCX * 1.5), m_tRC.top + (m_tInfo.fCY * 0.25f), m_tPoint.x, m_tRC.bottom - (m_tInfo.fCY * 0.25f));
+
+	/*Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);*/
 
 	for (auto& iter : m_Item_List)
 	{
