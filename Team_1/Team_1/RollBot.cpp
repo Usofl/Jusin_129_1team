@@ -38,7 +38,6 @@ void CRollBot::Late_Update(void)
 		m_lTime = GetTickCount();
 
 		m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, 0.f));
-
 		--m_iHP;
 	}
 }

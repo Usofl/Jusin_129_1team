@@ -40,16 +40,23 @@ void CMaingame::Update(void)
 {
 	//m_pPlayer->Update();
 
+	if (GetAsyncKeyState('R'))
+	{
+		m_iLife = 999;
+	}
+
 	srand(unsigned(time(NULL)));
 
-	if (m_Objlist[OBJ_MONSTER].size() < 2)
+	
+
+	if (!m_Objlist[OBJ_PLAYER].empty())
 	{
-		if (m_dwTime + 1000 < GetTickCount())
+		if (m_Objlist[OBJ_MONSTER].size() < 4)
 		{
-			int MON_TYPE = rand() % 3 + 1;
-			for (int i = 0; i < 4; ++i)
+			if (m_dwTime + 1000 < GetTickCount())
 			{
-				if (nullptr != m_Objlist[OBJ_PLAYER].front())
+				int MON_TYPE = rand() % 2 + 1;
+				for (int i = 0; i < 4; ++i)
 				{
 					m_Objlist[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front(), MON_TYPE));
 				}
@@ -143,11 +150,10 @@ void CMaingame::Update(void)
 						{
 							static_cast<CMonster*>(*iter)->Set_Speed(0.f); // 캐릭터가 죽었을때 몬스터의 속도를 0으로.
 						}                                                  // 부활했을때 같은 코드를 부활한 시점에서 몬스터에게 속도 부여해주기.
-						return;
+						PostQuitMessage(0);
 					}
 				}
 			}
-
 			else
 			{
 				(*iter)->Update();
@@ -163,6 +169,7 @@ void CMaingame::Late_Update(void)
 	CCollision::Collision_Circle(m_Objlist[OBJ_SHIELD], m_Objlist[OBJ_MONSTER]);
 	CCollision::Collision_Item(m_Objlist[OBJ_ITEM], m_Objlist[OBJ_PLAYER]);
 	CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]);
+	CCollision::Collision_Player(m_Objlist[OBJ_BULLETMONSTER], m_Objlist[OBJ_PLAYER]);
 
 	for (auto& list_iter : m_Objlist)
 	{
