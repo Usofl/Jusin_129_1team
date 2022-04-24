@@ -21,8 +21,8 @@ void CMonster_C::Initialize(void)
 	dwTime_bullet = 0;
 	theta = 0.f;
 
-	m_tInfo.fCX = 50.f;
-	m_tInfo.fCY = 50.f;
+	m_tInfo.fCX = MonsterCSIZE;
+	m_tInfo.fCY = MonsterCSIZE;
 
 	m_iHP = 2;
 
@@ -85,11 +85,11 @@ void CMonster_C::Release(void)
 void CMonster_C::Move_Monster(void)
 {
 	// 오른쪽 화면에서의 포물선 총알. 몬스터 타입 : C
-	if (((m_tInfo.fY + 0.5*Monster_C) >= (WINCY - GAMESIZE)) || ((m_tInfo.fY - 0.5*Monster_C) <= GAMESIZE))
+	if (((m_tInfo.fY + 0.5*MonsterCSIZE) >= (WINCY - GAMESIZE)) || ((m_tInfo.fY - 0.5*MonsterCSIZE) <= GAMESIZE))
 	{
 		m_fSpeed *= -1.f;
 	}
-	if (((m_tInfo.fX + 0.5*Monster_C) >= (WINCX - GAMESIZE)) || ((m_tInfo.fX - 0.5*Monster_C) <= 0.6 * WINCX))
+	if (((m_tInfo.fX + 0.5*MonsterCSIZE) >= (WINCX - GAMESIZE)) || ((m_tInfo.fX - 0.5*MonsterCSIZE) <= 0.6 * WINCX))
 	{
 		m_fSpeed *= -1.f;
 	}
