@@ -99,6 +99,44 @@ void CMaingame::Update(void)
 				if (i == OBJ_MONSTER) // 삭제되는 OBJ가 몬스터일 경우 score 증가
 				{
 					m_iScore += 10;
+
+					int iRanDrop = rand() % 3 + 1;
+					int iRanItem = rand() % 3 + 1;
+
+					switch (iRanDrop) // 랜덤한 확률로 아이템 발생
+					{
+					case 1:
+					{
+						switch (iRanItem)
+						{
+						case 0:
+						{
+							m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
+								725, 300));
+							break;
+						}
+						case 1:
+						{
+							m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ROLLBOT,
+								725, 300));
+							break;
+						}
+						case 2:
+						{
+							m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_SHIELD,
+								725, 300));
+							break;
+						}
+						case 3:
+						{
+							m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ULTIMATE,
+								725, 300));
+							break;
+						}
+						}
+						break;
+					}
+					}
 				}
 
 				if (i == OBJ_ITEM)
@@ -181,10 +219,13 @@ void CMaingame::Update(void)
 	}
 	if (GetAsyncKeyState(VK_SPACE)) // 얼티메이트 사용 데미지 50
 	{
-		if (!static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Use_Ult())
+		if (m_dwTime + 1000 < GetTickCount())
 		{
-			m_Objlist[OBJ_ULTIMATE].push_back(new CUltimate);
-			m_Objlist[OBJ_ULTIMATE].front()->Initialize();
+			if (!static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Use_Ult())
+			{
+				m_Objlist[OBJ_ULTIMATE].push_back(new CUltimate);
+				m_Objlist[OBJ_ULTIMATE].front()->Initialize();
+			}
 		}
 	}
 }
