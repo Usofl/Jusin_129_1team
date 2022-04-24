@@ -100,7 +100,7 @@ void CMaingame::Update(void)
 				{
 					m_iScore += 10;
 
-					int iRanDrop = rand() % 3 + 1;
+					int iRanDrop = rand() % 34 + 1;
 					int iRanItem = rand() % 3 + 1;
 
 					switch (iRanDrop) // 랜덤한 확률로 아이템 발생
