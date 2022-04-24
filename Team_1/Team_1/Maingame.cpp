@@ -82,6 +82,11 @@ void CMaingame::Update(void)
 			{
 				if (i == OBJ_PLAYER)
 				{
+					for (auto& iter : m_Objlist[OBJ_MONSTER])
+					{
+						static_cast<CMonster*>(iter)->Set_Player(nullptr);
+					}
+
 					for (auto iter = m_Objlist[OBJ_SHIELD].begin(); iter != m_Objlist[OBJ_SHIELD].end();)
 					{
 						delete *iter;

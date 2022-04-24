@@ -13,7 +13,7 @@ CBulletMonster::~CBulletMonster()
 void CBulletMonster::Initialize(void)
 {
 	m_tInfo.fCX = 10.f;
-	m_tInfo.fCY = 10.f;
+	m_tInfo.fCY = 4.f;
 	m_fSpeed = 5.f;
 	m_iHP = 1;
 }
