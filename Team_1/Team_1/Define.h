@@ -3,6 +3,12 @@
 #define WINCX 800
 #define WINCY 600
 
+
+#define ULT_START_X 75.f
+#define ULT_START_Y 300.f
+#define ULTCX 50.f
+#define ULTCY 500.f
+
 #define OUTGAMESIZE 25
 #define GAMESIZE 50
 

@@ -21,6 +21,10 @@ public:
 	inline void Set_BulletList(std::list<CObj*>* _pBulletList) { m_pBulletList = _pBulletList; }
 
 	void Pick_Up_Item(CObj* _Item);
+	void Pick_Up_Ult(CObj* _Ult);
+
+	const bool Use_Ult(void);
+	
 
 public:
 	void Key_Input(void);
@@ -29,6 +33,9 @@ public:
 private:
 	std::list<CObj*> m_Item_List;
 	float m_fGetItem;
+
+	std::list<CObj*> m_Ult_List;
+	float m_fGetUlt;
 
 	float m_fBSize; // √—Ω≈ ±Ê¿Ã
 	std::list<CObj*>* m_pBulletList;

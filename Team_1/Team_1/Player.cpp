@@ -4,6 +4,7 @@
 CPlayer::CPlayer()
 	: m_fGetItem(0.f)
 	, m_pBulletList(nullptr)
+	, m_fGetUlt(0.f)
 	, m_fBulletAngle(0)
 {
 }
@@ -57,6 +58,11 @@ void CPlayer::Render(HDC _hDC)
 	{
 		iter->Render(_hDC);
 	}
+
+	for (auto& iter : m_Ult_List)
+	{
+		iter->Render(_hDC);
+	}
 }
 
 void CPlayer::Release(void)
@@ -81,6 +87,31 @@ void CPlayer::Pick_Up_Item(CObj * _Item)
 	m_fGetItem += 25.f;
 
 	m_Item_List.push_back(item);
+}
+
+void CPlayer::Pick_Up_Ult(CObj * _Ult)
+{
+	CItem* item = new CItem(*static_cast<CItem*>(_Ult));
+	item->Pick_Up_Set_Ult(m_fGetUlt);
+
+	m_fGetUlt += 25.f;
+
+	m_Ult_List.push_back(item);
+}
+
+const bool CPlayer::Use_Ult(void)
+{
+	{
+
+		bool bEmpty = m_Ult_List.empty();
+
+		if (!bEmpty)
+		{
+			m_Ult_List.pop_back();
+		}
+
+		return bEmpty;
+	}
 }
 
 void CPlayer::Key_Input(void)

@@ -26,6 +26,7 @@ public:
 	inline void Set_POINT(const POINT& p) { m_tPoint = p; }
 	inline void Set_Pos(float _fX, float _fY){ m_tInfo.fX = _fX; m_tInfo.fY = _fY; }
 	inline void Set_Angle(float _fAngle) { m_fAngle = _fAngle; }
+	inline void Set_Hit_Ult(void) { m_iHP -= 50; } // 얼티메이트 타격 시 데미지
 
 	inline void Make_POINT(POINT& p) { m_tInfo.fX = (float)p.x; m_tInfo.fY = (float)p.y; }
 
@@ -38,7 +39,7 @@ protected:
 	RECT m_tRC;
 	POINT m_tPoint;// 좌표 long타입.
 
-	int m_iHP;// 총알 체력 1
+	int m_iHP;
 
 	float m_fSpeed;
 	float m_fAngle;

@@ -18,6 +18,7 @@ public:
 
 	inline const ITEMID& Get_Item_ID(void) const { return m_eItemID; }
 	void Pick_Up_Set(int _GetItem);
+	void Pick_Up_Set_Ult(int _GetUlt);
 
 private:
 	ITEMID m_eItemID;

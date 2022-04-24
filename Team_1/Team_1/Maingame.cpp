@@ -7,6 +7,7 @@ CMaingame::CMaingame()
 	, m_iFPS(0)
 	, m_iScore(0)
 	, m_iLife(0)
+	, m_bCheak(false)
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
 	ZeroMemory(m_szScore, sizeof(TCHAR) * 64);
@@ -36,6 +37,9 @@ void CMaingame::Initialize(void)
 	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
 		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 200.f)));
 
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ULTIMATE,
+		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+
 	Get_MONPOINT();
 }
 
@@ -43,18 +47,9 @@ void CMaingame::Update(void)
 {
 	//m_pPlayer->Update();
 
-	if (GetAsyncKeyState('R'))
-	{
-		m_iLife = 999;
-	}
-
-	
-	
-	CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]);
+	// 일시정지, 키인풋 함수, 이니셜라이즈에 게임 메인화면 출력
 
 	srand(unsigned(time(NULL)));
-
-	
 
 	if (!m_Objlist[OBJ_PLAYER].empty())
 	{
@@ -136,6 +131,10 @@ void CMaingame::Update(void)
 
 						m_Objlist[OBJ_ROLLBOT].push_back(rollBot);
 					}
+					else if (ITEM_ULTIMATE == static_cast<CItem*>(*iter)->Get_Item_ID())
+					{
+						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Ult(*iter);
+					}
 				}
 
 				Safe_Delete<CObj*>(*iter);
@@ -145,7 +144,9 @@ void CMaingame::Update(void)
 				{
 					if (0 < m_iLife)
 					{
-						--m_iLife;
+						--m_iLife; // 라이프 스코어 감소
+						m_bCheak = true; // 사망시 무적 시간 부여를 위한 bool 변수
+						m_iScore = (m_iScore * 0.8); // 사망시 점수 감소
 						m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
 						m_Objlist[OBJ_PLAYER].front()->Initialize();
 						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
@@ -156,13 +157,9 @@ void CMaingame::Update(void)
 						}
 						return;
 					}
+
 					else
 					{
-						/*RECT rcTemp { 300,200,500,400 };
-						DrawText(m_hDC, L"GameOver", 8, &rcTemp, DT_CENTER);*/
-
-						// 플레이어가 가만히 있으면 죽지 않음.
-
 						if (GetAsyncKeyState('Q'))
 						{
 							PostQuitMessage(0);
@@ -177,14 +174,49 @@ void CMaingame::Update(void)
 			}
 		}
 	}
+
+	if (GetAsyncKeyState('R')) // 라이프 카운트 추가
+	{
+		++m_iLife;
+	}
+	if (GetAsyncKeyState(VK_SPACE)) // 얼티메이트 사용 데미지 50
+	{
+		if (!static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Use_Ult())
+		{
+			m_Objlist[OBJ_ULTIMATE].push_back(new CUltimate);
+			m_Objlist[OBJ_ULTIMATE].front()->Initialize();
+		}
+	}
 }
 
 void CMaingame::Late_Update(void)
 {
+	if (m_bCheak) // 플레이어에 무적 시간 부여
+	{
+		if (m_dwPlayer + 2000 < GetTickCount())
+		{
+			m_dwPlayer = GetTickCount();
+			CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]);
+			CCollision::Collision_Circle(m_Objlist[OBJ_BULLETMONSTER], m_Objlist[OBJ_PLAYER]);
+			m_bCheak = false;
+		}
+	}
+	else
+	{
+		CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]);
+		CCollision::Collision_Circle(m_Objlist[OBJ_BULLETMONSTER], m_Objlist[OBJ_PLAYER]);
+	}
+
+	if (!m_Objlist[OBJ_ULTIMATE].empty()) // 얼티메이트 충돌 검사
+	{
+		CCollision::Collision_Ult(m_Objlist[OBJ_ULTIMATE], m_Objlist[OBJ_MONSTER]);
+		CCollision::Collision_Ult(m_Objlist[OBJ_ULTIMATE], m_Objlist[OBJ_BULLETMONSTER]);
+	}
+
 	CCollision::Collision_Circle(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_BULLET]);
-	CCollision::Collision_Circle(m_Objlist[OBJ_SHIELD], m_Objlist[OBJ_MONSTER]); // 총알에는 실드가 없어지지 않지만, 몬스터와 충돌했을 경우 실드가 사라지도록 수정
+	CCollision::Collision_Circle(m_Objlist[OBJ_SHIELD], m_Objlist[OBJ_MONSTER]);
+	CCollision::Collision_Player(m_Objlist[OBJ_SHIELD], m_Objlist[OBJ_BULLETMONSTER]);
 	CCollision::Collision_Item(m_Objlist[OBJ_ITEM], m_Objlist[OBJ_PLAYER]);
-	CCollision::Collision_Player(m_Objlist[OBJ_BULLETMONSTER], m_Objlist[OBJ_PLAYER]);
 
 	for (auto& list_iter : m_Objlist)
 	{
@@ -226,8 +258,6 @@ void CMaingame::Render(void)
 	
 void CMaingame::Release(void)
 {
-	delete m_pPlayer;
-	m_pPlayer = nullptr;
 }
 
 void CMaingame::Get_MONPOINT(void)
