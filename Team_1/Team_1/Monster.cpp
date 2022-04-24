@@ -100,7 +100,7 @@ void CMonster::Move_Monster(void)
 	switch (m_MonType)
 	{
 	case MONSTERTYPE_BOSS:
-
+		//º¸½º Hp=300;
 		break;
 
 	case MONSTERTYPE_A:

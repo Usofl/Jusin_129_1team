@@ -157,6 +157,7 @@
     <ClInclude Include="ItemFactory.h" />
     <ClInclude Include="Maingame.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterFactory.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />

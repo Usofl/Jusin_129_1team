@@ -31,7 +31,7 @@ public:
 	inline void Set_BulletList_Mon(std::list<CObj*>* _pBulletList) { Mon_Bulletlist = _pBulletList; }
 	inline void Set_Speed(float _speed) { m_fSpeed = _speed; }
 
-private:
+protected:
 	CObj* m_pPlayer;
 
 	std::list<CObj*>* Mon_Bulletlist;

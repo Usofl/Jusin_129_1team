@@ -65,6 +65,7 @@ void CMaingame::Update(void)
 				int MON_TYPE = rand() % 3 + 1;
 				for (int i = 0; i < 4; ++i)
 				{
+					//  몬스터 타입에 따라 즉 0~3까지에 따라 스위치 해서 부동한 몬스터 생성.
 					m_Objlist[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front(), MON_TYPE));
 				}
 			}
