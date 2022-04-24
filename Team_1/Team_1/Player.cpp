@@ -7,6 +7,7 @@ CPlayer::CPlayer()
 	, m_fGetUlt(0.f)
 	, m_fBulletAngle(0)
 	, m_BulletType(BULLETTYPE_DEFULT)
+	, m_Gui(nullptr)
 {
 }
 
@@ -37,6 +38,15 @@ void CPlayer::Update(void)
 {
 	Key_Input();
 
+	if (m_Gui != nullptr)
+	{
+		if (0 >= m_Gui->Get_HP())
+		{
+			delete m_Gui;
+			m_Gui = nullptr;
+		}
+	}
+	
 	Update_Rect();
 }
 
@@ -44,6 +54,16 @@ void CPlayer::Late_Update(void)
 {
 	m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf(m_fAngle * DEGREE));
 	m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf(m_fAngle * DEGREE));
+
+	if (m_Gui != nullptr)
+	{
+		if (m_dwUsing + 1000 < GetTickCount())
+		{
+			m_dwUsing = GetTickCount();
+
+			m_Gui->Set_HP(m_Gui->Get_HP() - 1);
+		}
+	}
 
 	Collision_Wall();
 }
@@ -57,7 +77,7 @@ void CPlayer::Render(HDC _hDC)
 	LineTo(_hDC, (int)(m_tInfo.fX - (m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY - (m_tInfo.fCY * 0.5f)));
 
 	MoveToEx(_hDC, (int)(m_tInfo.fX - (m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY - (m_tInfo.fCY * 0.5f)), nullptr);
-	LineTo(_hDC, m_tInfo.fX, m_tInfo.fY);
+	LineTo(_hDC, (int)m_tInfo.fX, (int)m_tInfo.fY);
 
 	MoveToEx(_hDC, m_tInfo.fX, m_tInfo.fY, nullptr);
 	LineTo(_hDC, (int)(m_tInfo.fX - (m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY + (m_tInfo.fCY * 0.5f)));
@@ -74,7 +94,7 @@ void CPlayer::Render(HDC _hDC)
 	MoveToEx(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY + (m_tInfo.fCY * 0.5f)), nullptr);
 	LineTo(_hDC, (int)m_tPoint.x, (int)m_tPoint.y);
 
-	Ellipse(_hDC, m_tPoint.x - (m_tInfo.fCX * 1.5), m_tRC.top + (m_tInfo.fCY * 0.25f), m_tPoint.x, m_tRC.bottom - (m_tInfo.fCY * 0.25f));
+	Ellipse(_hDC, m_tPoint.x - (int)(m_tInfo.fCX * 1.5f), m_tRC.top + (int)(m_tInfo.fCY * 0.25f), m_tPoint.x, m_tRC.bottom - (int)(m_tInfo.fCY * 0.25f));
 
 	/*Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);*/
 
@@ -86,6 +106,14 @@ void CPlayer::Render(HDC _hDC)
 	for (auto& iter : m_Ult_List)
 	{
 		iter->Render(_hDC);
+	}
+
+	if (m_Gui != nullptr)
+	{
+		m_Gui->Render(_hDC);
+
+		swprintf_s(m_szUsingGui, L": %d", m_Gui->Get_HP());
+		TextOutW(_hDC, (WINCX * 0.5f), WINCY - OUTGAMESIZE, m_szUsingGui, lstrlen(m_szUsingGui));
 	}
 }
 
@@ -100,6 +128,23 @@ void CPlayer::Release(void)
 		}
 
 		iter = m_Item_List.erase(iter);
+	}
+
+	for (auto iter = m_Ult_List.begin(); iter != m_Ult_List.end();)
+	{
+		if (*iter != nullptr)
+		{
+			delete *iter;
+			*iter = nullptr;
+		}
+
+		iter = m_Ult_List.erase(iter);
+	}
+
+	if (m_Gui != nullptr)
+	{
+		delete m_Gui;
+		m_Gui = nullptr;
 	}
 }
 
@@ -123,10 +168,22 @@ void CPlayer::Pick_Up_Ult(CObj * _Ult)
 	m_Ult_List.push_back(item);
 }
 
+void CPlayer::Pick_Up_Gui(CObj * _Gui)
+{
+	if (nullptr == m_Gui)
+	{
+		m_Gui = new CItem(*static_cast<CItem*>(_Gui));
+		static_cast<CItem*>(m_Gui)->Pick_Up_Set_Gui();
+
+		m_dwUsing = GetTickCount();
+	}
+	
+	m_Gui->Set_HP(m_Gui->Get_HP() + 60);
+}
+
 const bool CPlayer::Use_Ult(void)
 {
 	{
-
 		bool bEmpty = m_Ult_List.empty();
 
 		if (!bEmpty)

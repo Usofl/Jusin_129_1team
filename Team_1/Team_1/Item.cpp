@@ -62,6 +62,7 @@ void CItem::Render(HDC _hDC)
 {
 	if (ITEM_BULLET == m_eItemID)
 	{
+		Ellipse(_hDC, m_tRC.left - 2, m_tRC.top - 10, m_tRC.right + 1, m_tRC.bottom - 4);
 		Rectangle(_hDC, m_tRC.left - 2, m_tRC.top - 2, m_tRC.right + 1, m_tRC.bottom + 1);
 		DrawText(_hDC, L"B", 1, &m_tRC, DT_CENTER);
 	}
@@ -76,6 +77,12 @@ void CItem::Render(HDC _hDC)
 	{
 		Ellipse(_hDC, m_tRC.left - 2, m_tRC.top - 2, m_tRC.right + 1, m_tRC.bottom + 1);
 		DrawText(_hDC, L"R", 1, &m_tRC, DT_CENTER);
+	}
+
+	if (ITEM_GUIDED == m_eItemID)
+	{
+		Ellipse(_hDC, m_tRC.left - 2, m_tRC.top - 10, m_tRC.right + 1, m_tRC.bottom + 5);
+		DrawText(_hDC, L"G", 1, &m_tRC, DT_CENTER);
 	}
 
 	if (ITEM_ULTIMATE == m_eItemID)
@@ -100,6 +107,14 @@ void CItem::Pick_Up_Set(int _GetItem)
 void CItem::Pick_Up_Set_Ult(int _GetUlt)
 {
 	POINT p{ (WINCX - GAMESIZE) - _GetUlt, WINCY - OUTGAMESIZE };
+	Make_POINT(p);
+
+	Update_Rect();
+}
+
+void CItem::Pick_Up_Set_Gui(void)
+{
+	POINT p{ (WINCX * 0.5f - 15), WINCY - OUTGAMESIZE };
 	Make_POINT(p);
 
 	Update_Rect();

@@ -22,7 +22,8 @@ public:
 
 	void Pick_Up_Item(CObj* _Item);
 	void Pick_Up_Ult(CObj* _Ult);
-
+	void Pick_Up_Gui(CObj* _Gui);
+	
 	const bool Use_Ult(void);
 	
 public:
@@ -35,6 +36,10 @@ private:
 
 	std::list<CObj*> m_Ult_List;
 	float m_fGetUlt;
+
+	CObj* m_Gui;
+	TCHAR m_szUsingGui[64];
+	DWORD m_dwUsing;
 
 	float m_fBSize; // √—Ω≈ ±Ê¿Ã
 	std::list<CObj*>* m_pBulletList;
