@@ -29,13 +29,13 @@ void CBulletMonster::Update(void)
 	{
 		if (0.5 * WINCY > m_Ypos)
 		{
-			m_tInfo.fX -= 0.1*m_fSpeed * 2.5;
-			m_tInfo.fY += 0.1*m_fSpeed * 0.1*m_fSpeed * 3;
+			m_tInfo.fX -= 0.1f*m_fSpeed * 2.5f;
+			m_tInfo.fY += 0.1f*m_fSpeed * 0.1f*m_fSpeed * 3.f;
 		}
 		else if (0.5 * WINCY < m_Ypos)
 		{
-			m_tInfo.fX -= 0.1*m_fSpeed * 2.5;
-			m_tInfo.fY -= 0.1*m_fSpeed * 0.1*m_fSpeed * 3;
+			m_tInfo.fX -= 0.1f*m_fSpeed * 2.5f;
+			m_tInfo.fY -= 0.1f*m_fSpeed * 0.1f*m_fSpeed * 3.f;
 		}
 	
 	}

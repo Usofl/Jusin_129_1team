@@ -163,7 +163,7 @@ void CPlayer::Key_Input(void)
 			{
 				m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
 			}
-			for (int i = 0; i < m_Item_List.size(); ++i)
+			for (unsigned int i = 0; i < m_Item_List.size(); ++i)
 			{
 				m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
 			}

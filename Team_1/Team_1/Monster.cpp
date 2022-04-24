@@ -83,12 +83,12 @@ void CMonster::Move_Monster(void)
 		if (0.5 * PLAYERCX < abs(m_tInfo.fX - m_pPlayer->Get_fX()))
 		{
 			m_fAngle = Find_MonPlr_CosAngle();
-			m_tInfo.fX -= 0.2 * m_fSpeed * cos(m_fAngle);
+			m_tInfo.fX -= 0.2f * m_fSpeed * cos(m_fAngle);
 		}
 		if (0.5 * PLAYERCY < abs(m_tInfo.fY - m_pPlayer->Get_fY()))
 		{
 			m_fAngle = Find_MonPlr_SinAngle();
-			m_tInfo.fY -= 0.2 * m_fSpeed * sin(m_fAngle);
+			m_tInfo.fY -= 0.2f * m_fSpeed * sin(m_fAngle);
 		}
 
 		if ((m_tInfo.fY + 0.5*Monster_C) >= (WINCY - GAMESIZE)) // 몬스터가 프레임 밖으로 벗어나지 못하게 함.
@@ -127,8 +127,8 @@ void CMonster::Move_Monster(void)
 			dwTime = GetTickCount();
 		}
 
-		m_tInfo.fY += 0.15 * m_fSpeed * cos(theta);
-		m_tInfo.fX -= 0.15 * m_fSpeed * sin(theta);
+		m_tInfo.fY += 0.15f * m_fSpeed * cos(theta);
+		m_tInfo.fX -= 0.15f * m_fSpeed * sin(theta);
 		break;
 
 	case MONSTERTYPE_C:
@@ -151,11 +151,11 @@ void CMonster::Move_Monster(void)
 
 		if (m_tInfo.fY > 0.5*WINCY)
 		{
-			m_tInfo.fY -= 0.05 * m_fSpeed * cos(theta);
+			m_tInfo.fY -= 0.05f * m_fSpeed * cos(theta);
 		}
 		if (m_tInfo.fY < 0.5*WINCY)
 		{
-			m_tInfo.fY += 0.05 * m_fSpeed * cos(theta);
+			m_tInfo.fY += 0.05f * m_fSpeed * cos(theta);
 		}
 		break;
 	}
