@@ -96,3 +96,11 @@ void CItem::Pick_Up_Set(int _GetItem)
 
 	Update_Rect();
 }
+
+void CItem::Pick_Up_Set_Ult(int _GetUlt)
+{
+	POINT p{ (WINCX - GAMESIZE) - _GetUlt, WINCY - OUTGAMESIZE };
+	Make_POINT(p);
+
+	Update_Rect();
+}

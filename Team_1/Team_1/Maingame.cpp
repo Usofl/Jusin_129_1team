@@ -128,7 +128,7 @@ void CMaingame::Update(void)
 					}
 					else if (ITEM_ULTIMATE == static_cast<CItem*>(*iter)->Get_Item_ID())
 					{
-						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Item(*iter);
+						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Ult(*iter);
 					}
 				}
 
@@ -176,12 +176,10 @@ void CMaingame::Update(void)
 	}
 	if (GetAsyncKeyState(VK_SPACE)) // 얼티메이트 사용 데미지 50
 	{
-		if (!m_Objlist[ITEM_ULTIMATE].empty())
+		if (!static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Use_Ult())
 		{
 			m_Objlist[OBJ_ULTIMATE].push_back(new CUltimate);
 			m_Objlist[OBJ_ULTIMATE].front()->Initialize();
-
-			// ITEM_ULTIMATE 첫번째거 지우기
 		}
 	}
 }
