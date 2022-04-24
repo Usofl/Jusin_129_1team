@@ -158,7 +158,7 @@ void CMaingame::Update(void)
 					{
 						--m_iLife; // 라이프 스코어 감소
 						m_bCheak = true; // 사망시 무적 시간 부여를 위한 bool 변수
-						m_iScore = (m_iScore * 0.8); // 사망시 점수 감소
+						m_iScore = (int)(m_iScore * 0.8); // 사망시 점수 감소
 						m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
 						m_Objlist[OBJ_PLAYER].front()->Initialize();
 						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
