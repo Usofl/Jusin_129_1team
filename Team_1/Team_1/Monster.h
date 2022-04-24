@@ -12,18 +12,16 @@ public:
 	virtual ~CMonster();
 
 	// Inherited via CObj
-	virtual void Initialize(void) override;
-	virtual void Update(void) override;
+	virtual void Initialize(void) PURE;
+	virtual void Update(void) PURE;
 	virtual void Late_Update(void) override;
-	virtual void Render(HDC _hDC) override;
-	virtual void Release(void) override;
+	virtual void Render(HDC _hDC) PURE;
+	virtual void Release(void) PURE;
+
+	virtual void Move_Monster(void) PURE;
 
 public:
 	void Set_Mon_Type(MONSTERTYPE _type) { m_MonType = _type; }	
-
-	void Move_Monster(void);
-	float Find_MonPlr_CosAngle(void);
-	float Find_MonPlr_SinAngle(void);
 
 	inline void Set_Player(CObj* m_PA) { m_pPlayer = m_PA; }
 

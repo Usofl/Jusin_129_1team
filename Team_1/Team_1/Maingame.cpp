@@ -54,7 +54,6 @@ void CMaingame::Update(void)
 
 	srand(unsigned(time(NULL)));
 
-	
 
 	if (!m_Objlist[OBJ_PLAYER].empty())
 	{
@@ -62,11 +61,25 @@ void CMaingame::Update(void)
 		{
 			if (m_dwTime + 1000 < GetTickCount())
 			{
+				// 몬스터 생성하는 하나의 함수로 바꾸기.
 				int MON_TYPE = rand() % 3 + 1;
 				for (int i = 0; i < 4; ++i)
 				{
 					//  몬스터 타입에 따라 즉 0~3까지에 따라 스위치 해서 부동한 몬스터 생성.
-					m_Objlist[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front(), MON_TYPE));
+					switch (MON_TYPE)
+					{
+					case MONSTERTYPE_A:
+						m_Objlist[OBJ_MONSTER].push_back(CMonsterFactory::Create_Mon_A(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front()));
+						break;
+
+					case MONSTERTYPE_B:
+						m_Objlist[OBJ_MONSTER].push_back(CMonsterFactory::Create_Mon_B(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front()));
+						break;
+
+					case MONSTERTYPE_C:
+						m_Objlist[OBJ_MONSTER].push_back(CMonsterFactory::Create_Mon_C(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front()));
+						break;
+					}
 				}
 			}
 		}
@@ -83,6 +96,11 @@ void CMaingame::Update(void)
 			{
 				if (i == OBJ_PLAYER)
 				{
+					for (auto iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
+					{
+						static_cast<CMonster*>(*iter)->Set_Player(nullptr);
+					}
+
 					for (auto iter = m_Objlist[OBJ_SHIELD].begin(); iter != m_Objlist[OBJ_SHIELD].end();)
 					{
 						delete *iter;
