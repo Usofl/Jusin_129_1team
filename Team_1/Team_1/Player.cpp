@@ -2,7 +2,7 @@
 #include "Player.h"
 
 CPlayer::CPlayer()
-	: m_GetItem(0)
+	: m_fGetItem(0.f)
 	, m_pBulletList(nullptr)
 {
 }
@@ -75,9 +75,9 @@ void CPlayer::Release(void)
 void CPlayer::Pick_Up_Item(CObj * _Item)
 {
 	CItem* item = new CItem(*static_cast<CItem*>(_Item));
-	item->Pick_Up_Set(m_GetItem);
+	item->Pick_Up_Set(m_fGetItem);
 	
-	m_GetItem += 25;
+	m_fGetItem += 25.f;
 
 	m_Item_List.push_back(item);
 }
@@ -163,7 +163,7 @@ void CPlayer::Key_Input(void)
 			{
 				m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
 			}
-			for (int i = 0; i < m_Item_List.size(); ++i)
+			for (unsigned int i = 0; i < m_Item_List.size(); ++i)
 			{
 				m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
 			}

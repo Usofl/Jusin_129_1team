@@ -54,6 +54,7 @@ void CMaingame::Update(void)
 
 	srand(unsigned(time(NULL)));
 
+	
 
 	if (!m_Objlist[OBJ_PLAYER].empty())
 	{
@@ -85,6 +86,7 @@ void CMaingame::Update(void)
 					{
 						delete *iter;
 						iter = m_Objlist[OBJ_SHIELD].erase(iter);
+
 					}
 
 					for (auto iter = m_Objlist[ITEM_ROLLBOT].begin(); iter != m_Objlist[ITEM_ROLLBOT].end();)
@@ -142,6 +144,12 @@ void CMaingame::Update(void)
 						m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
 						m_Objlist[OBJ_PLAYER].front()->Initialize();
 						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+
+						for (auto iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
+						{
+							static_cast<CMonster*>(*iter)->Set_Player(m_Objlist[OBJ_PLAYER].front());
+						}
+						return;
 					}
 					else
 					{
