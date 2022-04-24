@@ -22,20 +22,20 @@ void CBulletMonster::Update(void)
 {
 	if (m_TYPE == MONSTERTYPE_B)
 	{
-		m_tInfo.fX -= m_fSpeed * cosf((m_fAngle * PI) / 180.f);
-		m_tInfo.fY += m_fSpeed * sinf((m_fAngle * PI) / 180.f);
+		m_tInfo.fX -= m_fSpeed * cosf(m_fAngle * DEGREE);
+		m_tInfo.fY += m_fSpeed * sinf(m_fAngle * DEGREE);
 	}
 	else if (m_TYPE == MONSTERTYPE_C)
 	{
 		if (0.5 * WINCY > m_Ypos)
 		{
-			m_tInfo.fX -= 0.1f*m_fSpeed * 2.5f;
-			m_tInfo.fY += 0.1f*m_fSpeed * 0.1f*m_fSpeed * 3.f;
+			m_tInfo.fX -= 0.1f * m_fSpeed * 5.f;
+			m_tInfo.fY += 0.1f * m_fSpeed * 0.1f * m_fSpeed * 7.f;
 		}
 		else if (0.5 * WINCY < m_Ypos)
 		{
-			m_tInfo.fX -= 0.1f*m_fSpeed * 2.5f;
-			m_tInfo.fY -= 0.1f*m_fSpeed * 0.1f*m_fSpeed * 3.f;
+			m_tInfo.fX -= 0.1f * m_fSpeed * 5.f;
+			m_tInfo.fY -= 0.1f * m_fSpeed * 0.1f * m_fSpeed * 7.f;
 		}
 	
 	}
@@ -46,8 +46,8 @@ void CBulletMonster::Update(void)
 void CBulletMonster::Late_Update(void)
 {
 	// ¸Ê Ãæµ¹Ã³¸®
-	if (50 >= m_tRC.left || WINCX - 50 <= m_tRC.right
-		|| 50 >= m_tRC.top || WINCY - 50 <= m_tRC.bottom)
+	if (GAMESIZE >= m_tRC.left || WINCX - GAMESIZE <= m_tRC.right
+		|| GAMESIZE >= m_tRC.top || WINCY - GAMESIZE <= m_tRC.bottom)
 	{
 		m_iHP = 0;
 	}

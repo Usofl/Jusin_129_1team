@@ -10,6 +10,7 @@
 #include "Ultimate.h"
 #include "AbstractFactory.h"
 #include "ItemFactory.h"
+#include "MonsterFactory.h"
 #include "Collision.h"
 
 class CMaingame
