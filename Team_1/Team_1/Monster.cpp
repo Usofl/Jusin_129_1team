@@ -67,17 +67,20 @@ void CMonster::Update(void)
 
 void CMonster::Late_Update(void)
 {
-	if (0 < m_pPlayer->Get_fX() - m_tInfo.fX)
+	if (m_pPlayer != nullptr)
 	{
-		LONG temp = m_tRC.left;
-		m_tRC.left = m_tRC.right;
-		m_tRC.right = temp;
+		if (0 < m_pPlayer->Get_fX() - m_tInfo.fX)
+		{
+			LONG temp = m_tRC.left;
+			m_tRC.left = m_tRC.right;
+			m_tRC.right = temp;
 
-		m_iReverse = -1;
-	}
-	else
-	{
-		m_iReverse = 1;
+			m_iReverse = -1;
+		}
+		else
+		{
+			m_iReverse = 1;
+		}
 	}
 }
 
