@@ -49,10 +49,31 @@ void CPlayer::Late_Update(void)
 
 void CPlayer::Render(HDC _hDC)
 {
-	Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
-
 	MoveToEx(_hDC, (int)m_tInfo.fX, (int)m_tInfo.fY, nullptr);
 	LineTo(_hDC, (int)m_tPoint.x, (int)m_tPoint.y);
+
+	MoveToEx(_hDC, (int)m_tPoint.x, (int)m_tPoint.y, nullptr);
+	LineTo(_hDC, (int)(m_tInfo.fX - (m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY - (m_tInfo.fCY * 0.5f)));
+
+	MoveToEx(_hDC, (int)(m_tInfo.fX - (m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY - (m_tInfo.fCY * 0.5f)), nullptr);
+	LineTo(_hDC, m_tInfo.fX, m_tInfo.fY);
+
+	MoveToEx(_hDC, m_tInfo.fX, m_tInfo.fY, nullptr);
+	LineTo(_hDC, (int)(m_tInfo.fX - (m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY + (m_tInfo.fCY * 0.5f)));
+
+	MoveToEx(_hDC, (int)(m_tInfo.fX - (m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY + (m_tInfo.fCY * 0.5f)), nullptr);
+	LineTo(_hDC, (int)m_tPoint.x, (int)m_tPoint.y);
+
+	MoveToEx(_hDC, (int)m_tPoint.x, (int)m_tPoint.y, nullptr);
+	LineTo(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY - (m_tInfo.fCY * 0.5f)));
+
+	MoveToEx(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY - (m_tInfo.fCY * 0.5f)), nullptr);
+	LineTo(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY + (m_tInfo.fCY * 0.5f)));
+
+	MoveToEx(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY + (m_tInfo.fCY * 0.5f)), nullptr);
+	LineTo(_hDC, (int)m_tPoint.x, (int)m_tPoint.y);
+
+	Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
 
 	for (auto& iter : m_Item_List)
 	{
