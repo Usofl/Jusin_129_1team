@@ -31,10 +31,8 @@ void CMonster::Initialize(void)
 
 void CMonster::Update(void)
 {
-	if (m_pPlayer != nullptr)
-	{
-		Move_Monster();      // 몬스터가 움직임.
-	}
+	Move_Monster();      // 몬스터가 움직임.
+
 
 	//B 타입 몬스터가 총알을 쏨. 1초 뒤에.
 	if (m_MonType == MONSTERTYPE_B)
@@ -142,33 +140,35 @@ void CMonster::Move_Monster(void)
 	{
 	case MONSTERTYPE_A:
 		// 플레이어를 따라가는 움직임. 몬스터 타입 : A
-		
-		if (0.5 * PLAYERCX < abs(m_tInfo.fX - m_pPlayer->Get_fX()))
+		if (m_pPlayer != nullptr)
 		{
-			m_fAngle = Find_MonPlr_CosAngle();
-			m_tInfo.fX -= 0.2f * m_fSpeed * cos(m_fAngle);
-		}
-		if (0.5 * PLAYERCY < abs(m_tInfo.fY - m_pPlayer->Get_fY()))
-		{
-			m_fAngle = Find_MonPlr_SinAngle();
-			m_tInfo.fY -= 0.2f * m_fSpeed * sin(m_fAngle);
-		}
+			if (0.5 * PLAYERCX < abs(m_tInfo.fX - m_pPlayer->Get_fX()))
+			{
+				m_fAngle = Find_MonPlr_CosAngle();
+				m_tInfo.fX -= 0.2f * m_fSpeed * cos(m_fAngle);
+			}
+			if (0.5 * PLAYERCY < abs(m_tInfo.fY - m_pPlayer->Get_fY()))
+			{
+				m_fAngle = Find_MonPlr_SinAngle();
+				m_tInfo.fY -= 0.2f * m_fSpeed * sin(m_fAngle);
+			}
 
-		if ((m_tInfo.fY + 0.5*Monster_C) >= (WINCY - GAMESIZE)) // 몬스터가 프레임 밖으로 벗어나지 못하게 함.
-		{
-			m_tInfo.fY = WINCY - GAMESIZE - 0.5*Monster_C;
-		}
-		if ((m_tInfo.fY - 0.5*Monster_C) <= GAMESIZE)
-		{
-			m_tInfo.fY = GAMESIZE + 0.5*Monster_C;
-		}
-		if ((m_tInfo.fX + 0.5*Monster_C) >= (WINCX - GAMESIZE))
-		{
-			m_tInfo.fX = WINCX - GAMESIZE - 0.5*Monster_C;
-		}
-		if ((m_tInfo.fX - 0.5*Monster_C) <= GAMESIZE)
-		{
-			m_tInfo.fX = GAMESIZE + 0.5*Monster_C;
+			if ((m_tInfo.fY + 0.5*Monster_C) >= (WINCY - GAMESIZE)) // 몬스터가 프레임 밖으로 벗어나지 못하게 함.
+			{
+				m_tInfo.fY = WINCY - GAMESIZE - 0.5*Monster_C;
+			}
+			if ((m_tInfo.fY - 0.5*Monster_C) <= GAMESIZE)
+			{
+				m_tInfo.fY = GAMESIZE + 0.5*Monster_C;
+			}
+			if ((m_tInfo.fX + 0.5*Monster_C) >= (WINCX - GAMESIZE))
+			{
+				m_tInfo.fX = WINCX - GAMESIZE - 0.5*Monster_C;
+			}
+			if ((m_tInfo.fX - 0.5*Monster_C) <= GAMESIZE)
+			{
+				m_tInfo.fX = GAMESIZE + 0.5*Monster_C;
+			}
 		}
 		break;
 
