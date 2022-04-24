@@ -4,6 +4,7 @@
 CPlayer::CPlayer()
 	: m_fGetItem(0.f)
 	, m_pBulletList(nullptr)
+	, m_fGetUlt(0.f)
 {
 }
 
