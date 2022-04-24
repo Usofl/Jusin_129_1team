@@ -77,6 +77,12 @@ void CItem::Render(HDC _hDC)
 		Ellipse(_hDC, m_tRC.left - 2, m_tRC.top - 2, m_tRC.right + 1, m_tRC.bottom + 1);
 		DrawText(_hDC, L"R", 1, &m_tRC, DT_CENTER);
 	}
+
+	if (ITEM_ULTIMATE == m_eItemID)
+	{
+		Rectangle(_hDC, m_tRC.left - 2, m_tRC.top - 2, m_tRC.right + 1, m_tRC.bottom + 1);
+		DrawText(_hDC, L"U", 1, &m_tRC, DT_CENTER);
+	}
 }
 
 void CItem::Release(void)
@@ -86,6 +92,14 @@ void CItem::Release(void)
 void CItem::Pick_Up_Set(int _GetItem)
 {
 	POINT p{ GAMESIZE + _GetItem, WINCY - OUTGAMESIZE };
+	Make_POINT(p);
+
+	Update_Rect();
+}
+
+void CItem::Pick_Up_Set_Ult(int _GetUlt)
+{
+	POINT p{ (WINCX - GAMESIZE) - _GetUlt, WINCY - OUTGAMESIZE };
 	Make_POINT(p);
 
 	Update_Rect();

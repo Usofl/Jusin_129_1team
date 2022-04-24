@@ -4,6 +4,8 @@
 CPlayer::CPlayer()
 	: m_fGetItem(0.f)
 	, m_pBulletList(nullptr)
+	, m_fGetUlt(0.f)
+	, m_fBulletAngle(0)
 {
 }
 
@@ -56,6 +58,11 @@ void CPlayer::Render(HDC _hDC)
 	{
 		iter->Render(_hDC);
 	}
+
+	for (auto& iter : m_Ult_List)
+	{
+		iter->Render(_hDC);
+	}
 }
 
 void CPlayer::Release(void)
@@ -80,6 +87,31 @@ void CPlayer::Pick_Up_Item(CObj * _Item)
 	m_fGetItem += 25.f;
 
 	m_Item_List.push_back(item);
+}
+
+void CPlayer::Pick_Up_Ult(CObj * _Ult)
+{
+	CItem* item = new CItem(*static_cast<CItem*>(_Ult));
+	item->Pick_Up_Set_Ult(m_fGetUlt);
+
+	m_fGetUlt += 25.f;
+
+	m_Ult_List.push_back(item);
+}
+
+const bool CPlayer::Use_Ult(void)
+{
+	{
+
+		bool bEmpty = m_Ult_List.empty();
+
+		if (!bEmpty)
+		{
+			m_Ult_List.pop_back();
+		}
+
+		return bEmpty;
+	}
 }
 
 void CPlayer::Key_Input(void)
@@ -159,13 +191,18 @@ void CPlayer::Key_Input(void)
 	{
 		if (m_dwTime + 100 < GetTickCount())
 		{
-			if (m_Item_List.empty())
+			if (m_Item_List.empty()) // 아이템 리스트 비어있을 때
 			{
 				m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
 			}
-			for (unsigned int i = 0; i < m_Item_List.size(); ++i)
+			else 
 			{
-				m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
+				m_fBulletAngle = m_Item_List.size();
+				for (unsigned int i = 0; i <= m_Item_List.size(); ++i)
+				{
+					m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle));
+					m_fBulletAngle -= 2 ;
+				}
 			}
 			m_dwTime = GetTickCount();
 		}
