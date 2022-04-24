@@ -21,6 +21,8 @@ CMaingame::~CMaingame()
 
 void CMaingame::Initialize(void)
 {
+	srand((unsigned int)time((nullptr)));
+
 	m_hDC = GetDC(g_hWnd);
 
 	m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
@@ -106,8 +108,8 @@ void CMaingame::Update(void)
 
 				if (i == OBJ_MONSTER) // 삭제되는 OBJ가 몬스터일 경우
 				{
+					Create_Item((*iter)->Get_fX(), (*iter)->Get_fY()); // 아이템 생성
 					m_iScore += 10; // score 증가
-					Create_Item(); // 아이템 생성
 				}
 
 				if (i == OBJ_ITEM)
@@ -281,43 +283,36 @@ void CMaingame::Get_MONPOINT(void)
 	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 1.6 * Monster_C), (LONG)(WINCY - GAMESIZE - 0.5 * Monster_C - 1) });
 }
 
-void CMaingame::Create_Item(void)
+void CMaingame::Create_Item(const float& _fA, const float& _fB)
 {
-	int iRanDrop = rand() % 34 + 1;
-	int iRanItem = rand() % 3 + 1;
+	int iRanDrop = rand() % 100 + 1;
+	int iRanItem = rand() % 100 + 1;
 
-	switch (iRanDrop) // 랜덤한 확률로 아이템 발생
+	switch (iRanDrop % 20) // 랜덤한 확률로 아이템 발생
 	{
 	case 1:
 	{
-		switch (iRanItem)
-		{
-		case 0:
+		if(0 < iRanItem && 30 >= iRanItem)
 		{
 			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
-				725, 300));
-			break;
+				_fA, _fB));
 		}
-		case 1:
-		{
-			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ROLLBOT,
-				725, 300));
-			break;
-		}
-		case 2:
+		else if(30 < iRanItem && 60 >= iRanItem)
 		{
 			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_SHIELD,
-				725, 300));
-			break;
+				_fA, _fB));
 		}
-		case 3:
+		else if(60 < iRanItem && 90 >= iRanItem)
+		{
+			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ROLLBOT,
+				_fA, _fB));
+		}
+		else
 		{
 			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ULTIMATE,
-				725, 300));
-			break;
+				_fA, _fB));
 		}
-		}
-		break;
 	}
+	break;
 	}
 }
