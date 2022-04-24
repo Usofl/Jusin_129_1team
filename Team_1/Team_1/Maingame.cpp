@@ -37,7 +37,10 @@ void CMaingame::Initialize(void)
 		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
 
 	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_GUIDED,
-		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+		m_Objlist[OBJ_PLAYER].front()->Get_fX() + 200.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ROLLBOT,
+		m_Objlist[OBJ_PLAYER].front()->Get_fX() + 100.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
 
 	Get_MONPOINT();
 }
@@ -97,15 +100,14 @@ void CMaingame::Update(void)
 
 					for (auto iter = m_Objlist[OBJ_SHIELD].begin(); iter != m_Objlist[OBJ_SHIELD].end();)
 					{
-						delete *iter;
+						Safe_Delete<CObj*>(*iter);
 						iter = m_Objlist[OBJ_SHIELD].erase(iter);
-
 					}
 
-					for (auto iter = m_Objlist[ITEM_ROLLBOT].begin(); iter != m_Objlist[ITEM_ROLLBOT].end();)
+					for (auto iter = m_Objlist[OBJ_ROLLBOT].begin(); iter != m_Objlist[OBJ_ROLLBOT].end();)
 					{
-						delete *iter;
-						iter = m_Objlist[ITEM_ROLLBOT].erase(iter);
+						Safe_Delete<CObj*>(*iter);
+						iter = m_Objlist[OBJ_ROLLBOT].erase(iter);
 					}
 				}
 
