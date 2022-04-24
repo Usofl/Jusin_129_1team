@@ -66,7 +66,26 @@ void CMonster::Late_Update(void)
 
 void CMonster::Render(HDC _hDC)
 {
-	Rectangle(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
+	if (MONSTERTYPE_A == m_MonType)
+	{
+		MoveToEx(_hDC, m_tRC.left - 10, m_tRC.top + 10, nullptr);
+		LineTo(_hDC, m_tRC.left + 15, m_tRC.top + 10);
+		LineTo(_hDC, m_tRC.right - 5, m_tRC.top - 10);
+		LineTo(_hDC, m_tRC.right - 5, m_tRC.bottom + 10);
+		LineTo(_hDC, m_tRC.left + 15, m_tRC.bottom - 10);
+		LineTo(_hDC, m_tRC.left - 10, m_tRC.bottom - 10);
+		LineTo(_hDC, m_tRC.left - 10, m_tRC.top + 10);
+	}
+
+	else if (MONSTERTYPE_B == m_MonType)
+	{
+		Rectangle(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
+	}
+
+	else if (MONSTERTYPE_C == m_MonType)
+	{
+		Rectangle(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
+	}
 }
 
 void CMonster::Release(void)
