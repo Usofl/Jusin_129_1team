@@ -24,19 +24,17 @@ void CBullet::Initialize(void)
 
 void CBullet::Update(void)
 {
-	// 일반 총알 이동처리
-	/*m_tInfo.fX += m_fSpeed * cosf(m_fAngle * DEGREE);
-	m_tInfo.fY -= m_fSpeed * sinf(m_fAngle * DEGREE);*/
+	// 일반 총알 이동
+	m_tInfo.fX += m_fSpeed * cosf(m_fAngle * DEGREE);
+	m_tInfo.fY -= m_fSpeed * sinf(m_fAngle * DEGREE);
+
+	m_tPoint.x = (long)(m_tInfo.fX + 20.f * cosf(m_fBulletAngle * DEGREE));
+	m_tPoint.y = (long)(m_tInfo.fY + 20.f * sinf(m_fBulletAngle * DEGREE));
 
 	// 스크류 총알 이동처리
 	/*m_tPoint.x = (long)(m_tInfo.fX + 20 * cosf(m_fBulletAngle * DEGREE));
 	m_tPoint.y = (long)(m_tInfo.fY - 20 * sinf(m_fBulletAngle * DEGREE));
 	m_fBulletAngle += 5.f;*/
-
-	m_tInfo.fX += m_fSpeed * cosf(m_fAngle * DEGREE);
-	m_tInfo.fY -= m_fSpeed * sinf(m_fAngle * DEGREE);
-	m_tPoint.x = (long)(m_tInfo.fX + 20.f * cosf(m_fBulletAngle * DEGREE));
-	m_tPoint.y = (long)(m_tInfo.fY + 20.f * sinf(m_fBulletAngle * DEGREE));
 
 	Update_Rect();
 }
@@ -64,7 +62,8 @@ void CBullet::Render(HDC _hDC)
 	m_tRC.bottom = LONG(m_tPoint.y + (m_tInfo.fCY * 0.5f));*/
 
 	Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
-	Rectangle(_hDC, m_tInfo.fX - 10, m_tInfo.fY - (m_tInfo.fCY * 0.5), m_tInfo.fX, m_tInfo.fY + (m_tInfo.fCY * 0.5));
+	Rectangle(_hDC, m_tRC.left - (m_tInfo.fCX * 0.5f), m_tRC.top, m_tRC.right - (m_tInfo.fCX * 0.5f), m_tRC.bottom);
+	Rectangle(_hDC, m_tRC.left - (m_tInfo.fCX * 0.5f) - 3.f, m_tRC.top - 1.f, m_tRC.left - (m_tInfo.fCX * 0.5f), m_tRC.bottom + 1.f);
 }
 
 void CBullet::Release(void)
