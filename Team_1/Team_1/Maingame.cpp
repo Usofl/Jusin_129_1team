@@ -57,7 +57,7 @@ void CMaingame::Update(void)
 		{
 			if (m_dwTime + 1000 < GetTickCount())
 			{
-				int MON_TYPE = rand() % 2 + 1;
+				int MON_TYPE = rand() % 4 + 1;
 				for (int i = 0; i < 4; ++i)
 				{
 					//  몬스터 타입에 따라 즉 0~3까지에 따라 스위치 해서 부동한 몬스터 생성.
@@ -81,7 +81,7 @@ void CMaingame::Update(void)
 	}
 
 	for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
-		static_cast<CMonster*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);
+		static_cast<CMonster_B*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);
 
 	for (int i = OBJ_PLAYER; i < OBJ_END; ++i)
 	{

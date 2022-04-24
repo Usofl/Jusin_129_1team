@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Monster_B.h"
-
+#include "BulletMonster.h"
 
 CMonster_B::CMonster_B()
 {
@@ -40,7 +40,7 @@ void CMonster_B::Update(void)
 	{
 		float m_MonPlr_Angle = 0.f;
 
-		Mon_Bulletlist->push_back(CAbstractFactory<CBulletMonster>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, m_MonPlr_Angle, m_MonType));
+		Mon_Bulletlist->push_back(CAbstractFactory<CBulletMonster>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, m_MonPlr_Angle, MONSTERTYPE_B));
 
 		dwTime_bullet = GetTickCount();
 	}

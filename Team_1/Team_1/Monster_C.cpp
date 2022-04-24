@@ -39,7 +39,7 @@ void CMonster_C::Update(void)
 	{
 		float m_MonPlr_Angle = 0.f;
 
-		Mon_Bulletlist->push_back(CAbstractFactory<CBulletMonster>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, m_MonPlr_Angle, m_MonType));
+		Mon_Bulletlist->push_back(CAbstractFactory<CBulletMonster>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, m_MonPlr_Angle, MONSTERTYPE_C));
 
 		dwTime_bullet = GetTickCount();
 	}
