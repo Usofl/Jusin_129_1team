@@ -36,9 +36,9 @@ private:
 
 	std::list<CObj*>* Mon_Bulletlist;
 
-	DWORD dwTime = 0;
-	DWORD dwTime_bullet = 0;
-	float theta = 0.f;
+	DWORD dwTime;
+	DWORD dwTime_bullet;
+	float theta;
 
 	MONSTERTYPE m_MonType;
 };

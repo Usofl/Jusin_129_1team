@@ -22,3 +22,8 @@
 extern HWND g_hWnd;
 
 #define Monster_C 30.f
+
+#define Diagonal(x,y) sqrtf((x * x) + (y * y))
+
+#define acos(x,y) acos(x / sqrtf((x * x) + (y * y)))
+#define asin(x,y) asin(y / sqrtf((x * x) + (y * y)))
