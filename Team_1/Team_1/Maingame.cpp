@@ -7,6 +7,7 @@ CMaingame::CMaingame()
 	, m_iFPS(0)
 	, m_iScore(0)
 	, m_iLife(0)
+	, m_bCheak(false)
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
 	ZeroMemory(m_szScore, sizeof(TCHAR) * 64);
@@ -47,10 +48,6 @@ void CMaingame::Update(void)
 	{
 		m_iLife = 999;
 	}
-
-	
-	
-	CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]);
 
 	srand(unsigned(time(NULL)));
 
@@ -141,6 +138,7 @@ void CMaingame::Update(void)
 					if (0 < m_iLife)
 					{
 						--m_iLife;
+						m_bCheak = true;
 						m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
 						m_Objlist[OBJ_PLAYER].front()->Initialize();
 						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
@@ -176,10 +174,24 @@ void CMaingame::Update(void)
 
 void CMaingame::Late_Update(void)
 {
+	if (m_bCheak) // 플레이어에 무적 시간 부여
+	{
+		if (m_dwPlayer + 2000 < GetTickCount())
+		{
+			m_dwPlayer = GetTickCount();
+			CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]); // 플레이어 사망 시 점수 깎기. 0.7배 정도.
+			CCollision::Collision_Circle(m_Objlist[OBJ_BULLETMONSTER], m_Objlist[OBJ_PLAYER]);
+			m_bCheak = false;
+		}
+	}
+	else
+	{
+		CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]);
+		CCollision::Collision_Circle(m_Objlist[OBJ_BULLETMONSTER], m_Objlist[OBJ_PLAYER]);
+	}
 	CCollision::Collision_Circle(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_BULLET]);
 	CCollision::Collision_Circle(m_Objlist[OBJ_SHIELD], m_Objlist[OBJ_MONSTER]); // 총알에는 실드가 없어지지 않지만, 몬스터와 충돌했을 경우 실드가 사라지도록 수정
 	CCollision::Collision_Item(m_Objlist[OBJ_ITEM], m_Objlist[OBJ_PLAYER]);
-	CCollision::Collision_Player(m_Objlist[OBJ_BULLETMONSTER], m_Objlist[OBJ_PLAYER]);
 
 	for (auto& list_iter : m_Objlist)
 	{
