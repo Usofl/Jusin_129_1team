@@ -27,10 +27,10 @@ void CMaingame::Initialize(void)
 	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
 		m_Objlist[OBJ_PLAYER].front()->Get_fX(), m_Objlist[OBJ_PLAYER].front()->Get_fY()));
 
-	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_SHIELD,
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
 		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 100.f)));
 
-	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ROLLBOT,
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
 		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 200.f)));
 
 	Get_MONPOINT();

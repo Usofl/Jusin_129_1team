@@ -4,6 +4,7 @@
 CPlayer::CPlayer()
 	: m_GetItem(0)
 	, m_pBulletList(nullptr)
+	, m_fBulletAngle(0)
 {
 }
 
@@ -159,13 +160,18 @@ void CPlayer::Key_Input(void)
 	{
 		if (m_dwTime + 100 < GetTickCount())
 		{
-			if (m_Item_List.empty())
+			if (m_Item_List.empty()) // 아이템 리스트 비어있을 때
 			{
 				m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
 			}
-			for (int i = 0; i < m_Item_List.size(); ++i)
+			else 
 			{
-				m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
+				m_fBulletAngle = m_Item_List.size();
+				for (unsigned int i = 0; i <= m_Item_List.size(); ++i)
+				{
+					m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle));
+					m_fBulletAngle -= 2 ;
+				}
 			}
 			m_dwTime = GetTickCount();
 		}
