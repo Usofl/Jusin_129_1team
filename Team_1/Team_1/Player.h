@@ -25,7 +25,6 @@ public:
 
 	const bool Use_Ult(void);
 	
-
 public:
 	void Key_Input(void);
 	void Collision_Wall(void); // 벽에 충돌시 이벤트 변경하려면 여기로
@@ -41,5 +40,6 @@ private:
 	std::list<CObj*>* m_pBulletList;
 	DWORD m_dwTime;
 	float m_fBulletAngle; // 총알 앵글 각도 
+	BULLETTYPE m_BulletType;
 	
 };
