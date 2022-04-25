@@ -82,6 +82,12 @@
 	<Filter Include="01.Obj\02.Monster\01.Monster_Boss">
       <UniqueIdentifier>{4adcafa5-9c73-4bad-bce4-74d69e980afa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Obj\01.Bullet\00. ScrewBullet">
+      <UniqueIdentifier>{7be49676-2bfe-4db0-be4f-6d2eed84cc7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\01.Bullet\01. GuiBullet">
+      <UniqueIdentifier>{2d407ca3-3566-4766-8bf2-d137fde157a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -183,6 +189,12 @@
     <ClInclude Include="Monster_Boss.h">
       <Filter>01.Obj\02.Monster\01.Monster_Boss</Filter>
     </ClInclude>
+    <ClInclude Include="ScrewBullet.h">
+      <Filter>01.Obj\01.Bullet\00. ScrewBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiBullet.h">
+      <Filter>01.Obj\01.Bullet\01. GuiBullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -250,6 +262,12 @@
     </ClCompile>
     <ClCompile Include="Monster_Boss.cpp">
       <Filter>01.Obj\02.Monster\01.Monster_Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="ScrewBullet.cpp">
+      <Filter>01.Obj\01.Bullet\00. ScrewBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiBullet.cpp">
+      <Filter>01.Obj\01.Bullet\01. GuiBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

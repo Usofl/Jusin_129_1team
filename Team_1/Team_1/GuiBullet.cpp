@@ -1,27 +1,27 @@
 #include "stdafx.h"
-#include "Bullet.h"
+#include "GuiBullet.h"
 
 
-CBullet::CBullet()
+CGuiBullet::CGuiBullet()
 {
 }
 
-CBullet::~CBullet()
+CGuiBullet::~CGuiBullet()
 {
 	Release();
 }
 
-void CBullet::Initialize(void)
+void CGuiBullet::Initialize(void)
 {
 	m_tInfo.fCX = 10.f;
 	m_tInfo.fCY = 10.f;
-	m_fSpeed = 5.f;
-	m_iHP = 1;
 
-	m_fBulletAngle = 0.f;
+	m_fSpeed = 5.f;
+
+	m_iHP = 1;
 }
 
-void CBullet::Update(void)
+void CGuiBullet::Update(void)
 {
 	m_tInfo.fX += m_fSpeed * cosf(m_fAngle * DEGREE);
 	m_tInfo.fY -= m_fSpeed * sinf(m_fAngle * DEGREE);
@@ -32,21 +32,35 @@ void CBullet::Update(void)
 	Update_Rect();
 }
 
-void CBullet::Late_Update(void)
+void CGuiBullet::Late_Update(void)
 {
 	if (50 >= m_tRC.left || WINCX - 50 <= m_tRC.right
 		|| 50 >= m_tRC.top || WINCY - 50 <= m_tRC.bottom)
 	{
 		m_iHP = 0;
 	}
+
+	for (auto& iter : *m_pMonsterList)
+	{
+		float fWidth = iter->Get_fX() - m_tInfo.fX;
+		float fHeight = iter->Get_fY() - m_tInfo.fY;
+		float fDiagonal = Diagonal(fWidth, fHeight);
+
+		if (fDiagonal < 100.f)
+		{
+			float fRadian = acosf(fWidth / fDiagonal);
+			m_fAngle = (fRadian * 180.f) / PI;
+
+			if (iter->Get_fY() > m_tInfo.fY)
+				m_fAngle *= -1.f;
+
+			break;
+		}
+	}
 }
 
-void CBullet::Render(HDC _hDC)
+void CGuiBullet::Render(HDC _hDC)
 {
-	// 총알 테스트용
-	/*MoveToEx(_hDC, m_tInfo.fX, m_tInfo.fY, nullptr);
-	LineTo(_hDC, m_tPoint.x, m_tPoint.y);*/
-
 	Ellipse(_hDC, (int)m_tRC.left, (int)m_tRC.top, (int)m_tRC.right, (int)m_tRC.bottom);
 
 	Rectangle(_hDC, (int)(m_tRC.left - (m_tInfo.fCX * 0.5f)), (int)(m_tRC.top),
@@ -56,6 +70,6 @@ void CBullet::Render(HDC _hDC)
 		(int)(m_tRC.left - (m_tInfo.fCX * 0.5f)), (int)(m_tRC.bottom + 1.f));
 }
 
-void CBullet::Release(void)
+void CGuiBullet::Release(void)
 {
 }

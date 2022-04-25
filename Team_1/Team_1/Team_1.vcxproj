@@ -152,6 +152,7 @@
     <ClInclude Include="Define.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Functor.h" />
+    <ClInclude Include="GuiBullet.h" />
     <ClInclude Include="Include.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemFactory.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RollBot.h" />
+    <ClInclude Include="ScrewBullet.h" />
     <ClInclude Include="Shield.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
@@ -182,6 +184,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletMonster.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="GuiBullet.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Item_Bullet.cpp" />
     <ClCompile Include="Item_Guided.cpp" />
@@ -197,6 +200,7 @@
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RollBot.cpp" />
+    <ClCompile Include="ScrewBullet.cpp" />
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

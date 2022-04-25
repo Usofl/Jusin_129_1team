@@ -1,8 +1,10 @@
 #pragma once
 #include "Obj.h"
-#include "Bullet.h"
 #include "Item.h"
 #include "AbstractFactory.h"
+#include "Bullet.h"
+#include "ScrewBullet.h"
+#include "GuiBullet.h"
 #include "ItemFactory.h"
 
 class CPlayer :
@@ -20,6 +22,7 @@ public:
 	virtual void Release(void) override;
 
 	inline void Set_BulletList(std::list<CObj*>* _pBulletList) { m_pBulletList = _pBulletList; }
+	inline void Set_MonsterList(std::list<CObj*>* _pMonsterList) { m_pMonsterList = _pMonsterList; }
 
 	void Pick_Up_Bullet(void);
 	void Pick_Up_Ulti(void);
@@ -30,6 +33,10 @@ public:
 public:
 	void Key_Input(void);
 	void Collision_Wall(void); // 벽에 충돌시 이벤트 변경하려면 여기로
+
+private:
+	template<typename T>
+	CObj* Create_Bullet(void);
 
 private:
 	std::list<CObj*> m_Item_List;
@@ -44,5 +51,7 @@ private:
 	DWORD m_dwTime;
 	float m_fBulletAngle; // 총알 앵글 각도 
 	BULLETTYPE m_BulletType;
+	std::list<CObj*>* m_pMonsterList;
 	
 };
+
