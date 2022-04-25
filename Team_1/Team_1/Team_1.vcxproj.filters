@@ -61,8 +61,23 @@
     <Filter Include="01.Obj\03.Item">
       <UniqueIdentifier>{c7d752df-01d0-4803-93ce-2366d939fb73}</UniqueIdentifier>
     </Filter>
-	<Filter Include="01.Obj\06.Ultimate">
+    <Filter Include="01.Obj\06.Ultimate">
       <UniqueIdentifier>{ab704782-9003-4db4-a87f-9f06d919444d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\03.Item\00.Shield">
+      <UniqueIdentifier>{f8a3b921-c860-46f3-bf93-09c3cb45b1e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\03.Item\01.RollBot">
+      <UniqueIdentifier>{3427b4c5-9566-4c17-a62e-adc3a77b1670}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\03.Item\02.Ultimate">
+      <UniqueIdentifier>{04da8d09-dcbd-4d63-a777-ce9b679dd383}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\03.Item\04.Guided">
+      <UniqueIdentifier>{e1578ae9-7298-4a82-bd8d-5c68ddf71c42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\03.Item\05.Item_Bullet">
+      <UniqueIdentifier>{67dc7e46-a1f8-406c-8bc4-992aee6ae7a8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +162,21 @@
     <ClInclude Include="Monster_C.h">
       <Filter>01.Obj\02.Monster\04.Monster_C</Filter>
     </ClInclude>
+    <ClInclude Include="Item_Guided.h">
+      <Filter>01.Obj\03.Item\04.Guided</Filter>
+    </ClInclude>
+    <ClInclude Include="Item_RollBot.h">
+      <Filter>01.Obj\03.Item\01.RollBot</Filter>
+    </ClInclude>
+    <ClInclude Include="Item_Shield.h">
+      <Filter>01.Obj\03.Item\00.Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="Item_UltiMate.h">
+      <Filter>01.Obj\03.Item\02.Ultimate</Filter>
+    </ClInclude>
+    <ClInclude Include="Item_Bullet.h">
+      <Filter>01.Obj\03.Item\05.Item_Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -196,6 +226,21 @@
     </ClCompile>
     <ClCompile Include="Monster_C.cpp">
       <Filter>01.Obj\02.Monster\04.Monster_C</Filter>
+    </ClCompile>
+    <ClCompile Include="Item_Guided.cpp">
+      <Filter>01.Obj\03.Item\04.Guided</Filter>
+    </ClCompile>
+    <ClCompile Include="Item_RollBot.cpp">
+      <Filter>01.Obj\03.Item\01.RollBot</Filter>
+    </ClCompile>
+    <ClCompile Include="Item_Shield.cpp">
+      <Filter>01.Obj\03.Item\00.Shield</Filter>
+    </ClCompile>
+    <ClCompile Include="Item_UltiMate.cpp">
+      <Filter>01.Obj\03.Item\02.Ultimate</Filter>
+    </ClCompile>
+    <ClCompile Include="Item_Bullet.cpp">
+      <Filter>01.Obj\03.Item\05.Item_Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

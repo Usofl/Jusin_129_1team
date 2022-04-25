@@ -2,9 +2,7 @@
 #include "Player.h"
 
 CPlayer::CPlayer()
-	: m_fGetItem(0.f)
-	, m_pBulletList(nullptr)
-	, m_fGetUlt(0.f)
+	: m_pBulletList(nullptr)
 	, m_fBulletAngle(0)
 	, m_BulletType(BULLETTYPE_DEFULT)
 	, m_Gui(nullptr)
@@ -103,7 +101,7 @@ void CPlayer::Render(HDC _hDC)
 		iter->Render(_hDC);
 	}
 
-	for (auto& iter : m_Ult_List)
+	for (auto& iter : m_Ulti_List)
 	{
 		iter->Render(_hDC);
 	}
@@ -130,7 +128,7 @@ void CPlayer::Release(void)
 		iter = m_Item_List.erase(iter);
 	}
 
-	for (auto iter = m_Ult_List.begin(); iter != m_Ult_List.end();)
+	for (auto iter = m_Ulti_List.begin(); iter != m_Ulti_List.end();)
 	{
 		if (*iter != nullptr)
 		{
@@ -138,7 +136,7 @@ void CPlayer::Release(void)
 			*iter = nullptr;
 		}
 
-		iter = m_Ult_List.erase(iter);
+		iter = m_Ulti_List.erase(iter);
 	}
 
 	if (m_Gui != nullptr)
@@ -148,53 +146,46 @@ void CPlayer::Release(void)
 	}
 }
 
-void CPlayer::Pick_Up_Item(CObj * _Item)
+void CPlayer::Pick_Up_Bullet()
 {
-	CItem* item = new CItem(*static_cast<CItem*>(_Item));
-	item->Pick_Up_Set(m_fGetItem);
-	
-	m_fGetItem += 25.f;
+	CObj* item = CItemFactory::Create_Item_Bullet(0.f, 0.f);
+	static_cast<CItem*>(item)->Pick_Up_Set();
 
 	m_Item_List.push_back(item);
 }
 
-void CPlayer::Pick_Up_Ult(CObj * _Ult)
+void CPlayer::Pick_Up_Ulti()
 {
-	CItem* item = new CItem(*static_cast<CItem*>(_Ult));
-	item->Pick_Up_Set_Ult(m_fGetUlt);
+	CObj* item = CItemFactory::Create_Item_UltiMate(0.f,0.f);
+	static_cast<CItem*>(item)->Pick_Up_Set();
 
-	m_fGetUlt += 25.f;
-
-	m_Ult_List.push_back(item);
+	m_Ulti_List.push_back(item);
 }
 
-void CPlayer::Pick_Up_Gui(CObj * _Gui)
+void CPlayer::Pick_Up_Guided()
 {
 	if (nullptr == m_Gui)
 	{
-		m_Gui = new CItem(*static_cast<CItem*>(_Gui));
-		static_cast<CItem*>(m_Gui)->Pick_Up_Set_Gui();
-
+		m_Gui = CItemFactory::Create_Item_Guided(0.f, 0.f);
+		static_cast<CItem*>(m_Gui)->Pick_Up_Set();
+		
 		m_dwUsing = GetTickCount();
 	}
-	
+		
 	m_Gui->Set_HP(m_Gui->Get_HP() + 60);
 }
 
 const bool CPlayer::Use_Ult(void)
 {
+	bool bEmpty = m_Ulti_List.empty();
+
+	if (!bEmpty)
 	{
-		bool bEmpty = m_Ult_List.empty();
-
-		if (!bEmpty)
-		{
-			m_Ult_List.pop_back();
-		}
-
-		m_fGetUlt -= 25.f;
-
-		return bEmpty;
+		delete m_Ulti_List.back();
+		m_Ulti_List.pop_back();
 	}
+
+	return bEmpty;
 }
 
 void CPlayer::Key_Input(void)
