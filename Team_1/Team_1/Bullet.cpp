@@ -41,7 +41,7 @@ void CBullet::Late_Update(void)
 	}
 }
 
-void CBullet::Render(HDC& _hDC)
+void CBullet::Render(HDC _hDC)
 {
 	// 총알 테스트용
 	/*MoveToEx(_hDC, m_tInfo.fX, m_tInfo.fY, nullptr);

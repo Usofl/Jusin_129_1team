@@ -13,7 +13,7 @@ public:
 	virtual void Initialize(void) override;
 	virtual void Update(void) override;
 	virtual void Late_Update(void) override;
-	virtual void Render(HDC& _hDC) PURE;
+	virtual void Render(HDC _hDC) PURE;
 	virtual void Release(void) PURE;
 
 	virtual void Pick_Up_Set(void) PURE;

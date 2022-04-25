@@ -19,7 +19,7 @@ CItem_Bullet::~CItem_Bullet()
 	Release();
 }
 
-void CItem_Bullet::Render(HDC& _hDC)
+void CItem_Bullet::Render(HDC _hDC)
 {
 	Ellipse(_hDC, m_tRC.left - 2, m_tRC.top - 10, m_tRC.right + 1, m_tRC.bottom - 4);
 	Rectangle(_hDC, m_tRC.left - 2, m_tRC.top - 2, m_tRC.right + 1, m_tRC.bottom + 1);

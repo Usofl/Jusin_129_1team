@@ -26,10 +26,11 @@ void CMaingame::Initialize(void)
 
 	m_hDC = GetDC(g_hWnd);
 
-	m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
-	m_Objlist[OBJ_PLAYER].front()->Initialize();
-	static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
-	static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_MonsterList(&m_Objlist[OBJ_MONSTER]);
+	CPlayer* player = new CPlayer;
+	player->Initialize();
+	player->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+	player->Set_MonsterList(&m_Objlist[OBJ_MONSTER]);
+	m_Objlist[OBJ_PLAYER].push_back(player);
 	m_iLife = 3;
 
 	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Bullet
@@ -71,10 +72,12 @@ void CMaingame::Update(void)
 			--m_iLife; // 라이프 스코어 감소
 			m_bCheak = true; // 사망시 무적 시간 부여를 위한 bool 변수
 			m_iScore = (int)(m_iScore * 0.8); // 사망시 점수 감소
-			m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
-			m_Objlist[OBJ_PLAYER].front()->Initialize();
-			static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
-			static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_MonsterList(&m_Objlist[OBJ_MONSTER]);
+
+			CPlayer* player = new CPlayer;
+			player->Initialize();
+			player->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+			player->Set_MonsterList(&m_Objlist[OBJ_MONSTER]);
+			m_Objlist[OBJ_PLAYER].push_back(player);
 
 			for (auto iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
 			{
@@ -180,17 +183,18 @@ void CMaingame::Update(void)
 		if (0 >= (*iter)->Get_HP())
 		{
 			ITEMID eItem = static_cast<CItem*>(*iter)->Get_Item_ID();
+			CPlayer* player = static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front());
 
 			switch (eItem)
 			{
 			case ITEM_BULLET:
-				static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Bullet();
+				player->Pick_Up_Bullet();
 				break;
 			case ITEM_GUIDED:
-				static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Guided();
+				player->Pick_Up_Guided();
 				break;
 			case ITEM_ULTIMATE:
-				static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Ulti();
+				player->Pick_Up_Ulti();
 				break;
 			case ITEM_SHIELD:
 			{
@@ -335,6 +339,7 @@ void CMaingame::Release(void)
 	{
 		for (auto iter = List_iter.begin(); iter != List_iter.end();)
 		{
+			(*iter)->Release();
 			Safe_Delete<CObj*>(*iter);
 			iter = List_iter.erase(iter);
 		}

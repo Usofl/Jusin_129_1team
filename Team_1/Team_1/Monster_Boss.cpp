@@ -57,7 +57,7 @@ void CMonster_Boss::Update(void)
 	Update_Rect();
 }
 
-void CMonster_Boss::Render(HDC& _hDC)
+void CMonster_Boss::Render(HDC _hDC)
 {
 	// 보스의 형태.
 	//Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);

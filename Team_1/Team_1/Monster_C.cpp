@@ -51,7 +51,7 @@ void CMonster_C::Update(void)
 //{
 //}
 
-void CMonster_C::Render(HDC& _hDC)
+void CMonster_C::Render(HDC _hDC)
 {
 	// «œ√º
 	Rectangle(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.1f) * m_iReverse, m_tRC.top + (int)(m_tInfo.fCY * 0.5f)

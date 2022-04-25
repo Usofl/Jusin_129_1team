@@ -41,7 +41,7 @@ void CRollBot::Late_Update(void)
 	}
 }
 
-void CRollBot::Render(HDC& _hDC)
+void CRollBot::Render(HDC _hDC)
 {
 	Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
 	Rectangle(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);

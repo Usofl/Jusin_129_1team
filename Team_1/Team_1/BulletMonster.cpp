@@ -64,7 +64,7 @@ void CBulletMonster::Late_Update(void)
 	}
 }
 
-void CBulletMonster::Render(HDC& _hDC)
+void CBulletMonster::Render(HDC _hDC)
 {
 	Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
 

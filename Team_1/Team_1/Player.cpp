@@ -9,25 +9,9 @@ CPlayer::CPlayer()
 {
 }
 
-CPlayer::CPlayer(CPlayer & _rObj)
-	: CObj(&_rObj)
-	, m_Item_List(_rObj.m_Item_List)
-	, m_Ulti_List(_rObj.m_Ulti_List)
-	, m_Gui(_rObj.m_Gui)
-	, m_dwUsing(_rObj.m_dwUsing)
-	, m_fBSize(_rObj.m_fBSize)
-	, m_pBulletList(_rObj.m_pBulletList)
-	, m_dwTime(_rObj.m_dwTime)
-	, m_fBulletAngle(_rObj.m_fBulletAngle)
-	, m_BulletType(_rObj.m_BulletType)
-	, m_pMonsterList(_rObj.m_pMonsterList)
-{
-	lstrcpyW(m_szUsingGui, _rObj.m_szUsingGui);
-}
 
 CPlayer::~CPlayer()
 {
-	Release();
 }
 
 void CPlayer::Initialize(void)
@@ -83,7 +67,7 @@ void CPlayer::Late_Update(void)
 	Collision_Wall();
 }
 
-void CPlayer::Render(HDC& _hDC)
+void CPlayer::Render(HDC _hDC)
 {
 	MoveToEx(_hDC, (int)m_tInfo.fX, (int)m_tInfo.fY, nullptr);
 	LineTo(_hDC, (int)m_tPoint.x, (int)m_tPoint.y);

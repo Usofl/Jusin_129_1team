@@ -19,7 +19,7 @@ CItem_UltiMate::~CItem_UltiMate()
 	Release();
 }
 
-void CItem_UltiMate::Render(HDC& _hDC)
+void CItem_UltiMate::Render(HDC _hDC)
 {
 	Rectangle(_hDC, m_tRC.left - 2, m_tRC.top - 2, m_tRC.right + 1, m_tRC.bottom + 1);
 	DrawText(_hDC, L"U", 1, &m_tRC, DT_CENTER);

@@ -11,7 +11,7 @@ public:
 	virtual void Initialize(void) PURE;
 	virtual void Update(void) PURE;
 	virtual void Late_Update(void) PURE;
-	virtual void Render(HDC& _hDC) PURE;
+	virtual void Render(HDC _hDC) PURE;
 	virtual void Release(void) PURE;
 
 	inline const POINT& Get_POINT(void) { return m_tPoint; }

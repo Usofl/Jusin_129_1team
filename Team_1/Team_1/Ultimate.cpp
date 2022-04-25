@@ -53,7 +53,7 @@ void CUltimate::Late_Update(void)
 {
 }
 
-void CUltimate::Render(HDC& _hDC)
+void CUltimate::Render(HDC _hDC)
 {
 	//Rectangle(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
 

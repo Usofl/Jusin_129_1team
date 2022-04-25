@@ -12,7 +12,7 @@ public:
 	virtual void Initialize(void) override;
 	virtual void Update(void) override;
 	virtual void Late_Update(void) override;
-	virtual void Render(HDC& _hDC) override;
+	virtual void Render(HDC _hDC) override;
 	virtual void Release(void) override;
 
 public:
@@ -21,7 +21,6 @@ public:
 	inline MONSTERTYPE Get_Monster_Type(void) { return m_TYPE; }
 
 	void Set_Size(const float& fa, const float& fb);
-	
 
 private:
 	MONSTERTYPE m_TYPE;
