@@ -74,6 +74,7 @@ void CMaingame::Update(void)
 			m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
 			m_Objlist[OBJ_PLAYER].front()->Initialize();
 			static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+			static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_MonsterList(&m_Objlist[OBJ_MONSTER]);
 
 			for (auto iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
 			{

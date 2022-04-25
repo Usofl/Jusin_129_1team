@@ -63,35 +63,42 @@ void CMonster_Boss::Render(HDC _hDC)
 	//Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
 
 	// 보스의 진정한 형태.
-	MoveToEx(_hDC, m_tRC.left, m_tRC.top + (m_tRC.bottom - m_tRC.top) * 0.5f, NULL);
-	LineTo(_hDC, m_tRC.left + (m_tRC.right - m_tRC.left) / 3.f, m_tRC.top + (m_tRC.bottom - m_tRC.top) / 3.f);
-	LineTo(_hDC, m_tRC.left + (m_tRC.right - m_tRC.left) / 3.f, m_tRC.top + 2.f * (m_tRC.bottom - m_tRC.top) / 3.f);
-	LineTo(_hDC, m_tRC.left, m_tRC.top + (m_tRC.bottom - m_tRC.top) * 0.5f);
-	MoveToEx(_hDC, m_tRC.left + (m_tRC.right - m_tRC.left) / 3.f, m_tRC.top + 2.f * (m_tRC.bottom - m_tRC.top) / 3.f, NULL);
-	LineTo(_hDC, m_tRC.left + 2.f * (m_tRC.right - m_tRC.left) / 3.f, m_tRC.bottom);
+	MoveToEx(_hDC, m_tRC.left, m_tRC.top + (int)((m_tRC.bottom - m_tRC.top) * 0.5f), NULL);
+	LineTo(_hDC, m_tRC.left + (int)(m_tRC.right - m_tRC.left) / 3, m_tRC.top + (int)(m_tRC.bottom - m_tRC.top) / 3);
+	LineTo(_hDC, m_tRC.left + (int)(m_tRC.right - m_tRC.left) / 3, m_tRC.top + 2 * (int)(m_tRC.bottom - m_tRC.top) / 3);
+	LineTo(_hDC, m_tRC.left, m_tRC.top + (int)((m_tRC.bottom - m_tRC.top) * 0.5f));
+	MoveToEx(_hDC, m_tRC.left + (int)(m_tRC.right - m_tRC.left) / 3, m_tRC.top + 2 * (int)(m_tRC.bottom - m_tRC.top) / 3, NULL);
+	LineTo(_hDC, m_tRC.left + 2 * (int)(m_tRC.right - m_tRC.left) / 3, m_tRC.bottom);
 	LineTo(_hDC, m_tRC.right, m_tRC.bottom);
-	LineTo(_hDC, m_tRC.left + 2.f * (m_tRC.right - m_tRC.left) / 3.f + 30.f, m_tRC.top + 2.f * (m_tRC.bottom - m_tRC.top) / 3.f);
+	LineTo(_hDC, m_tRC.left + 2 * (int)(m_tRC.right - m_tRC.left) / 3 + 30, m_tRC.top + 2 * (int)(m_tRC.bottom - m_tRC.top) / 3);
 	//LineTo(_hDC, m_tRC.right, m_tRC.top + 2.f * (m_tRC.bottom - m_tRC.top) / 3.f);
 	//LineTo(_hDC, m_tRC.right, m_tRC.top + (m_tRC.bottom - m_tRC.top) / 3.f);
 
 	//LineTo(_hDC, m_tRC.left + 2.f * (m_tRC.right - m_tRC.left) / 3.f, m_tRC.top + (m_tRC.bottom - m_tRC.top) / 3.f);
 
-	MoveToEx(_hDC, m_tRC.left + 2.f * (m_tRC.right - m_tRC.left) / 3.f + 30.f, m_tRC.top + (m_tRC.bottom - m_tRC.top) / 3.f,nullptr);
+	MoveToEx(_hDC, m_tRC.left + 2 * (m_tRC.right - m_tRC.left) / 3 + 30, m_tRC.top + (m_tRC.bottom - m_tRC.top) / 3,nullptr);
 	LineTo(_hDC, m_tRC.right,m_tRC.top);
-	LineTo(_hDC, m_tRC.left + 2.f * (m_tRC.right - m_tRC.left) / 3.f, m_tRC.top);
-	LineTo(_hDC, m_tRC.left + (m_tRC.right - m_tRC.left) / 3.f, m_tRC.top + (m_tRC.bottom - m_tRC.top) / 3.f);
+	LineTo(_hDC, m_tRC.left + 2 * (m_tRC.right - m_tRC.left) / 3, m_tRC.top);
+	LineTo(_hDC, m_tRC.left + (m_tRC.right - m_tRC.left) / 3, m_tRC.top + (m_tRC.bottom - m_tRC.top) / 3);
 	//불
-	Ellipse(_hDC, m_tRC.left + 0.5 * (m_tRC.right - m_tRC.left) + 20.f, m_tRC.top + 3.f * (m_tRC.bottom - m_tRC.top) / 9.f, m_tRC.right - 20.f, m_tRC.top + 4.f * (m_tRC.bottom - m_tRC.top) / 9.f);
-	Ellipse(_hDC, m_tRC.left + 0.5 * (m_tRC.right - m_tRC.left) + 20.f, m_tRC.top + 4.f * (m_tRC.bottom - m_tRC.top) / 9.f, m_tRC.right - 20.f, m_tRC.top + 5.f * (m_tRC.bottom - m_tRC.top) / 9.f);
-	Ellipse(_hDC, m_tRC.left + 0.5 * (m_tRC.right - m_tRC.left) + 20.f, m_tRC.top + 5.f * (m_tRC.bottom - m_tRC.top) / 9.f, m_tRC.right - 20.f, m_tRC.top + 6.f * (m_tRC.bottom - m_tRC.top) / 9.f);
+	Ellipse(_hDC, m_tRC.left + (int)(0.5 * (m_tRC.right - m_tRC.left)) + 20, m_tRC.top + 3 * (m_tRC.bottom - m_tRC.top) / 9, m_tRC.right - 20, m_tRC.top + 4 * (m_tRC.bottom - m_tRC.top) / 9);
+	Ellipse(_hDC, m_tRC.left + (int)(0.5 * (m_tRC.right - m_tRC.left)) + 20, m_tRC.top + 4 * (m_tRC.bottom - m_tRC.top) / 9, m_tRC.right - 20, m_tRC.top + 5 * (m_tRC.bottom - m_tRC.top) / 9);
+	Ellipse(_hDC, m_tRC.left + (int)(0.5 * (m_tRC.right - m_tRC.left)) + 20, m_tRC.top + 5 * (m_tRC.bottom - m_tRC.top) / 9, m_tRC.right - 20, m_tRC.top + 6 * (m_tRC.bottom - m_tRC.top) / 9);
 	//중심부 몸통.
-	Rectangle(_hDC, m_tRC.left + (m_tRC.right - m_tRC.left) / 3.f, m_tRC.top + (m_tRC.bottom - m_tRC.top) / 3.f, m_tRC.left + 2.f * (m_tRC.right - m_tRC.left) / 3.f + 30.f, m_tRC.top + 2.f * (m_tRC.bottom - m_tRC.top) / 3.f);
+	Rectangle(_hDC, m_tRC.left + (m_tRC.right - m_tRC.left) / 3, m_tRC.top + (m_tRC.bottom - m_tRC.top) / 3, m_tRC.left + 2 * (m_tRC.right - m_tRC.left) / 3 + 30, m_tRC.top + 2 * (m_tRC.bottom - m_tRC.top) / 3);
 	//중심부 포신 위치.
-	MoveToEx(_hDC, m_tRC.left + 2.f * (m_tRC.right - m_tRC.left) / 3.f, m_tRC.top + 2.f * (m_tRC.bottom - m_tRC.top) / 3.f, NULL);
-	LineTo(_hDC, m_tRC.left + 2.f * (m_tRC.right - m_tRC.left) / 3.f, m_tRC.top + (m_tRC.bottom - m_tRC.top) / 3.f);
+	MoveToEx(_hDC, m_tRC.left + 2 * (m_tRC.right - m_tRC.left) / 3, m_tRC.top + 2 * (m_tRC.bottom - m_tRC.top) / 3, NULL);
+	LineTo(_hDC, m_tRC.left + 2 * (m_tRC.right - m_tRC.left) / 3, m_tRC.top + (m_tRC.bottom - m_tRC.top) / 3);
 
-	Rectangle(_hDC, m_tRC.left + 0.5 * (m_tRC.right - m_tRC.left), m_tRC.top + 0.5 * (m_tRC.bottom - m_tRC.top) - (m_tRC.bottom - m_tRC.top) / 36.f, m_tRC.left + 2.f * (m_tRC.right - m_tRC.left) / 3.f, m_tRC.top + 0.5 * (m_tRC.bottom - m_tRC.top) + (m_tRC.bottom - m_tRC.top) / 36.f);
-	Ellipse(_hDC, m_tRC.left + 0.5 * (m_tRC.right - m_tRC.left) - (m_tRC.right - m_tRC.left) / 36.f, m_tRC.top + 0.5 * (m_tRC.bottom - m_tRC.top) - (m_tRC.bottom - m_tRC.top) / 36.f, m_tRC.left + 0.5 * (m_tRC.right - m_tRC.left) + (m_tRC.right - m_tRC.left) / 36.f, m_tRC.top + 0.5 * (m_tRC.bottom - m_tRC.top) + (m_tRC.bottom - m_tRC.top) / 36.f);
+	Rectangle(_hDC, m_tRC.left + (int)(0.5 * (m_tRC.right - m_tRC.left))
+		, m_tRC.top + (int)(0.5 * (m_tRC.bottom - m_tRC.top)) - (m_tRC.bottom - m_tRC.top) / 36
+		, m_tRC.left + 2 * (m_tRC.right - m_tRC.left) / 3
+		, m_tRC.top + (int)(0.5 * (m_tRC.bottom - m_tRC.top)) + (m_tRC.bottom - m_tRC.top) / 36);
+
+	Ellipse(_hDC, m_tRC.left + (int)(0.5 * (m_tRC.right - m_tRC.left)) - (m_tRC.right - m_tRC.left) / 36
+		, m_tRC.top + (int)(0.5 * (m_tRC.bottom - m_tRC.top)) - (m_tRC.bottom - m_tRC.top) / 36
+		, m_tRC.left + (int)(0.5 * (m_tRC.right - m_tRC.left)) + (m_tRC.right - m_tRC.left) / 36
+		, m_tRC.top + (int)(0.5 * (m_tRC.bottom - m_tRC.top)) + (m_tRC.bottom - m_tRC.top) / 36);
 
 
 
