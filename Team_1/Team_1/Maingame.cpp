@@ -329,10 +329,14 @@ void CMaingame::Render(void)
 
 	while (m_bGameOver)                      //    게임 종료 시키기.
 	{
-		while (true)
+		while (m_dwTime + 1000 < GetTickCount())
 		{
 			swprintf_s(m_szMonHP, L"게임이 종료 되였습니다.");
 			TextOutW(m_hDC, WINCX - GAMESIZE - 300, OUTGAMESIZE, m_szMonHP, lstrlen(m_szMonHP));
+		}
+		if (GetAsyncKeyState('Q'))
+		{
+			PostQuitMessage(0);
 		}
 	}
 
