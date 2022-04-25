@@ -56,7 +56,7 @@ public:
 		return pObj;
 	}
 
-	static CObj*    Create(float fA, float fB, float fAngle, MONSTERTYPE _type)
+	static CObj*    Create(float fA, float fB, float fAngle, MONSTERTYPE _type) // 난수 받기.
 	{
 		CObj*    pObj = new T;
 		pObj->Initialize();

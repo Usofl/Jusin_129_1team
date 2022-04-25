@@ -50,7 +50,7 @@ void CMaingame::Update(void)
 
 	if (!m_Objlist[OBJ_PLAYER].empty())
 	{
-		if ((m_Objlist[OBJ_MONSTER].size() < 4) && (m_iScore <= 350) && (!m_bBossCheck)) // 스코어 1000이하 몬스터 개수 0이상 4개이하면 짭몬들이 생성.
+		if ((m_Objlist[OBJ_MONSTER].size() < 2) && (m_iScore <= 350) && (!m_bBossCheck)) // 스코어 1000이하 몬스터 개수 0이상 4개이하면 짭몬들이 생성.
 		{
 			if (m_dwTime + 1000 < GetTickCount())
 			{
@@ -239,7 +239,7 @@ void CMaingame::Late_Update(void)
 void CMaingame::Render(void)
 {
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
-	Rectangle(m_hDC, GAMESIZE, GAMESIZE, WINCX - GAMESIZE, WINCY - GAMESIZE);
+	//Rectangle(m_hDC, GAMESIZE, GAMESIZE, WINCX - GAMESIZE, WINCY - GAMESIZE);
 	swprintf_s(m_szScore, L"Score : %d", m_iScore);
 	TextOutW(m_hDC, GAMESIZE, OUTGAMESIZE, m_szScore, lstrlen(m_szScore));
 	swprintf_s(m_szLife, L"Life : %d", m_iLife);

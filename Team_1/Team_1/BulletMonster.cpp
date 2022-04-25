@@ -48,6 +48,7 @@ void CBulletMonster::Update(void)
 
 		//2. 3방향 총알 나가기.
 
+
 	}
 
 	Update_Rect();
