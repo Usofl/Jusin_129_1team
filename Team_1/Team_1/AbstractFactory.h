@@ -56,7 +56,19 @@ public:
 		return pObj;
 	}
 
-	static CObj*    Create(float fA, float fB, float fAngle, MONSTERTYPE _type) // 난수 받기.
+	static CObj*    Create_Bullet(float fA, float fB, float fAngle, BULLETTYPE _eType)
+	{
+		CObj*    pObj = new T(_eType);
+		pObj->Initialize();
+
+		POINT p{ (long)fA, (long)fB };
+		pObj->Make_POINT(p);
+		pObj->Set_Angle(fAngle);
+
+		return pObj;
+	}
+
+	static CObj*    Create(float fA, float fB, float fAngle, MONSTERTYPE _type)
 	{
 		CObj*    pObj = new T;
 		pObj->Initialize();

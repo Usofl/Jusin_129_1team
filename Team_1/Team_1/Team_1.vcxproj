@@ -155,6 +155,11 @@
     <ClInclude Include="Include.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemFactory.h" />
+    <ClInclude Include="Item_Bullet.h" />
+    <ClInclude Include="Item_Guided.h" />
+    <ClInclude Include="Item_RollBot.h" />
+    <ClInclude Include="Item_Shield.h" />
+    <ClInclude Include="Item_UltiMate.h" />
     <ClInclude Include="Maingame.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterFactory.h" />
@@ -178,6 +183,11 @@
     <ClCompile Include="BulletMonster.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Item_Bullet.cpp" />
+    <ClCompile Include="Item_Guided.cpp" />
+    <ClCompile Include="Item_RollBot.cpp" />
+    <ClCompile Include="Item_Shield.cpp" />
+    <ClCompile Include="Item_UltiMate.cpp" />
     <ClCompile Include="Maingame.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Monster_A.cpp" />

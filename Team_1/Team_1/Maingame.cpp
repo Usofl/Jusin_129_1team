@@ -7,7 +7,7 @@ CMaingame::CMaingame()
 	, m_iFPS(0)
 	, m_iScore(0)
 	, m_iLife(0)
-	, m_bCheak(false)
+	, m_bCheak(true)
 	, m_bBossCheck(false)
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
@@ -31,11 +31,21 @@ void CMaingame::Initialize(void)
 	static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
 	m_iLife = 3;
 
-	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
-		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 200.f)));
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Bullet
+		(m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 200.f)));
 
-	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ULTIMATE,
-		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Shield
+		(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 200.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_RollBot
+	(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 50.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Guided
+		(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 100.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_UltiMate
+		(m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+
 
 	Get_MONPOINT();
 }
@@ -46,11 +56,44 @@ void CMaingame::Update(void)
 
 	// 일시정지, 키인풋 함수, 이니셜라이즈에 게임 메인화면 출력
 
+	Key_Input();
+
 	srand(unsigned(time(NULL)));
 
-	if (!m_Objlist[OBJ_PLAYER].empty())
+	if (m_Objlist[OBJ_PLAYER].empty())
 	{
-		if ((m_Objlist[OBJ_MONSTER].size() < 2) && (m_iScore <= 350) && (!m_bBossCheck)) // 스코어 1000이하 몬스터 개수 0이상 4개이하면 짭몬들이 생성.
+		if (0 < m_iLife)
+		{
+			if (!m_Objlist[OBJ_ULTIMATE].empty())
+			{
+				Safe_Delete<CObj*>(*m_Objlist[OBJ_ULTIMATE].begin());
+				m_Objlist[OBJ_ULTIMATE].erase(m_Objlist[OBJ_ULTIMATE].begin());
+			}
+			--m_iLife; // 라이프 스코어 감소
+			m_bCheak = true; // 사망시 무적 시간 부여를 위한 bool 변수
+			m_iScore = (int)(m_iScore * 0.8); // 사망시 점수 감소
+			m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
+			m_Objlist[OBJ_PLAYER].front()->Initialize();
+			static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+
+			for (auto iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
+			{
+				static_cast<CMonster*>(*iter)->Set_Player(m_Objlist[OBJ_PLAYER].front());
+			}
+			return;
+		}
+
+		else
+		{
+			if (GetAsyncKeyState('Q'))
+			{
+				PostQuitMessage(0);
+			}
+		}
+	}
+	else
+	{
+		if (m_Objlist[OBJ_MONSTER].size() < 4)
 		{
 			if (m_dwTime + 1000 < GetTickCount())
 			{
@@ -71,77 +114,103 @@ void CMaingame::Update(void)
 		}
 	}
 
-	for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
+	for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end();)
+	{
 		static_cast<CMonster_C*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);
 
-	for (int i = OBJ_PLAYER; i < OBJ_END; ++i)
-	{
-		for (auto iter = m_Objlist[i].begin(); iter != m_Objlist[i].end();)
+		if (0 >= (*iter)->Get_HP())
 		{
-			if (0 >= (*iter)->Get_HP())
+			Create_Item((*iter)->Get_fX(), (*iter)->Get_fY()); // 아이템 생성
+			m_iScore += 10; // score 증가
+
+			Safe_Delete<CObj*>(*iter);
+			iter = m_Objlist[OBJ_MONSTER].erase(iter);
+		}
+		else
+		{
+			(*iter)->Update();
+			++iter;
+		}
+	}
+
+	for (auto iter = m_Objlist[OBJ_PLAYER].begin(); iter != m_Objlist[OBJ_PLAYER].end();)
+	{
+		if (0 >= (*iter)->Get_HP())
+		{
+			for (auto& iter : m_Objlist[OBJ_MONSTER])
 			{
-				if (i == OBJ_PLAYER)
+				static_cast<CMonster*>(iter)->Set_Player(nullptr);
+			}
+
+			for (auto iter = m_Objlist[OBJ_SHIELD].begin(); iter != m_Objlist[OBJ_SHIELD].end();)
+			{
+				Safe_Delete<CObj*>(*iter);
+				iter = m_Objlist[OBJ_SHIELD].erase(iter);
+			}
+
+			for (auto iter = m_Objlist[OBJ_ROLLBOT].begin(); iter != m_Objlist[OBJ_ROLLBOT].end();)
+			{
+				Safe_Delete<CObj*>(*iter);
+				iter = m_Objlist[OBJ_ROLLBOT].erase(iter);
+			}
+
+			Safe_Delete<CObj*>(*iter);
+			iter = m_Objlist[OBJ_PLAYER].erase(iter);
+		}
+		else
+		{
+			(*iter)->Update();
+			++iter;
+		}
+	}
+
+	for (auto iter = m_Objlist[OBJ_ITEM].begin(); iter != m_Objlist[OBJ_ITEM].end();)
+	{
+		if (0 >= (*iter)->Get_HP())
+		{
+			ITEMID eItem = static_cast<CItem*>(*iter)->Get_Item_ID();
+
+			switch (eItem)
+			{
+			case ITEM_BULLET:
+				static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Bullet();
+				break;
+			case ITEM_GUIDED:
+				static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Guided();
+				break;
+			case ITEM_ULTIMATE:
+				static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Ulti();
+				break;
+			case ITEM_SHIELD:
+			{
+				CObj* shield = CAbstractFactory<CShield>::Create();
+				shield->Initialize();
+				if (!m_Objlist[OBJ_SHIELD].empty())
 				{
-					for (auto& iter : m_Objlist[OBJ_MONSTER])
-					{
-						static_cast<CMonster*>(iter)->Set_Player(nullptr);
-					}
-
-					for (auto iter = m_Objlist[OBJ_SHIELD].begin(); iter != m_Objlist[OBJ_SHIELD].end();)
-					{
-						delete *iter;
-						iter = m_Objlist[OBJ_SHIELD].erase(iter);
-					}
-
-					for (auto iter = m_Objlist[ITEM_ROLLBOT].begin(); iter != m_Objlist[ITEM_ROLLBOT].end();)
-					{
-						delete *iter;
-						iter = m_Objlist[ITEM_ROLLBOT].erase(iter);
-					}
+					shield->Set_Angle(m_Objlist[OBJ_SHIELD].back()->Get_Angle() + SHILED_INTERVAL);
 				}
+				static_cast<CShield*>(shield)->Set_Player(m_Objlist[OBJ_PLAYER].front());
 
-				if (i == OBJ_MONSTER) // 삭제되는 OBJ가 몬스터일 경우
+				m_Objlist[OBJ_SHIELD].push_back(shield);
+			}
+				break;
+			case ITEM_ROLLBOT:
+			{
+				CObj* rollBot = CAbstractFactory<CRollBot>::Create();
+				rollBot->Initialize();
+				if (!m_Objlist[OBJ_ROLLBOT].empty())
 				{
-					Create_Item((*iter)->Get_fX(), (*iter)->Get_fY()); // 아이템 생성
-					m_iScore += 10; // score 증가
+					rollBot->Set_Angle(m_Objlist[OBJ_ROLLBOT].back()->Get_Angle() + SHILED_INTERVAL);
 				}
+				static_cast<CRollBot*>(rollBot)->Set_Player(m_Objlist[OBJ_PLAYER].front());
+				static_cast<CRollBot*>(rollBot)->Set_BulletList(&m_Objlist[OBJ_BULLET]);
 
-				if (i == OBJ_ITEM)
-				{
-					if(ITEM_BULLET == static_cast<CItem*>(*iter)->Get_Item_ID())
-					{
-						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Item(*iter);
-					}
-					else if (ITEM_SHIELD == static_cast<CItem*>(*iter)->Get_Item_ID())
-					{
-						CObj* shield = CAbstractFactory<CShield>::Create();
-						shield->Initialize();
-						if (!m_Objlist[OBJ_SHIELD].empty())
-						{
-							shield->Set_Angle(m_Objlist[OBJ_SHIELD].back()->Get_Angle() + SHILED_INTERVAL);
-						}
-						static_cast<CShield*>(shield)->Set_Player(m_Objlist[OBJ_PLAYER].front());
-
-						m_Objlist[OBJ_SHIELD].push_back(shield);
-					}
-					else if (ITEM_ROLLBOT == static_cast<CItem*>(*iter)->Get_Item_ID())
-					{
-						CObj* rollBot = CAbstractFactory<CRollBot>::Create();
-						rollBot->Initialize();
-						if (!m_Objlist[OBJ_ROLLBOT].empty())
-						{
-							rollBot->Set_Angle(m_Objlist[OBJ_ROLLBOT].back()->Get_Angle() + SHILED_INTERVAL);
-						}
-						static_cast<CRollBot*>(rollBot)->Set_Player(m_Objlist[OBJ_PLAYER].front());
-						static_cast<CRollBot*>(rollBot)->Set_BulletList(&m_Objlist[OBJ_BULLET]);
-
-						m_Objlist[OBJ_ROLLBOT].push_back(rollBot);
-					}
-					else if (ITEM_ULTIMATE == static_cast<CItem*>(*iter)->Get_Item_ID())
-					{
-						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Ult(*iter);
-					}
-				}
+				m_Objlist[OBJ_ROLLBOT].push_back(rollBot);
+			}
+				break;
+			case ITEM_END:
+				break;
+			}
 
 				Safe_Delete<CObj*>(*iter);
 
@@ -182,18 +251,20 @@ void CMaingame::Update(void)
 		}
 	}
 
-	if (GetAsyncKeyState('R')) // 라이프 카운트 추가
+
+	for (int i = OBJ_BULLET; i < OBJ_END; ++i)
 	{
-		++m_iLife;
-	}
-	if (GetAsyncKeyState(VK_SPACE)) // 얼티메이트 사용 데미지 50
-	{
-		if (m_dwTime + 1000 < GetTickCount())
+		for (auto iter = m_Objlist[i].begin(); iter != m_Objlist[i].end();)
 		{
-			if (!static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Use_Ult())
+			if (0 >= (*iter)->Get_HP())
 			{
-				m_Objlist[OBJ_ULTIMATE].push_back(new CUltimate);
-				m_Objlist[OBJ_ULTIMATE].front()->Initialize();
+				Safe_Delete<CObj*>(*iter);
+				iter = m_Objlist[i].erase(iter);
+			}
+			else
+			{
+				(*iter)->Update();
+				++iter;
 			}
 		}
 	}
@@ -203,7 +274,7 @@ void CMaingame::Late_Update(void)
 {
 	if (m_bCheak) // 플레이어에 무적 시간 부여
 	{
-		if (m_dwPlayer + 2000 < GetTickCount())
+		if (m_dwPlayer + 3000 < GetTickCount())
 		{
 			m_dwPlayer = GetTickCount();
 			CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]);
@@ -272,7 +343,33 @@ void CMaingame::Render(void)
 }
 	
 void CMaingame::Release(void)
+
 {
+}
+
+void CMaingame::Key_Input(void)
+{
+	if (GetAsyncKeyState('R')) // 라이프 카운트 추가
+	{
+		++m_iLife;
+	}
+
+	if (GetAsyncKeyState(VK_SPACE)) // 얼티메이트 사용 데미지 50
+	{
+		if (m_dwTime + 1000 < GetTickCount())
+		{
+			if (!static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Use_Ult())
+			{
+				/*m_Objlist[OBJ_ULTIMATE].push_back(new CUltimate);
+				m_Objlist[OBJ_ULTIMATE].front()->Initialize();*/
+
+				CObj* Ult = CAbstractFactory<CUltimate>::Create();
+				Ult->Initialize();
+				static_cast<CUltimate*>(Ult)->Set_Player(m_Objlist[OBJ_PLAYER].front());
+				m_Objlist[OBJ_ULTIMATE].push_back(Ult);
+			}
+		}
+	}
 }
 
 void CMaingame::Get_MONPOINT(void)
@@ -292,25 +389,25 @@ void CMaingame::Create_Item(const float& _fA, const float& _fB)
 	{
 	case 1:
 	{
-		if(0 < iRanItem && 30 >= iRanItem)
+		if(0 < iRanItem && 25 >= iRanItem)
 		{
-			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
-				_fA, _fB));
+			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Bullet(_fA, _fB));
 		}
-		else if(30 < iRanItem && 60 >= iRanItem)
+		else if(25 < iRanItem && 50 >= iRanItem)
 		{
-			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_SHIELD,
-				_fA, _fB));
+			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Shield(_fA, _fB));
 		}
-		else if(60 < iRanItem && 90 >= iRanItem)
+		else if(50 < iRanItem && 75 >= iRanItem)
 		{
-			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ROLLBOT,
-				_fA, _fB));
+			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_RollBot(_fA, _fB));
+		}
+		else if (75 < iRanItem && 90 >= iRanItem)
+		{
+			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Guided(_fA, _fB));
 		}
 		else
 		{
-			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ULTIMATE,
-				_fA, _fB));
+			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_UltiMate(_fA, _fB));
 		}
 	}
 	break;
