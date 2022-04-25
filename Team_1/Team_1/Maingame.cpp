@@ -59,8 +59,6 @@ void CMaingame::Update(void)
 
 	Key_Input();
 
-	srand(unsigned(time(NULL)));
-
 	if (m_Objlist[OBJ_PLAYER].empty())
 	{
 		if (0 < m_iLife)
@@ -194,7 +192,7 @@ void CMaingame::Update(void)
 
 				m_Objlist[OBJ_SHIELD].push_back(shield);
 			}
-				break;
+			break;
 			case ITEM_ROLLBOT:
 			{
 				CObj* rollBot = CAbstractFactory<CRollBot>::Create();
@@ -208,47 +206,19 @@ void CMaingame::Update(void)
 
 				m_Objlist[OBJ_ROLLBOT].push_back(rollBot);
 			}
-				break;
+			break;
 			case ITEM_END:
 				break;
 			}
 
-				Safe_Delete<CObj*>(*iter);
-				iter = m_Objlist[i].erase(iter);
 
-				if (m_Objlist[OBJ_PLAYER].empty())
-				{
-					if (0 < m_iLife)
-					{
-						--m_iLife; // 라이프 스코어 감소
-						m_bCheak = true; // 사망시 무적 시간 부여를 위한 bool 변수
-						m_iScore = (int)(m_iScore * 0.8); // 사망시 점수 감소
-						m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
-						m_Objlist[OBJ_PLAYER].front()->Initialize();
-						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
-						static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_MonsterList(&m_Objlist[OBJ_MONSTER]);
-
-						for (auto iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
-						{
-							static_cast<CMonster*>(*iter)->Set_Player(m_Objlist[OBJ_PLAYER].front());
-						}
-						return;
-					}
-
-					else
-					{
-						if (GetAsyncKeyState('Q'))
-						{
-							PostQuitMessage(0);
-						}
-					}
-				}
-			}
-			else
-			{
-				(*iter)->Update();
-				++iter;
-			}
+			Safe_Delete<CObj*>(*iter);
+			iter = m_Objlist[OBJ_ITEM].erase(iter);
+		}
+		else
+		{
+			(*iter)->Update();
+			++iter;
 		}
 	}
 
