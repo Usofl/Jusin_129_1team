@@ -75,7 +75,7 @@ void CBulletMonster::Release(void)
 {
 }
 
-void CBulletMonster::Set_Size(float fa, float fb)  //  또는 총알의 기타 information을 바꿈.(initialiaze안의 변수)
+void CBulletMonster::Set_Size(const float& fa, const float& fb)  //  또는 총알의 기타 information을 바꿈.(initialiaze안의 변수)
 {
 	m_tInfo.fCX = fa;
 	m_tInfo.fCY = fb;

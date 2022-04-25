@@ -6,7 +6,7 @@ class CMonster_B final:
 {
 public:
 	CMonster_B();
-	CMonster_B(CObj* _player);
+	CMonster_B(CObj*& _player);
 	virtual ~CMonster_B();
 
 	virtual void Initialize(void) override;

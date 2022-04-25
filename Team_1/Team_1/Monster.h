@@ -8,7 +8,7 @@ class CMonster :
 {
 public:
 	CMonster();
-	CMonster(CObj* _player);
+	CMonster(CObj*& _player);
 	virtual ~CMonster();
 
 	// Inherited via CObj
@@ -21,13 +21,14 @@ public:
 	virtual void Move_Monster(void) PURE;
 
 public:
-	void Set_Mon_Type(MONSTERTYPE _type) { m_MonType = _type; }	
+	void Set_Mon_Type(MONSTERTYPE& _type) { m_MonType = _type; }
+	MONSTERTYPE Get_Mon_Type(void) { return m_MonType; }
 
 	inline void Set_Player(CObj* m_PA) { m_pPlayer = m_PA; }
 
 	//몬스터 총알에 관한 함수.
 	inline void Set_BulletList_Mon(std::list<CObj*>* _pBulletList) { Mon_Bulletlist = _pBulletList; }
-	inline void Set_Speed(float _speed) { m_fSpeed = _speed; }
+	inline void Set_Speed(float& _speed) { m_fSpeed = _speed; }
 
 protected:
 	CObj* m_pPlayer;

@@ -22,13 +22,25 @@ public:
 		return pObj;
 	}
 
-	static CObj*    Create(float fA, float fB)
+	static CObj*    Create(const float& fA, const float& fB)
 	{
 		CObj*    pObj = new T;
 		pObj->Initialize();
 
 		POINT p{ (long)fA, (long)fB };
 		pObj->Make_POINT(p);
+
+		return pObj;
+	}
+
+	static CObj* Create(const float& _fA, const float& _fB, const float& _fAngle)
+	{
+		CObj* pObj = new T;
+		pObj->Initialize();
+
+		POINT p{ (long)_fA, (long)_fB };
+		pObj->Make_POINT(p);
+		pObj->Set_Angle(_fAngle);
 
 		return pObj;
 	}
@@ -44,25 +56,13 @@ public:
 	//	return pObj;
 	//}
 
-	static CObj* Create(float fA, float fB, float fAngle)
-	{
-		CObj* pObj = new T;
-		pObj->Initialize();
-
-		POINT p{ (long)fA, (long)fB };
-		pObj->Make_POINT(p);
-		pObj->Set_Angle(fAngle);
-
-		return pObj;
-	}
-
 	// 醚舅 积己
-	static CObj* Create_Bullet(float _fA, float _fB, float _fAngle)
+	static CObj* Create_Bullet(const long& _lA, const long& _lB, const float& _fAngle)
 	{
 		CObj* pObj = new T;
 		pObj->Initialize();
 
-		POINT p{ (long)_fA, (long)_fB };
+		POINT p{ _lA, _lB };
 		pObj->Make_POINT(p);
 		pObj->Set_Angle(_fAngle);
 
@@ -70,12 +70,12 @@ public:
 	}
 
 	// 蜡档藕 积己
-	static CObj* Create_Bullet(float _fA, float _fB, float _fAngle, std::list<CObj*>* _pMonsterList)
+	static CObj* Create_Bullet(const long& _lA, const long& _lB, const float& _fAngle, std::list<CObj*>*& _pMonsterList)
 	{
 		CObj* pObj = new T;
 		pObj->Initialize();
 
-		POINT p{ (long)_fA, (long)_fB };
+		POINT p{ _lA, _lB };
 		pObj->Make_POINT(p);
 		pObj->Set_Angle(_fAngle);
 		static_cast<CGuiBullet*>(pObj)->Set_MonsterList(_pMonsterList);
@@ -83,16 +83,16 @@ public:
 		return pObj;
 	}
 
-	static CObj*    Create(float fA, float fB, float fAngle, MONSTERTYPE _type)
+	static CObj*    Create(const float& _fA, const float& _fB, const float& _fAngle, const MONSTERTYPE& _type)
 	{
 		CObj*    pObj = new T;
 		pObj->Initialize();
 
-		POINT p{ (long)fA, (long)fB };
+		POINT p{ (long)_fA, (long)_fB };
 		pObj->Make_POINT(p);
-		pObj->Set_Angle(fAngle);
+		pObj->Set_Angle(_fAngle);
 		static_cast<CBulletMonster*>(pObj)->Set_Monster_Type(_type);
-		static_cast<CBulletMonster*>(pObj)->Set_Monster_FirstYPos(fB);
+		static_cast<CBulletMonster*>(pObj)->Set_Monster_FirstYPos(_fB);
 
 		return pObj;
 	}

@@ -26,10 +26,11 @@ void CMaingame::Initialize(void)
 
 	m_hDC = GetDC(g_hWnd);
 
-	m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
-	m_Objlist[OBJ_PLAYER].front()->Initialize();
-	static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
-	static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_MonsterList(&m_Objlist[OBJ_MONSTER]);
+	CPlayer* player = new CPlayer;
+	player->Initialize();
+	player->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+	player->Set_MonsterList(&m_Objlist[OBJ_MONSTER]);
+	m_Objlist[OBJ_PLAYER].push_back(player);
 	m_iLife = 3;
 
 	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Bullet
@@ -71,10 +72,12 @@ void CMaingame::Update(void)
 			--m_iLife; // 라이프 스코어 감소
 			m_bCheak = true; // 사망시 무적 시간 부여를 위한 bool 변수
 			m_iScore = (int)(m_iScore * 0.8); // 사망시 점수 감소
-			m_Objlist[OBJ_PLAYER].push_back(new CPlayer);
-			m_Objlist[OBJ_PLAYER].front()->Initialize();
-			static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
-			static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_MonsterList(&m_Objlist[OBJ_MONSTER]);
+
+			CPlayer* player = new CPlayer;
+			player->Initialize();
+			player->Set_BulletList(&m_Objlist[OBJ_BULLET]);
+			player->Set_MonsterList(&m_Objlist[OBJ_MONSTER]);
+			m_Objlist[OBJ_PLAYER].push_back(player);
 
 			for (auto iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
 			{
@@ -93,21 +96,21 @@ void CMaingame::Update(void)
 	}
 	else
 	{
-		if (m_Objlist[OBJ_MONSTER].size() < 4)
+		if ((m_Objlist[OBJ_MONSTER].size() < 2) && (350 >= m_iScore) &&(!m_bBossCheck) ) // 스코어 판단 부호 바꾸기 xxx
 		{
 			if (m_dwTime + 1000 < GetTickCount())
 			{
 				Random_Mon();
 			}
 		}
-		if ((m_Objlist[OBJ_MONSTER].size() < 2)  && (350 < m_iScore)) // 스코어가 1000이상일때 보스 생성.xxxxx 100 < m_iScore
+		if ((m_Objlist[OBJ_MONSTER].size() < 2) && (350 < m_iScore))
 		{
-			if ((0 == (m_Objlist[OBJ_MONSTER].size()))&&(!m_bBossCheck)) // 0을 1 로 xxxxx
+			if ((0 == (m_Objlist[OBJ_MONSTER].size())) && (!m_bBossCheck))
 			{
 				m_Objlist[OBJ_MONSTER].push_back(CMonsterFactory::Create_Mon_BOSS(m_Objlist[OBJ_PLAYER].front()));// 보스 생성.
 
-				for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
-					static_cast<CMonster_Boss*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);// 보스 총알 부여.
+				//for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
+					//static_cast<CMonster_Boss*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);// 보스 총알 부여.
 
 				m_bBossCheck = true;// 보스가 존재함.
 			}
@@ -116,15 +119,26 @@ void CMaingame::Update(void)
 
 	for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end();)
 	{
-		static_cast<CMonster_C*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);
+		//if (static_cast<CMonster_Boss*>(*iter)->Get_Mon_Type != MONSTERTYPE_BOSS)
+		    static_cast<CMonster*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);
 
 		if (0 >= (*iter)->Get_HP())
 		{
 			Create_Item((*iter)->Get_fX(), (*iter)->Get_fY()); // 아이템 생성
 			m_iScore += 10; // score 증가
 
-			Safe_Delete<CObj*>(*iter);
-			iter = m_Objlist[OBJ_MONSTER].erase(iter);
+
+			/*if (static_cast<CMonster_Boss*>(m_Objlist[OBJ_MONSTER].front())->Get_Mon_Type() == MONSTERTYPE_BOSS)
+			{
+				Safe_Delete<CObj*>(*iter);
+				
+			}*/
+			//else
+			//{
+				Safe_Delete<CObj*>(*iter);
+				iter = m_Objlist[OBJ_MONSTER].erase(iter); //  보스가 죽을때 iter넘길 대상 없음.  xxxxxxxxxxxxxxxxxxx
+
+			//}
 		}
 		else
 		{
@@ -169,17 +183,18 @@ void CMaingame::Update(void)
 		if (0 >= (*iter)->Get_HP())
 		{
 			ITEMID eItem = static_cast<CItem*>(*iter)->Get_Item_ID();
+			CPlayer* player = static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front());
 
 			switch (eItem)
 			{
 			case ITEM_BULLET:
-				static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Bullet();
+				player->Pick_Up_Bullet();
 				break;
 			case ITEM_GUIDED:
-				static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Guided();
+				player->Pick_Up_Guided();
 				break;
 			case ITEM_ULTIMATE:
-				static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Ulti();
+				player->Pick_Up_Ulti();
 				break;
 			case ITEM_SHIELD:
 			{
@@ -288,17 +303,21 @@ void CMaingame::Render(void)
 	TextOutW(m_hDC, GAMESIZE, OUTGAMESIZE, m_szScore, lstrlen(m_szScore));
 	swprintf_s(m_szLife, L"Life : %d", m_iLife);
 	TextOutW(m_hDC, GAMESIZE + 100, OUTGAMESIZE, m_szLife, lstrlen(m_szLife));
-	if (m_bBossCheck)
-	{
-		swprintf_s(m_szMonHP, L"HP : %d", m_Objlist[OBJ_MONSTER].front()->Get_HP());
-		TextOutW(m_hDC, WINCX - GAMESIZE - 100, OUTGAMESIZE, m_szMonHP, lstrlen(m_szMonHP));
-	}
 
 	for (auto& list_iter : m_Objlist)
 	{
 		for (auto& iter : list_iter)
 		{
 			iter->Render(m_hDC);
+		}
+	}
+
+	if (m_bBossCheck)
+	{
+		if (!(m_Objlist[OBJ_MONSTER].empty()))
+		{
+			swprintf_s(m_szMonHP, L"HP : %d", m_Objlist[OBJ_MONSTER].front()->Get_HP());
+			TextOutW(m_hDC, WINCX - GAMESIZE - 100, OUTGAMESIZE, m_szMonHP, lstrlen(m_szMonHP));
 		}
 	}
 
@@ -315,8 +334,16 @@ void CMaingame::Render(void)
 }
 	
 void CMaingame::Release(void)
-
 {
+	for (auto& List_iter : m_Objlist)
+	{
+		for (auto iter = List_iter.begin(); iter != List_iter.end();)
+		{
+			(*iter)->Release();
+			Safe_Delete<CObj*>(*iter);
+			iter = List_iter.erase(iter);
+		}
+	}
 }
 
 void CMaingame::Key_Input(void)
@@ -346,10 +373,10 @@ void CMaingame::Key_Input(void)
 
 void CMaingame::Get_MONPOINT(void)
 {
-	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 1.6 * Monster_C), (LONG)(GAMESIZE + 0.5 * Monster_C + 1) });
+	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 1.6 * Monster_C), (LONG)(GAMESIZE + 0.5 * Monster_C + 20) });
 	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 3.6 * Monster_C), (LONG)(GAMESIZE + 3.5 * Monster_C) });
 	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 3.6 * Monster_C), (LONG)(WINCY - GAMESIZE - 3.5 * Monster_C) });
-	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 1.6 * Monster_C), (LONG)(WINCY - GAMESIZE - 0.5 * Monster_C - 1) });
+	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 1.6 * Monster_C), (LONG)(WINCY - GAMESIZE - 0.5 * Monster_C - 20) });
 }
 
 void CMaingame::Create_Item(const float& _fA, const float& _fB)

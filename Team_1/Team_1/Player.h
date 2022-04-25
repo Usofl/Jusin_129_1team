@@ -12,6 +12,7 @@ class CPlayer :
 {
 public:
 	CPlayer();
+	CPlayer(CPlayer & _rObj);
 	virtual ~CPlayer();
 
 public:

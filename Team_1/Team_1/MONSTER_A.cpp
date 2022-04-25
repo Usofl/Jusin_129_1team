@@ -6,7 +6,7 @@ CMonster_A::CMonster_A()
 {
 }
 
-CMonster_A::CMonster_A(CObj * _player)
+CMonster_A::CMonster_A(CObj *& _player)
 	: CMonster(_player)
 {
 }

@@ -10,9 +10,9 @@ CPlayer::CPlayer()
 {
 }
 
+
 CPlayer::~CPlayer()
 {
-	Release();
 }
 
 void CPlayer::Initialize(void)
@@ -263,15 +263,15 @@ void CPlayer::Key_Input(void)
 				switch (m_BulletType)
 				{
 				case BULLETTYPE_DEFULT:
-					m_pBulletList->push_back(CAbstractFactory<CBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
+					m_pBulletList->push_back(CAbstractFactory<CBullet>::Create_Bullet(m_tPoint.x, m_tPoint.y, m_fAngle));
 					break;
 
 				case BULLETTYPE_SCREW:
-					m_pBulletList->push_back(CAbstractFactory<CScrewBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
+					m_pBulletList->push_back(CAbstractFactory<CScrewBullet>::Create_Bullet(m_tPoint.x, m_tPoint.y, m_fAngle));
 					break;
 
 				case BULLETTYPE_GUI:
-					m_pBulletList->push_back(CAbstractFactory<CGuiBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle, m_pMonsterList));
+					m_pBulletList->push_back(CAbstractFactory<CGuiBullet>::Create_Bullet(m_tPoint.x, m_tPoint.y, m_fBulletAngle, m_pMonsterList));
 					break;
 				}
 			}
@@ -283,15 +283,15 @@ void CPlayer::Key_Input(void)
 					switch (m_BulletType)
 					{
 					case BULLETTYPE_DEFULT:
-						m_pBulletList->push_back(CAbstractFactory<CBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle));
+						m_pBulletList->push_back(CAbstractFactory<CBullet>::Create_Bullet(m_tPoint.x, m_tPoint.y, m_fBulletAngle));
 						break;
 
 					case BULLETTYPE_SCREW:
-						m_pBulletList->push_back(CAbstractFactory<CScrewBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle));
+						m_pBulletList->push_back(CAbstractFactory<CScrewBullet>::Create_Bullet(m_tPoint.x, m_tPoint.y, m_fBulletAngle));
 						break;
 
 					case BULLETTYPE_GUI:
-						m_pBulletList->push_back(CAbstractFactory<CGuiBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle, m_pMonsterList));
+						m_pBulletList->push_back(CAbstractFactory<CGuiBullet>::Create_Bullet(m_tPoint.x, m_tPoint.y, m_fBulletAngle, m_pMonsterList));
 						break;
 					}
 					m_fBulletAngle -= 2;

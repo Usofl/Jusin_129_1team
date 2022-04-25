@@ -29,7 +29,7 @@ void CItem_Guided::Release(void)
 
 void CItem_Guided::Pick_Up_Set(void)
 {
-	POINT p{ (WINCX * 0.5f - 15), WINCY - OUTGAMESIZE };
+	POINT p{ (long)(WINCX * 0.5f - 15), WINCY - OUTGAMESIZE };
 	Make_POINT(p);
 
 	Update_Rect();

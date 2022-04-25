@@ -41,12 +41,12 @@ void CMonster_Boss::Update(void)
 			if (200 < m_iHP)
 			{
 				float m_MonPlr_Angle = 90.f;
-				Mon_Bulletlist->push_back(CAbstractFactory<CBulletMonster>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, m_MonPlr_Angle, MONSTERTYPE_BOSS));// 총알 생성시 난수 받기.
+				Mon_Bulletlist->push_back(CAbstractFactory<CBulletMonster>::Create(m_tInfo.fX, m_tInfo.fY, m_MonPlr_Angle, MONSTERTYPE_BOSS));// 총알 생성시 난수 받기.
 			}
 			else if ((200 >= m_iHP)&&(50 < m_iHP))
 			{
 				float m_MonPlr_Angle = 0.f;
-				Mon_Bulletlist->push_back(CAbstractFactory<CBulletMonster>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, m_MonPlr_Angle, MONSTERTYPE_BOSS));
+				Mon_Bulletlist->push_back(CAbstractFactory<CBulletMonster>::Create(m_tInfo.fX, m_tInfo.fY, m_MonPlr_Angle, MONSTERTYPE_BOSS));
 			}
 			
 

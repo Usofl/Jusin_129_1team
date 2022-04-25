@@ -7,7 +7,7 @@ class CMonster_A final:
 {
 public:
 	CMonster_A();
-	CMonster_A(CObj* _player);
+	CMonster_A(CObj*& _player);
 	virtual ~CMonster_A();
 
 	// Inherited via CObj

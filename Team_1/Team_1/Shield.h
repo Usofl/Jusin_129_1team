@@ -14,7 +14,7 @@ public:
 	virtual void Render(HDC _hDC);
 	virtual void Release(void);
 
-	inline void Set_Player(CObj*& _player) { m_pPlayer = _player; }
+	inline void Set_Player(CObj* _player) { m_pPlayer = _player; }
 
 private:
 	CObj* m_pPlayer;

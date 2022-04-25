@@ -19,7 +19,7 @@ public:
 	virtual void Release(void) override;
 
 	inline void Set_BulletList(std::list<CObj*>* _pBulletList) { m_pBulletList = _pBulletList; }
-	inline void Set_Player(CObj*& _player) { m_pPlayer = _player; }
+	inline void Set_Player(CObj* _player) { m_pPlayer = _player; }
 
 private:
 	DWORD m_dwTime;
