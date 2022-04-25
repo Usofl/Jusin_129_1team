@@ -54,28 +54,28 @@ void CMonster_C::Update(void)
 void CMonster_C::Render(HDC _hDC)
 {
 	// 하체
-	Rectangle(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.1f), m_tRC.top + (int)(m_tInfo.fCY * 0.5f)
+	Rectangle(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.1f) * m_iReverse, m_tRC.top + (int)(m_tInfo.fCY * 0.5f)
 					, m_tRC.right, m_tRC.bottom - (int)(m_tInfo.fCY * 0.2f));
 
 	// 머리
-	Rectangle(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.3f), m_tRC.top + (int)(m_tInfo.fCY * 0.2f)
-					, m_tRC.right - (int)(m_tInfo.fCY * 0.1f), m_tRC.top + (int)(m_tInfo.fCY * 0.5f));
+	Rectangle(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.3f) * m_iReverse, m_tRC.top + (int)(m_tInfo.fCY * 0.2f)
+					, m_tRC.right - (int)(m_tInfo.fCY * 0.1f) * m_iReverse, m_tRC.top + (int)(m_tInfo.fCY * 0.5f));
 
 	// 포신
 	Rectangle(_hDC, m_tRC.left, m_tRC.top + (int)(m_tInfo.fCY * 0.3f)
-		, m_tRC.left + (int)(m_tInfo.fCY * 0.3f), m_tRC.bottom - (int)(m_tInfo.fCY * 0.6f));
+		, m_tRC.left + (int)(m_tInfo.fCY * 0.3f) * m_iReverse, m_tRC.bottom - (int)(m_tInfo.fCY * 0.6f));
 
-	Ellipse(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.1f), m_tRC.bottom - (int)(m_tInfo.fCY * 0.2f)
-		, m_tRC.left + (int)(m_tInfo.fCY * 0.3f), m_tRC.bottom);
+	Ellipse(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.1f) * m_iReverse, m_tRC.bottom - (int)(m_tInfo.fCY * 0.2f)
+		, m_tRC.left + (int)(m_tInfo.fCY * 0.3f) * m_iReverse, m_tRC.bottom);
 
-	Ellipse(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.35f), m_tRC.bottom - (int)(m_tInfo.fCY * 0.2f)
-		, m_tRC.left + (int)(m_tInfo.fCY * 0.55f), m_tRC.bottom);
+	Ellipse(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.35f) * m_iReverse, m_tRC.bottom - (int)(m_tInfo.fCY * 0.2f)
+		, m_tRC.left + (int)(m_tInfo.fCY * 0.55f) * m_iReverse, m_tRC.bottom);
 
-	Ellipse(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.6f), m_tRC.bottom - (int)(m_tInfo.fCY * 0.2f)
-		, m_tRC.left + (int)(m_tInfo.fCY * 0.8f), m_tRC.bottom);
+	Ellipse(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.6f) * m_iReverse, m_tRC.bottom - (int)(m_tInfo.fCY * 0.2f)
+		, m_tRC.left + (int)(m_tInfo.fCY * 0.8f) * m_iReverse, m_tRC.bottom);
 
-	Ellipse(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.85f), m_tRC.bottom - (int)(m_tInfo.fCY * 0.2f)
-		, m_tRC.left + (int)(m_tInfo.fCY * 1.05f), m_tRC.bottom);
+	Ellipse(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.85f) * m_iReverse, m_tRC.bottom - (int)(m_tInfo.fCY * 0.2f)
+		, m_tRC.left + (int)(m_tInfo.fCY * 1.05f) * m_iReverse, m_tRC.bottom);
 }
 
 void CMonster_C::Release(void)
