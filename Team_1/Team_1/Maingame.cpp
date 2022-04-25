@@ -9,6 +9,7 @@ CMaingame::CMaingame()
 	, m_iLife(0)
 	, m_bCheak(true)
 	, m_bBossCheck(false)
+	, m_bGameOver(false)
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
 	ZeroMemory(m_szScore, sizeof(TCHAR) * 64);
@@ -314,6 +315,20 @@ void CMaingame::Render(void)
 		{
 			swprintf_s(m_szMonHP, L"HP : %d", m_Objlist[OBJ_MONSTER].front()->Get_HP());
 			TextOutW(m_hDC, WINCX - GAMESIZE - 100, OUTGAMESIZE, m_szMonHP, lstrlen(m_szMonHP));
+		}
+		else
+		{
+			m_bGameOver = true;
+			m_bBossCheck = false;
+		}
+	}
+
+	while (m_bGameOver)                      //    게임 종료 시키기.
+	{
+		while (true)
+		{
+			swprintf_s(m_szMonHP, L"게임이 종료 되였습니다.");
+			TextOutW(m_hDC, WINCX - GAMESIZE - 300, OUTGAMESIZE, m_szMonHP, lstrlen(m_szMonHP));
 		}
 	}
 
