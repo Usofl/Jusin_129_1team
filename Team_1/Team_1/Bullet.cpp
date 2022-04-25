@@ -79,8 +79,8 @@ void CBullet::Render(HDC _hDC)
 	}
 
 	Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
-	Rectangle(_hDC, m_tRC.left - (m_tInfo.fCX * 0.5f), m_tRC.top, m_tRC.right - (m_tInfo.fCX * 0.5f), m_tRC.bottom);
-	Rectangle(_hDC, m_tRC.left - (m_tInfo.fCX * 0.5f) - 3.f, m_tRC.top - 1.f, m_tRC.left - (m_tInfo.fCX * 0.5f), m_tRC.bottom + 1.f);
+	Rectangle(_hDC, m_tRC.left - (int)(m_tInfo.fCX * 0.5f), m_tRC.top, m_tRC.right - (int)(m_tInfo.fCX * 0.5f), m_tRC.bottom);
+	Rectangle(_hDC, m_tRC.left - (int)(m_tInfo.fCX * 0.5f) - 3, m_tRC.top - 1, m_tRC.left - (int)(m_tInfo.fCX * 0.5f), m_tRC.bottom + 1);
 }
 
 void CBullet::Release(void)

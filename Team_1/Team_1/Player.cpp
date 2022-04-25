@@ -72,24 +72,24 @@ void CPlayer::Render(HDC _hDC)
 	LineTo(_hDC, (int)m_tPoint.x, (int)m_tPoint.y);
 
 	MoveToEx(_hDC, (int)m_tPoint.x, (int)m_tPoint.y, nullptr);
-	LineTo(_hDC, (int)(m_tInfo.fX - (m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY - (m_tInfo.fCY * 0.5f)));
+	LineTo(_hDC, (int)(m_tInfo.fX - (int)(m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY - (int)(m_tInfo.fCY * 0.5f)));
 
-	MoveToEx(_hDC, (int)(m_tInfo.fX - (m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY - (m_tInfo.fCY * 0.5f)), nullptr);
+	MoveToEx(_hDC, (int)(m_tInfo.fX - (int)(m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY - (m_tInfo.fCY * 0.5f)), nullptr);
 	LineTo(_hDC, (int)m_tInfo.fX, (int)m_tInfo.fY);
 
-	MoveToEx(_hDC, m_tInfo.fX, m_tInfo.fY, nullptr);
-	LineTo(_hDC, (int)(m_tInfo.fX - (m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY + (m_tInfo.fCY * 0.5f)));
+	MoveToEx(_hDC, (int)m_tInfo.fX, (int)m_tInfo.fY, nullptr);
+	LineTo(_hDC, (int)(m_tInfo.fX - (m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY + (int)(m_tInfo.fCY * 0.5f)));
 
-	MoveToEx(_hDC, (int)(m_tInfo.fX - (m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY + (m_tInfo.fCY * 0.5f)), nullptr);
+	MoveToEx(_hDC, (int)(m_tInfo.fX - (int)(m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY + (int)(m_tInfo.fCY * 0.5f)), nullptr);
 	LineTo(_hDC, (int)m_tPoint.x, (int)m_tPoint.y);
 
 	MoveToEx(_hDC, (int)m_tPoint.x, (int)m_tPoint.y, nullptr);
-	LineTo(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY - (m_tInfo.fCY * 0.5f)));
+	LineTo(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY - (int)(m_tInfo.fCY * 0.5f)));
 
-	MoveToEx(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY - (m_tInfo.fCY * 0.5f)), nullptr);
-	LineTo(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY + (m_tInfo.fCY * 0.5f)));
+	MoveToEx(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY - (int)(m_tInfo.fCY * 0.5f)), nullptr);
+	LineTo(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY + (int)(m_tInfo.fCY * 0.5f)));
 
-	MoveToEx(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY + (m_tInfo.fCY * 0.5f)), nullptr);
+	MoveToEx(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY + (int)(m_tInfo.fCY * 0.5f)), nullptr);
 	LineTo(_hDC, (int)m_tPoint.x, (int)m_tPoint.y);
 
 	Ellipse(_hDC, m_tPoint.x - (int)(m_tInfo.fCX * 1.5f), m_tRC.top + (int)(m_tInfo.fCY * 0.25f), m_tPoint.x, m_tRC.bottom - (int)(m_tInfo.fCY * 0.25f));
@@ -111,7 +111,7 @@ void CPlayer::Render(HDC _hDC)
 		m_Gui->Render(_hDC);
 
 		swprintf_s(m_szUsingGui, L": %d", m_Gui->Get_HP());
-		TextOutW(_hDC, (WINCX * 0.5f), WINCY - OUTGAMESIZE, m_szUsingGui, lstrlen(m_szUsingGui));
+		TextOutW(_hDC, (int)(WINCX * 0.5f), WINCY - OUTGAMESIZE, m_szUsingGui, lstrlen(m_szUsingGui));
 	}
 }
 
@@ -271,7 +271,7 @@ void CPlayer::Key_Input(void)
 			}
 			else 
 			{
-				m_fBulletAngle = m_Item_List.size();
+				m_fBulletAngle = (float)m_Item_List.size();
 				for (unsigned int i = 0; i <= m_Item_List.size(); ++i)
 				{
 					m_pBulletList->push_back(CAbstractFactory<CBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle, m_BulletType));

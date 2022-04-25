@@ -114,7 +114,8 @@ void CMaingame::Update(void)
 		}
 	}
 
-	for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
+	for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end();)
+	{
 		static_cast<CMonster_C*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);
 
 		if (0 >= (*iter)->Get_HP())
@@ -299,12 +300,6 @@ void CMaingame::Render(void)
 			iter->Render(m_hDC);
 		}
 	}
-
-	//Rectangle(m_hDC, GAMESIZE, GAMESIZE, WINCX - GAMESIZE, WINCY - GAMESIZE);
-	swprintf_s(m_szScore, L"Score : %d", m_iScore);
-	TextOutW(m_hDC, GAMESIZE, OUTGAMESIZE, m_szScore, lstrlen(m_szScore));
-	swprintf_s(m_szLife, L"Life : %d", m_iLife);
-	TextOutW(m_hDC, GAMESIZE + 100, OUTGAMESIZE, m_szLife, lstrlen(m_szLife));
 
 	++m_iFPS;
 

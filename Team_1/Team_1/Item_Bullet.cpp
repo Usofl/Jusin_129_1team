@@ -15,6 +15,7 @@ CItem_Bullet::CItem_Bullet(const CItem & _rObj)
 
 CItem_Bullet::~CItem_Bullet()
 {
+	m_GetBullet -= 25;
 }
 
 void CItem_Bullet::Render(HDC _hDC)
@@ -33,7 +34,7 @@ void CItem_Bullet::Pick_Up_Set(void)
 	POINT p{ GAMESIZE + m_GetBullet, WINCY - OUTGAMESIZE };
 	Make_POINT(p);
 
-	m_GetBullet += 25.f;
+	m_GetBullet += 25;
 
 	Update_Rect();
 }

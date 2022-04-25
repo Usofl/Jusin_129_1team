@@ -15,7 +15,7 @@ CItem_UltiMate::CItem_UltiMate(const CItem & _rObj)
 
 CItem_UltiMate::~CItem_UltiMate()
 {
-	m_GetUlt -= 25.f;
+	m_GetUlt -= 25;
 }
 
 void CItem_UltiMate::Render(HDC _hDC)
@@ -33,7 +33,7 @@ void CItem_UltiMate::Pick_Up_Set(void)
 	POINT p{ (WINCX - GAMESIZE) - m_GetUlt, WINCY - OUTGAMESIZE };
 	Make_POINT(p);
 
-	m_GetUlt += 25.f;
+	m_GetUlt += 25;
 
 	Update_Rect();
 }
