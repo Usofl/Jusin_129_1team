@@ -1,8 +1,10 @@
 #pragma once
 #include "Obj.h"
-#include "Bullet.h"
 #include "Item.h"
 #include "AbstractFactory.h"
+#include "Bullet.h"
+#include "ScrewBullet.h"
+
 
 class CPlayer :
 	public CObj
@@ -31,6 +33,10 @@ public:
 	void Collision_Wall(void); // 벽에 충돌시 이벤트 변경하려면 여기로
 
 private:
+	template<typename T>
+	CObj* Create_Bullet(void);
+
+private:
 	std::list<CObj*> m_Item_List;
 	float m_fGetItem;
 
@@ -48,3 +54,4 @@ private:
 	BULLETTYPE m_BulletType;
 	
 };
+

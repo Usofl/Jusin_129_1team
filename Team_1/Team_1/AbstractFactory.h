@@ -44,9 +44,9 @@ public:
 	//	return pObj;
 	//}
 
-	static CObj*    Create(float fA, float fB, float fAngle)
+	static CObj* Create(float fA, float fB, float fAngle)
 	{
-		CObj*    pObj = new T;
+		CObj* pObj = new T;
 		pObj->Initialize();
 
 		POINT p{ (long)fA, (long)fB };
@@ -56,14 +56,15 @@ public:
 		return pObj;
 	}
 
-	static CObj*    Create_Bullet(float fA, float fB, float fAngle, BULLETTYPE _eType)
+	// ÃÑ¾Ë »ý¼º
+	static CObj* Create_Bullet(float _fA, float _fB, float _fAngle)
 	{
-		CObj*    pObj = new T(_eType);
+		CObj* pObj = new T;
 		pObj->Initialize();
 
-		POINT p{ (long)fA, (long)fB };
+		POINT p{ (long)_fA, (long)_fB };
 		pObj->Make_POINT(p);
-		pObj->Set_Angle(fAngle);
+		pObj->Set_Angle(_fAngle);
 
 		return pObj;
 	}

@@ -61,8 +61,11 @@
     <Filter Include="01.Obj\03.Item">
       <UniqueIdentifier>{c7d752df-01d0-4803-93ce-2366d939fb73}</UniqueIdentifier>
     </Filter>
-	<Filter Include="01.Obj\06.Ultimate">
+    <Filter Include="01.Obj\06.Ultimate">
       <UniqueIdentifier>{ab704782-9003-4db4-a87f-9f06d919444d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\01.Bullet\00. ScrewBullet">
+      <UniqueIdentifier>{7be49676-2bfe-4db0-be4f-6d2eed84cc7e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +150,9 @@
     <ClInclude Include="Monster_C.h">
       <Filter>01.Obj\02.Monster\04.Monster_C</Filter>
     </ClInclude>
+    <ClInclude Include="ScrewBullet.h">
+      <Filter>01.Obj\01.Bullet\00. ScrewBullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -196,6 +202,9 @@
     </ClCompile>
     <ClCompile Include="Monster_C.cpp">
       <Filter>01.Obj\02.Monster\04.Monster_C</Filter>
+    </ClCompile>
+    <ClCompile Include="ScrewBullet.cpp">
+      <Filter>01.Obj\01.Bullet\00. ScrewBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

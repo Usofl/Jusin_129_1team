@@ -5,7 +5,6 @@ class CBullet :
 {
 public:
 	CBullet();
-	CBullet(BULLETTYPE _eType);
 	virtual ~CBullet();
 
 	// Inherited via CObj
@@ -17,5 +16,4 @@ public:
 
 private:
 	float m_fBulletAngle;
-	int m_BulletType;
 };

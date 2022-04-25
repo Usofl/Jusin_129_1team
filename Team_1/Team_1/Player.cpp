@@ -276,15 +276,33 @@ void CPlayer::Key_Input(void)
 		{
 			if (m_Item_List.empty()) // 아이템 리스트 비어있을 때
 			{
-				m_pBulletList->push_back(CAbstractFactory<CBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle, m_BulletType));
+				switch (m_BulletType)
+				{
+				case BULLETTYPE_DEFULT:
+					m_pBulletList->push_back(CAbstractFactory<CBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
+					break;
+
+				case BULLETTYPE_SCREW:
+					m_pBulletList->push_back(CAbstractFactory<CScrewBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
+					break;
+				}
 			}
-			else 
+			else
 			{
-				m_fBulletAngle = m_Item_List.size();
+				m_fBulletAngle = (float)m_Item_List.size();
 				for (unsigned int i = 0; i <= m_Item_List.size(); ++i)
 				{
-					m_pBulletList->push_back(CAbstractFactory<CBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle, m_BulletType));
-					m_fBulletAngle -= 2 ;
+					switch (m_BulletType)
+					{
+					case BULLETTYPE_DEFULT:
+						m_pBulletList->push_back(CAbstractFactory<CBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle));
+						break;
+
+					case BULLETTYPE_SCREW:
+						m_pBulletList->push_back(CAbstractFactory<CScrewBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle));
+						break;
+					}
+					m_fBulletAngle -= 2;
 				}
 			}
 			m_dwTime = GetTickCount();
@@ -302,6 +320,13 @@ void CPlayer::Key_Input(void)
 			m_BulletType = BULLETTYPE_DEFULT;
 		}
 	}
+}
+
+template<typename T>
+CObj * CPlayer::Create_Bullet(void)
+{
+	CObj* pBullet = CAbstractFactory<T>::Create((float)m_tPoint.x, (float)m_tPoint.x, m_fAngle);
+	return pBullet;
 }
 
 void CPlayer::Collision_Wall(void)
