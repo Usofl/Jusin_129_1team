@@ -26,6 +26,8 @@
 
 #define Monster_C 30.f
 
+#define MonsterCSIZE 50.f
+
 #define Diagonal(x,y) sqrtf((x * x) + (y * y))
 
 #define acos(x,y) acos(x / sqrtf((x * x) + (y * y)))
