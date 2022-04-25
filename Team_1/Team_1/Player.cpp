@@ -3,9 +3,9 @@
 
 CPlayer::CPlayer()
 	: m_pBulletList(nullptr)
+	, m_Gui(nullptr)
 	, m_fBulletAngle(0)
 	, m_BulletType(BULLETTYPE_DEFULT)
-	, m_Gui(nullptr)
 {
 }
 
@@ -40,8 +40,7 @@ void CPlayer::Update(void)
 	{
 		if (0 >= m_Gui->Get_HP())
 		{
-			delete m_Gui;
-			m_Gui = nullptr;
+			Safe_Delete<CObj*>(m_Gui);
 		}
 	}
 	
@@ -119,31 +118,17 @@ void CPlayer::Release(void)
 {
 	for (auto iter = m_Item_List.begin(); iter != m_Item_List.end();)
 	{
-		if (*iter != nullptr)
-		{
-			delete *iter;
-			*iter = nullptr;
-		}
-
+		Safe_Delete<CObj*>(*iter);
 		iter = m_Item_List.erase(iter);
 	}
 
 	for (auto iter = m_Ulti_List.begin(); iter != m_Ulti_List.end();)
 	{
-		if (*iter != nullptr)
-		{
-			delete *iter;
-			*iter = nullptr;
-		}
-
+		Safe_Delete<CObj*>(*iter);
 		iter = m_Ulti_List.erase(iter);
 	}
 
-	if (m_Gui != nullptr)
-	{
-		delete m_Gui;
-		m_Gui = nullptr;
-	}
+	Safe_Delete<CObj*>(m_Gui);
 }
 
 void CPlayer::Pick_Up_Bullet()
@@ -170,9 +155,13 @@ void CPlayer::Pick_Up_Guided()
 		static_cast<CItem*>(m_Gui)->Pick_Up_Set();
 		
 		m_dwUsing = GetTickCount();
+
+		m_Gui->Set_HP(60);
 	}
-		
-	m_Gui->Set_HP(m_Gui->Get_HP() + 60);
+	else
+	{
+		m_Gui->Set_HP(m_Gui->Get_HP() + 60);
+	}
 }
 
 const bool CPlayer::Use_Ult(void)
