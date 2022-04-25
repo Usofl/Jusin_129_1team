@@ -160,6 +160,7 @@
     <ClInclude Include="MonsterFactory.h" />
     <ClInclude Include="Monster_A.h" />
     <ClInclude Include="Monster_B.h" />
+    <ClInclude Include="Monster_Boss.h" />
     <ClInclude Include="Monster_C.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Player.h" />
@@ -181,6 +182,7 @@
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Monster_A.cpp" />
     <ClCompile Include="Monster_B.cpp" />
+    <ClCompile Include="Monster_Boss.cpp" />
     <ClCompile Include="Monster_C.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Player.cpp" />

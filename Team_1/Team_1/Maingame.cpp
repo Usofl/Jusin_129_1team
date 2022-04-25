@@ -8,6 +8,7 @@ CMaingame::CMaingame()
 	, m_iScore(0)
 	, m_iLife(0)
 	, m_bCheak(false)
+	, m_bBossCheck(false)
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
 	ZeroMemory(m_szScore, sizeof(TCHAR) * 64);
@@ -49,35 +50,29 @@ void CMaingame::Update(void)
 
 	if (!m_Objlist[OBJ_PLAYER].empty())
 	{
-		if (m_Objlist[OBJ_MONSTER].size() < 4)
+		if ((m_Objlist[OBJ_MONSTER].size() < 4) && (m_iScore <= 350) && (!m_bBossCheck)) // 스코어 1000이하 몬스터 개수 0이상 4개이하면 짭몬들이 생성.
 		{
 			if (m_dwTime + 1000 < GetTickCount())
 			{
-				int MON_TYPE = rand() % 4 + 1;
-				for (int i = 0; i < 4; ++i)
-				{
-					//  몬스터 타입에 따라 즉 0~3까지에 따라 스위치 해서 부동한 몬스터 생성.
-					switch (MON_TYPE)
-					{
-					case MONSTERTYPE_A:
-						m_Objlist[OBJ_MONSTER].push_back(CMonsterFactory::Create_Mon_A(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front()));
-						break;
+				Random_Mon();
+			}
+		}
+		if ((m_Objlist[OBJ_MONSTER].size() < 2)  && (350 < m_iScore)) // 스코어가 1000이상일때 보스 생성.xxxxx 100 < m_iScore
+		{
+			if ((0 == (m_Objlist[OBJ_MONSTER].size()))&&(!m_bBossCheck)) // 0을 1 로 xxxxx
+			{
+				m_Objlist[OBJ_MONSTER].push_back(CMonsterFactory::Create_Mon_BOSS(m_Objlist[OBJ_PLAYER].front()));// 보스 생성.
 
-					case MONSTERTYPE_B:
-						m_Objlist[OBJ_MONSTER].push_back(CMonsterFactory::Create_Mon_B(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front()));
-						break;
+				for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
+					static_cast<CMonster_Boss*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);// 보스 총알 부여.
 
-					case MONSTERTYPE_C:
-						m_Objlist[OBJ_MONSTER].push_back(CMonsterFactory::Create_Mon_C(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front()));
-						break;
-					}
-				}
+				m_bBossCheck = true;// 보스가 존재함.
 			}
 		}
 	}
 
 	for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
-		static_cast<CMonster_B*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);
+		static_cast<CMonster_C*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);
 
 	for (int i = OBJ_PLAYER; i < OBJ_END; ++i)
 	{
@@ -96,7 +91,6 @@ void CMaingame::Update(void)
 					{
 						delete *iter;
 						iter = m_Objlist[OBJ_SHIELD].erase(iter);
-
 					}
 
 					for (auto iter = m_Objlist[ITEM_ROLLBOT].begin(); iter != m_Objlist[ITEM_ROLLBOT].end();)
@@ -250,6 +244,11 @@ void CMaingame::Render(void)
 	TextOutW(m_hDC, GAMESIZE, OUTGAMESIZE, m_szScore, lstrlen(m_szScore));
 	swprintf_s(m_szLife, L"Life : %d", m_iLife);
 	TextOutW(m_hDC, GAMESIZE + 100, OUTGAMESIZE, m_szLife, lstrlen(m_szLife));
+	if (m_bBossCheck)
+	{
+		swprintf_s(m_szMonHP, L"HP : %d", m_Objlist[OBJ_MONSTER].front()->Get_HP());
+		TextOutW(m_hDC, WINCX - GAMESIZE - 100, OUTGAMESIZE, m_szMonHP, lstrlen(m_szMonHP));
+	}
 
 	for (auto& list_iter : m_Objlist)
 	{
@@ -314,5 +313,28 @@ void CMaingame::Create_Item(const float& _fA, const float& _fB)
 		}
 	}
 	break;
+	}
+}
+
+void CMaingame::Random_Mon(void)
+{
+	int MON_TYPE = rand() % 4 + 1;
+	for (int i = 0; i < 4; ++i)
+	{
+		//  몬스터 타입에 따라 즉 0~3까지에 따라 스위치 해서 부동한 몬스터 생성.
+		switch (MON_TYPE)
+		{
+		case MONSTERTYPE_A:
+			m_Objlist[OBJ_MONSTER].push_back(CMonsterFactory::Create_Mon_A(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front()));
+			break;
+
+		case MONSTERTYPE_B:
+			m_Objlist[OBJ_MONSTER].push_back(CMonsterFactory::Create_Mon_B(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front()));
+			break;
+
+		case MONSTERTYPE_C:
+			m_Objlist[OBJ_MONSTER].push_back(CMonsterFactory::Create_Mon_C(m_tMonsterPoint[i], m_Objlist[OBJ_PLAYER].front()));
+			break;
+		}
 	}
 }

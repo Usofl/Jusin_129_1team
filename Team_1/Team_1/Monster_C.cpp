@@ -53,8 +53,6 @@ void CMonster_C::Update(void)
 void CMonster_C::Render(HDC _hDC)
 {
 	Rectangle(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
-
-	Update_Rect();
 }
 
 void CMonster_C::Release(void)

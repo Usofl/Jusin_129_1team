@@ -29,7 +29,7 @@ public:
 public:
 	void Get_MONPOINT(void);
 	void Create_Item(const float& _fA, const float& _fB);
-
+	void Random_Mon(void);
 
 private:
 	HDC		m_hDC;
@@ -45,6 +45,9 @@ private:
 	int			m_iLife; // 플레이어 목숨
 	DWORD		m_dwPlayer; // 플레이어 무적 시간 부여를 위한 멤버
 	bool		m_bCheak; // 플레이어 무적 시간 부여를 위한 멤버
+
+	TCHAR       m_szMonHP[64]; // 몬스터의 Hp 출력.
+	bool        m_bBossCheck;
 
 	/*CObj* m_pPlayer;
 	CObj* m_pUlt;*/
