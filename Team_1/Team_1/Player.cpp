@@ -6,6 +6,7 @@ CPlayer::CPlayer()
 	, m_Gui(nullptr)
 	, m_fBulletAngle(0)
 	, m_BulletType(BULLETTYPE_DEFULT)
+	, m_BulletTypeKey(GetTickCount())
 {
 }
 
@@ -60,7 +61,6 @@ void CPlayer::Late_Update(void)
 			m_dwUsing = GetTickCount();
 
 			m_Gui->Set_HP(m_Gui->Get_HP() - 1);
-			
 		}
 	}
 
@@ -301,16 +301,20 @@ void CPlayer::Key_Input(void)
 		}
 	}
 
-	if (GetAsyncKeyState('E'))
+	if (m_BulletTypeKey + 300 < GetTickCount())
 	{
-		if (m_BulletType == BULLETTYPE_DEFULT)
+		if (GetAsyncKeyState('E'))
 		{
-			m_BulletType = BULLETTYPE_SCREW;
+			if (m_BulletType == BULLETTYPE_DEFULT)
+			{
+				m_BulletType = BULLETTYPE_SCREW;
+			}
+			else if (m_BulletType == BULLETTYPE_SCREW)
+			{
+				m_BulletType = BULLETTYPE_DEFULT;
+			}
 		}
-		else if (m_BulletType == BULLETTYPE_SCREW)
-		{
-			m_BulletType = BULLETTYPE_DEFULT;
-		}
+		m_BulletTypeKey = GetTickCount();
 	}
 }
 

@@ -27,9 +27,9 @@ public:
 	void Pick_Up_Bullet(void);
 	void Pick_Up_Ulti(void);
 	void Pick_Up_Guided(void);
-	
+
 	const bool Use_Ult(void);
-	
+
 public:
 	void Key_Input(void);
 	void Collision_Wall(void); // 벽에 충돌시 이벤트 변경하려면 여기로
@@ -52,6 +52,6 @@ private:
 	float m_fBulletAngle; // 총알 앵글 각도 
 	BULLETTYPE m_BulletType;
 	std::list<CObj*>* m_pMonsterList;
-	
+	DWORD m_BulletTypeKey;
 };
 
