@@ -24,7 +24,7 @@ void CMonster_A::Initialize(void)
 	m_tInfo.fCX = Monster_C;
 	m_tInfo.fCY = Monster_C;
 
-	m_iHP = 5;
+	m_iHP = 4;
 
 	m_iReverse = 1;
 

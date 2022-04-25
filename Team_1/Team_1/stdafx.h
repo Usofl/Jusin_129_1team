@@ -20,6 +20,7 @@
 
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.
 #include <list>
+#include <stack>
 #include <vector>
 #include <ctime>//시간
 #include <cmath>//수학공식 cos sin abs sqrt등등

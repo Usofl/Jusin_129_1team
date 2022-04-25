@@ -3,6 +3,7 @@
 #include "MONSTER_A.h"
 #include "Monster_B.h"
 #include "Monster_C.h"
+#include "Monster_Boss.h"
 #include "Obj.h"
 
 //template<typename T>
@@ -19,9 +20,17 @@ public:
 	}
 
 public:
-	static CObj* Create_Mon_BOSS()
+	static CObj* Create_Mon_BOSS(CObj* _player)
 	{
+		CObj*    pObj = new CMonster_Boss;
+		pObj->Initialize();
+		POINT p = {};
+		p.x = (LONG)(WINCX - GAMESIZE - 170);
+		p.y = (LONG)(0.5 * WINCY);
+		pObj->Make_POINT(p);
+		static_cast<CMonster_Boss*>(pObj)->Initialize();
 
+		return pObj;
 	}
 
 	static CObj* Create_Mon_A(POINT& _tPoint, CObj* _player)
@@ -54,15 +63,3 @@ public:
 		return pObj;
 	}
 };
-
-// 참고용.
-//static CObj*    Create(POINT& _tPoint, CObj* _player, int TYPE) // type 추가
-//{
-//	CObj*    pObj = new T(_player);
-//	pObj->Initialize();
-//	dynamic_cast<CMonster*>(pObj)->Set_Mon_Type((MONSTERTYPE)TYPE);
-//
-//	pObj->Make_POINT(_tPoint);
-//
-//	return pObj;
-//}

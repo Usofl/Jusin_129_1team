@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "ScrewBullet.h"
 #include "GuiBullet.h"
+#include "ItemFactory.h"
 
 class CPlayer :
 	public CObj
@@ -23,9 +24,9 @@ public:
 	inline void Set_BulletList(std::list<CObj*>* _pBulletList) { m_pBulletList = _pBulletList; }
 	inline void Set_MonsterList(std::list<CObj*>* _pMonsterList) { m_pMonsterList = _pMonsterList; }
 
-	void Pick_Up_Item(CObj* _Item);
-	void Pick_Up_Ult(CObj* _Ult);
-	void Pick_Up_Gui(CObj* _Gui);
+	void Pick_Up_Bullet(void);
+	void Pick_Up_Ulti(void);
+	void Pick_Up_Guided(void);
 	
 	const bool Use_Ult(void);
 	
@@ -39,10 +40,7 @@ private:
 
 private:
 	std::list<CObj*> m_Item_List;
-	float m_fGetItem;
-
-	std::list<CObj*> m_Ult_List;
-	float m_fGetUlt;
+	std::list<CObj*> m_Ulti_List;
 
 	CObj* m_Gui;
 	TCHAR m_szUsingGui[64];
