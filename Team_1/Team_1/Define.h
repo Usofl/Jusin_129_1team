@@ -30,5 +30,5 @@
 
 #define Diagonal(x,y) sqrtf((x * x) + (y * y))
 
-#define acos(x,y) acos(x / sqrtf((x * x) + (y * y)))
-#define asin(x,y) asin(y / sqrtf((x * x) + (y * y)))
+#define ACOSF(x,y) acosf(x / sqrtf((x * x) + (y * y)))
+#define ASINF(x,y) asinf(y / sqrtf((x * x) + (y * y)))

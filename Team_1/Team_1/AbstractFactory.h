@@ -69,6 +69,20 @@ public:
 		return pObj;
 	}
 
+	// À¯µµÅº »ý¼º
+	static CObj* Create_Bullet(float _fA, float _fB, float _fAngle, std::list<CObj*>* _pMonsterList)
+	{
+		CObj* pObj = new T;
+		pObj->Initialize();
+
+		POINT p{ (long)_fA, (long)_fB };
+		pObj->Make_POINT(p);
+		pObj->Set_Angle(_fAngle);
+		static_cast<CGuiBullet*>(pObj)->Set_MonsterList(_pMonsterList);
+
+		return pObj;
+	}
+
 	static CObj*    Create(float fA, float fB, float fAngle, MONSTERTYPE _type)
 	{
 		CObj*    pObj = new T;

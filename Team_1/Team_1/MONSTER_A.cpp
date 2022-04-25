@@ -108,7 +108,7 @@ float CMonster_A::Find_MonPlr_CosAngle(void)
 	fXX = m_tInfo.fX - (*m_pPlayer).Get_fX();
 	fYY = m_tInfo.fY - (*m_pPlayer).Get_fY();
 
-	fAngle = acos(fXX, fYY);
+	fAngle = ACOSF(fXX, fYY);
 
 	return fAngle;
 }
@@ -121,7 +121,7 @@ float CMonster_A::Find_MonPlr_SinAngle(void)
 	fXX = m_tInfo.fX - (*m_pPlayer).Get_fX();
 	fYY = m_tInfo.fY - (*m_pPlayer).Get_fY();
 
-	fAngle = asin(fXX, fYY);
+	fAngle = ASINF(fXX, fYY);
 
 	return fAngle;
 }

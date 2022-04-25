@@ -174,7 +174,7 @@ void CPlayer::Pick_Up_Gui(CObj * _Gui)
 	{
 		m_Gui = new CItem(*static_cast<CItem*>(_Gui));
 		static_cast<CItem*>(m_Gui)->Pick_Up_Set_Gui();
-
+		
 		m_dwUsing = GetTickCount();
 	}
 	
@@ -274,35 +274,43 @@ void CPlayer::Key_Input(void)
 	{
 		if (m_dwTime + 100 < GetTickCount())
 		{
-			if (m_Item_List.empty()) // 아이템 리스트 비어있을 때
+			if (m_Gui)
 			{
-				switch (m_BulletType)
-				{
-				case BULLETTYPE_DEFULT:
-					m_pBulletList->push_back(CAbstractFactory<CBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
-					break;
-
-				case BULLETTYPE_SCREW:
-					m_pBulletList->push_back(CAbstractFactory<CScrewBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
-					break;
-				}
+				// 유도탄 생성하면서 몬스터 리스트 주소를 보내준다.
+				m_pBulletList->push_back(CAbstractFactory<CGuiBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle, m_pMonsterList));
 			}
 			else
 			{
-				m_fBulletAngle = (float)m_Item_List.size();
-				for (unsigned int i = 0; i <= m_Item_List.size(); ++i)
+				if (m_Item_List.empty()) // 아이템 리스트 비어있을 때
 				{
 					switch (m_BulletType)
 					{
 					case BULLETTYPE_DEFULT:
-						m_pBulletList->push_back(CAbstractFactory<CBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle));
+						m_pBulletList->push_back(CAbstractFactory<CBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
 						break;
 
 					case BULLETTYPE_SCREW:
-						m_pBulletList->push_back(CAbstractFactory<CScrewBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle));
+						m_pBulletList->push_back(CAbstractFactory<CScrewBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
 						break;
 					}
-					m_fBulletAngle -= 2;
+				}
+				else
+				{
+					m_fBulletAngle = (float)m_Item_List.size();
+					for (unsigned int i = 0; i <= m_Item_List.size(); ++i)
+					{
+						switch (m_BulletType)
+						{
+						case BULLETTYPE_DEFULT:
+							m_pBulletList->push_back(CAbstractFactory<CBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle));
+							break;
+
+						case BULLETTYPE_SCREW:
+							m_pBulletList->push_back(CAbstractFactory<CScrewBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle));
+							break;
+						}
+						m_fBulletAngle -= 2;
+					}
 				}
 			}
 			m_dwTime = GetTickCount();
@@ -325,7 +333,7 @@ void CPlayer::Key_Input(void)
 template<typename T>
 CObj * CPlayer::Create_Bullet(void)
 {
-	CObj* pBullet = CAbstractFactory<T>::Create((float)m_tPoint.x, (float)m_tPoint.x, m_fAngle);
+	CObj* pBullet = CAbstractFactory<T>::Create((float)m_tPoint.x, (float)m_tPoint.x, m_fAngle, m_Gui);
 	return pBullet;
 }
 

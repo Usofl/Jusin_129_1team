@@ -4,7 +4,7 @@
 #include "AbstractFactory.h"
 #include "Bullet.h"
 #include "ScrewBullet.h"
-
+#include "GuiBullet.h"
 
 class CPlayer :
 	public CObj
@@ -21,6 +21,7 @@ public:
 	virtual void Release(void) override;
 
 	inline void Set_BulletList(std::list<CObj*>* _pBulletList) { m_pBulletList = _pBulletList; }
+	inline void Set_MonsterList(std::list<CObj*>* _pMonsterList) { m_pMonsterList = _pMonsterList; }
 
 	void Pick_Up_Item(CObj* _Item);
 	void Pick_Up_Ult(CObj* _Ult);
@@ -52,6 +53,7 @@ private:
 	DWORD m_dwTime;
 	float m_fBulletAngle; // ÃÑ¾Ë ¾Þ±Û °¢µµ 
 	BULLETTYPE m_BulletType;
+	std::list<CObj*>* m_pMonsterList;
 	
 };
 

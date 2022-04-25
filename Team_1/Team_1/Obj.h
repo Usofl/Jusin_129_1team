@@ -38,7 +38,7 @@ protected:
 protected:
 	INFO m_tInfo;
 	RECT m_tRC;
-	POINT m_tPoint;// 좌표 long타입.
+	POINT m_tPoint; // 좌표 long타입.
 
 	int m_iHP;
 
