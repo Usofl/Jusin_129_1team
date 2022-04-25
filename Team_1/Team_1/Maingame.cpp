@@ -93,21 +93,21 @@ void CMaingame::Update(void)
 	}
 	else
 	{
-		if (m_Objlist[OBJ_MONSTER].size() < 4)
+		if ((m_Objlist[OBJ_MONSTER].size() < 2) && (350 >= m_iScore) &&(!m_bBossCheck) ) // 스코어 판단 부호 바꾸기 xxx
 		{
 			if (m_dwTime + 1000 < GetTickCount())
 			{
 				Random_Mon();
 			}
 		}
-		if ((m_Objlist[OBJ_MONSTER].size() < 2)  && (350 < m_iScore)) // 스코어가 1000이상일때 보스 생성.xxxxx 100 < m_iScore
+		if ((m_Objlist[OBJ_MONSTER].size() < 2) && (350 < m_iScore))
 		{
-			if ((0 == (m_Objlist[OBJ_MONSTER].size()))&&(!m_bBossCheck)) // 0을 1 로 xxxxx
+			if ((0 == (m_Objlist[OBJ_MONSTER].size())) && (!m_bBossCheck))
 			{
 				m_Objlist[OBJ_MONSTER].push_back(CMonsterFactory::Create_Mon_BOSS(m_Objlist[OBJ_PLAYER].front()));// 보스 생성.
 
-				for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
-					static_cast<CMonster_Boss*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);// 보스 총알 부여.
+				//for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end(); ++iter)
+					//static_cast<CMonster_Boss*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);// 보스 총알 부여.
 
 				m_bBossCheck = true;// 보스가 존재함.
 			}
@@ -116,15 +116,26 @@ void CMaingame::Update(void)
 
 	for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end();)
 	{
-		static_cast<CMonster_C*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);
+		//if (static_cast<CMonster_Boss*>(*iter)->Get_Mon_Type != MONSTERTYPE_BOSS)
+		    static_cast<CMonster*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);
 
 		if (0 >= (*iter)->Get_HP())
 		{
 			Create_Item((*iter)->Get_fX(), (*iter)->Get_fY()); // 아이템 생성
 			m_iScore += 10; // score 증가
 
-			Safe_Delete<CObj*>(*iter);
-			iter = m_Objlist[OBJ_MONSTER].erase(iter);
+
+			/*if (static_cast<CMonster_Boss*>(m_Objlist[OBJ_MONSTER].front())->Get_Mon_Type() == MONSTERTYPE_BOSS)
+			{
+				Safe_Delete<CObj*>(*iter);
+				
+			}*/
+			//else
+			//{
+				Safe_Delete<CObj*>(*iter);
+				iter = m_Objlist[OBJ_MONSTER].erase(iter); //  보스가 죽을때 iter넘길 대상 없음.  xxxxxxxxxxxxxxxxxxx
+
+			//}
 		}
 		else
 		{
@@ -346,10 +357,10 @@ void CMaingame::Key_Input(void)
 
 void CMaingame::Get_MONPOINT(void)
 {
-	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 1.6 * Monster_C), (LONG)(GAMESIZE + 0.5 * Monster_C + 1) });
+	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 1.6 * Monster_C), (LONG)(GAMESIZE + 0.5 * Monster_C + 20) });
 	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 3.6 * Monster_C), (LONG)(GAMESIZE + 3.5 * Monster_C) });
 	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 3.6 * Monster_C), (LONG)(WINCY - GAMESIZE - 3.5 * Monster_C) });
-	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 1.6 * Monster_C), (LONG)(WINCY - GAMESIZE - 0.5 * Monster_C - 1) });
+	m_tMonsterPoint.push_back({ (LONG)(WINCX - GAMESIZE - 1.6 * Monster_C), (LONG)(WINCY - GAMESIZE - 0.5 * Monster_C - 20) });
 }
 
 void CMaingame::Create_Item(const float& _fA, const float& _fB)
