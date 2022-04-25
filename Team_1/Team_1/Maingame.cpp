@@ -327,17 +327,21 @@ void CMaingame::Render(void)
 	TextOutW(m_hDC, GAMESIZE, OUTGAMESIZE, m_szScore, lstrlen(m_szScore));
 	swprintf_s(m_szLife, L"Life : %d", m_iLife);
 	TextOutW(m_hDC, GAMESIZE + 100, OUTGAMESIZE, m_szLife, lstrlen(m_szLife));
-	if (m_bBossCheck)
-	{
-		swprintf_s(m_szMonHP, L"HP : %d", m_Objlist[OBJ_MONSTER].front()->Get_HP());
-		TextOutW(m_hDC, WINCX - GAMESIZE - 100, OUTGAMESIZE, m_szMonHP, lstrlen(m_szMonHP));
-	}
 
 	for (auto& list_iter : m_Objlist)
 	{
 		for (auto& iter : list_iter)
 		{
 			iter->Render(m_hDC);
+		}
+	}
+
+	if (m_bBossCheck)
+	{
+		if (!(m_Objlist[OBJ_MONSTER].empty()))
+		{
+			swprintf_s(m_szMonHP, L"HP : %d", m_Objlist[OBJ_MONSTER].front()->Get_HP());
+			TextOutW(m_hDC, WINCX - GAMESIZE - 100, OUTGAMESIZE, m_szMonHP, lstrlen(m_szMonHP));
 		}
 	}
 
