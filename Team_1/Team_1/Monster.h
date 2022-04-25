@@ -22,6 +22,7 @@ public:
 
 public:
 	void Set_Mon_Type(MONSTERTYPE _type) { m_MonType = _type; }	
+	MONSTERTYPE Get_Mon_Type(void) { return m_MonType; }
 
 	inline void Set_Player(CObj* m_PA) { m_pPlayer = m_PA; }
 
