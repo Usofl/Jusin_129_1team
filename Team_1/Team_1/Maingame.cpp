@@ -30,17 +30,21 @@ void CMaingame::Initialize(void)
 	static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Set_BulletList(&m_Objlist[OBJ_BULLET]);
 	m_iLife = 3;
 
-	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
-		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 200.f)));
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Bullet
+		(m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 200.f)));
 
-	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ULTIMATE,
-		m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Shield
+		(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 200.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
 
-	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_GUIDED,
-		m_Objlist[OBJ_PLAYER].front()->Get_fX() + 200.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_RollBot
+	(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 50.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
 
-	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ROLLBOT,
-		m_Objlist[OBJ_PLAYER].front()->Get_fX() + 100.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Guided
+		(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 100.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+
+	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_UltiMate
+		(m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+
 
 	Get_MONPOINT();
 }
@@ -164,11 +168,20 @@ void CMaingame::Update(void)
 	{
 		if (0 >= (*iter)->Get_HP())
 		{
-			if (ITEM_BULLET == static_cast<CItem*>(*iter)->Get_Item_ID())
+			ITEMID eItem = static_cast<CItem*>(*iter)->Get_Item_ID();
+
+			switch (eItem)
 			{
-				static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Item(*iter);
-			}
-			else if (ITEM_SHIELD == static_cast<CItem*>(*iter)->Get_Item_ID())
+			case ITEM_BULLET:
+				static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Bullet();
+				break;
+			case ITEM_GUIDED:
+				static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Guided();
+				break;
+			case ITEM_ULTIMATE:
+				static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Ulti();
+				break;
+			case ITEM_SHIELD:
 			{
 				CObj* shield = CAbstractFactory<CShield>::Create();
 				shield->Initialize();
@@ -180,7 +193,8 @@ void CMaingame::Update(void)
 
 				m_Objlist[OBJ_SHIELD].push_back(shield);
 			}
-			else if (ITEM_ROLLBOT == static_cast<CItem*>(*iter)->Get_Item_ID())
+				break;
+			case ITEM_ROLLBOT:
 			{
 				CObj* rollBot = CAbstractFactory<CRollBot>::Create();
 				rollBot->Initialize();
@@ -193,14 +207,11 @@ void CMaingame::Update(void)
 
 				m_Objlist[OBJ_ROLLBOT].push_back(rollBot);
 			}
-			else if (ITEM_GUIDED == static_cast<CItem*>(*iter)->Get_Item_ID())
-			{
-				static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Gui(*iter);
+				break;
+			case ITEM_END:
+				break;
 			}
-			else if (ITEM_ULTIMATE == static_cast<CItem*>(*iter)->Get_Item_ID())
-			{
-				static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Pick_Up_Ult(*iter);
-			}
+
 			Safe_Delete<CObj*>(*iter);
 			iter = m_Objlist[OBJ_ITEM].erase(iter);
 		}
@@ -299,6 +310,7 @@ void CMaingame::Render(void)
 }
 	
 void CMaingame::Release(void)
+
 {
 }
 
@@ -346,28 +358,23 @@ void CMaingame::Create_Item(const float& _fA, const float& _fB)
 	{
 		if(0 < iRanItem && 25 >= iRanItem)
 		{
-			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_BULLET,
-				_fA, _fB));
+			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Bullet(_fA, _fB));
 		}
 		else if(25 < iRanItem && 50 >= iRanItem)
 		{
-			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_SHIELD,
-				_fA, _fB));
+			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Shield(_fA, _fB));
 		}
 		else if(50 < iRanItem && 75 >= iRanItem)
 		{
-			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ROLLBOT,
-				_fA, _fB));
+			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_RollBot(_fA, _fB));
 		}
 		else if (75 < iRanItem && 90 >= iRanItem)
 		{
-			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_ROLLBOT,
-				_fA, _fB));
+			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Guided(_fA, _fB));
 		}
 		else
 		{
-			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create(ITEM_GUIDED,
-				_fA, _fB));
+			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_UltiMate(_fA, _fB));
 		}
 	}
 	break;
