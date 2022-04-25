@@ -214,7 +214,7 @@ void CMaingame::Update(void)
 
 				Safe_Delete<CObj*>(*iter);
 
-				iter = m_Objlist[i].erase(iter);// 보스 몬스터가 1마리만 남았고 죽어서 없을때 대상으로 줄 iter가 없음.
+				iter = m_Objlist[OBJ_ITEM].erase(iter);// 보스 몬스터가 1마리만 남았고 죽어서 없을때 대상으로 줄 iter가 없음.
 
 				if (m_Objlist[OBJ_PLAYER].empty())
 				{
@@ -248,7 +248,7 @@ void CMaingame::Update(void)
 				(*iter)->Update();
 				++iter;
 			}
-		}
+		
 	}
 
 
