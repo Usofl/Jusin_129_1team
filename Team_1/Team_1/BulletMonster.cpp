@@ -12,8 +12,6 @@ CBulletMonster::~CBulletMonster()
 
 void CBulletMonster::Initialize(void)
 {
-	m_tInfo.fCX = 10.f;
-	m_tInfo.fCY = 4.f;
 	m_fSpeed = 5.f;
 	m_iHP = 1;
 }
@@ -22,11 +20,13 @@ void CBulletMonster::Update(void)
 {
 	if (m_TYPE == MONSTERTYPE_B)
 	{
+		Set_Size(10.f, 4.f);
 		m_tInfo.fX -= m_fSpeed * cosf(m_fAngle * DEGREE);
 		m_tInfo.fY += m_fSpeed * sinf(m_fAngle * DEGREE);
 	}
 	else if (m_TYPE == MONSTERTYPE_C)
 	{
+		Set_Size(15.f, 8.f);
 		if (0.5 * WINCY > m_Ypos)
 		{
 			m_tInfo.fX -= 0.1f * m_fSpeed * 5.f;
@@ -40,9 +40,7 @@ void CBulletMonster::Update(void)
 	}
 	else if (m_TYPE == MONSTERTYPE_BOSS)
 	{
-		m_tInfo.fCX = 20.f;
-		m_tInfo.fCY = 20.f;
-
+		Set_Size(25.f, 25.f);
 		//1. 스크류 총알 나가기.
 		m_tInfo.fX -= (m_fSpeed + m_tInfo.fCX * cosf(m_fAngle * DEGREE));
 		m_tInfo.fY += m_tInfo.fCY * sinf(m_fAngle * DEGREE);
@@ -74,4 +72,10 @@ void CBulletMonster::Render(HDC _hDC)
 
 void CBulletMonster::Release(void)
 {
+}
+
+void CBulletMonster::Set_Size(float fa, float fb)  //  또는 총알의 기타 information을 바꿈.(initialiaze안의 변수)
+{
+	m_tInfo.fCX = fa;
+	m_tInfo.fCY = fb;
 }

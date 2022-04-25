@@ -38,7 +38,7 @@ void CMonster_Boss::Update(void)
 
 	if (0 < m_iHP)
 	{
-		if (dwTime_bullet + 500 < GetTickCount())
+		if (dwTime_bullet + 1000 < GetTickCount())
 		{
 			//if (Mon_Bulletlist->empty())
 			//{

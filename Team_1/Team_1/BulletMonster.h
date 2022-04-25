@@ -20,6 +20,9 @@ public:
 	inline void Set_Monster_FirstYPos(float fA) { m_Ypos = fA; }
 	inline MONSTERTYPE Get_Monster_Type(void) { return m_TYPE; }
 
+	void Set_Size(float fa, float fb);
+	
+
 private:
 	MONSTERTYPE m_TYPE;
 
