@@ -160,8 +160,11 @@ void CPlayer::Pick_Up_Guided()
 
 		m_Gui->Set_HP(60);
 	}
-		
-	m_Gui->Set_HP(m_Gui->Get_HP() + 60);
+	else
+	{
+		m_Gui->Set_HP(m_Gui->Get_HP() + 60);
+	}
+
 	m_BulletType = BULLETTYPE_GUI; // 총알 유도탄 타입으로 변경
 }
 
@@ -255,7 +258,6 @@ void CPlayer::Key_Input(void)
 	{
 		if (m_dwTime + 100 < GetTickCount())
 		{
-
 			if (m_Item_List.empty()) // 아이템 리스트 비어있을 때
 			{
 				switch (m_BulletType)
@@ -266,6 +268,10 @@ void CPlayer::Key_Input(void)
 
 				case BULLETTYPE_SCREW:
 					m_pBulletList->push_back(CAbstractFactory<CScrewBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
+					break;
+
+				case BULLETTYPE_GUI:
+					m_pBulletList->push_back(CAbstractFactory<CGuiBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle, m_pMonsterList));
 					break;
 				}
 			}
