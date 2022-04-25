@@ -7,7 +7,7 @@ CMaingame::CMaingame()
 	, m_iFPS(0)
 	, m_iScore(0)
 	, m_iLife(0)
-	, m_bCheak(false)
+	, m_bCheak(true)
 {
 	ZeroMemory(m_szFPS, sizeof(TCHAR) * 64);
 	ZeroMemory(m_szScore, sizeof(TCHAR) * 64);
@@ -234,7 +234,7 @@ void CMaingame::Late_Update(void)
 {
 	if (m_bCheak) // 플레이어에 무적 시간 부여
 	{
-		if (m_dwPlayer + 2000 < GetTickCount())
+		if (m_dwPlayer + 3000 < GetTickCount())
 		{
 			m_dwPlayer = GetTickCount();
 			CCollision::Collision_Player(m_Objlist[OBJ_MONSTER], m_Objlist[OBJ_PLAYER]);
@@ -271,11 +271,6 @@ void CMaingame::Late_Update(void)
 void CMaingame::Render(void)
 {
 	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
-	Rectangle(m_hDC, GAMESIZE, GAMESIZE, WINCX - GAMESIZE, WINCY - GAMESIZE);
-	swprintf_s(m_szScore, L"Score : %d", m_iScore);
-	TextOutW(m_hDC, GAMESIZE, OUTGAMESIZE, m_szScore, lstrlen(m_szScore));
-	swprintf_s(m_szLife, L"Life : %d", m_iLife);
-	TextOutW(m_hDC, GAMESIZE + 100, OUTGAMESIZE, m_szLife, lstrlen(m_szLife));
 
 	for (auto& list_iter : m_Objlist)
 	{
@@ -284,6 +279,12 @@ void CMaingame::Render(void)
 			iter->Render(m_hDC);
 		}
 	}
+
+	//Rectangle(m_hDC, GAMESIZE, GAMESIZE, WINCX - GAMESIZE, WINCY - GAMESIZE);
+	swprintf_s(m_szScore, L"Score : %d", m_iScore);
+	TextOutW(m_hDC, GAMESIZE, OUTGAMESIZE, m_szScore, lstrlen(m_szScore));
+	swprintf_s(m_szLife, L"Life : %d", m_iLife);
+	TextOutW(m_hDC, GAMESIZE + 100, OUTGAMESIZE, m_szLife, lstrlen(m_szLife));
 
 	++m_iFPS;
 
@@ -314,8 +315,13 @@ void CMaingame::Key_Input(void)
 		{
 			if (!static_cast<CPlayer*>(m_Objlist[OBJ_PLAYER].front())->Use_Ult())
 			{
-				m_Objlist[OBJ_ULTIMATE].push_back(new CUltimate);
-				m_Objlist[OBJ_ULTIMATE].front()->Initialize();
+				/*m_Objlist[OBJ_ULTIMATE].push_back(new CUltimate);
+				m_Objlist[OBJ_ULTIMATE].front()->Initialize();*/
+
+				CObj* Ult = CAbstractFactory<CUltimate>::Create();
+				Ult->Initialize();
+				static_cast<CUltimate*>(Ult)->Set_Player(m_Objlist[OBJ_PLAYER].front());
+				m_Objlist[OBJ_ULTIMATE].push_back(Ult);
 			}
 		}
 	}

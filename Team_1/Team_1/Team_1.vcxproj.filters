@@ -61,7 +61,7 @@
     <Filter Include="01.Obj\03.Item">
       <UniqueIdentifier>{c7d752df-01d0-4803-93ce-2366d939fb73}</UniqueIdentifier>
     </Filter>
-	<Filter Include="01.Obj\06.Ultimate">
+    <Filter Include="01.Obj\06.Ultimate">
       <UniqueIdentifier>{ab704782-9003-4db4-a87f-9f06d919444d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
