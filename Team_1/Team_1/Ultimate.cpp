@@ -57,7 +57,7 @@ void CUltimate::Render(HDC _hDC)
 {
 	//Rectangle(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
 
-	Arc(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom, m_tRC.left, m_tRC.top, m_tRC.left, m_tRC.top);
+	Arc(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom, (m_tRC.right / 2), m_tRC.top, (m_tRC.right / 2), m_tRC.top);
 }
 
 void CUltimate::Release(void)
