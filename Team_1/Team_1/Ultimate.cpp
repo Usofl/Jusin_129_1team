@@ -25,7 +25,7 @@ void CUltimate::Initialize(void)
 	m_tInfo.fCY = 10.f;
 
 	m_fSpeed = 100.f;
-	m_iHP = 300;
+	m_iHP = 250;
 	m_fTemp = 5.f;
 
 	m_lDest = 2;
@@ -36,14 +36,14 @@ void CUltimate::Update(void)
 	//Update_Rect();
 	//m_tInfo.fX += m_fSpeed;
 	//--m_iHP;
-	m_tInfo.fCX += 1.f;
-	m_tInfo.fCY += 1.f;
+	m_tInfo.fCX += 2.f;
+	m_tInfo.fCY += 2.f;
 
 	m_fAngle += m_fSpeed;
 
 	m_tInfo.fX = m_pPlayer->Get_fX() + (m_fTemp * cosf(m_fAngle * DEGREE));
 	m_tInfo.fY = m_pPlayer->Get_fY() - (m_fTemp * sinf(m_fAngle * DEGREE));
-	m_fTemp += 1.f;
+	m_fTemp += 2.f;
 	m_iHP -= 1;
 
 	Update_Rect();

@@ -63,6 +63,11 @@ void CMaingame::Update(void)
 	{
 		if (0 < m_iLife)
 		{
+			if (!m_Objlist[OBJ_ULTIMATE].empty())
+			{
+				Safe_Delete<CObj*>(*m_Objlist[OBJ_ULTIMATE].begin());
+				m_Objlist[OBJ_ULTIMATE].erase(m_Objlist[OBJ_ULTIMATE].begin());
+			}
 			--m_iLife; // 라이프 스코어 감소
 			m_bCheak = true; // 사망시 무적 시간 부여를 위한 bool 변수
 			m_iScore = (int)(m_iScore * 0.8); // 사망시 점수 감소
