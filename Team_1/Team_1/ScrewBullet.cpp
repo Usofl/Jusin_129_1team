@@ -43,7 +43,7 @@ void CScrewBullet::Late_Update(void)
 	}
 }
 
-void CScrewBullet::Render(HDC _hDC)
+void CScrewBullet::Render(HDC& _hDC)
 {
 	m_tRC.left = LONG(m_tPoint.x - (m_tInfo.fCX * 0.5f));
 	m_tRC.top = LONG(m_tPoint.y - (m_tInfo.fCY * 0.5f));

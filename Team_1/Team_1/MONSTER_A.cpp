@@ -6,7 +6,7 @@ CMonster_A::CMonster_A()
 {
 }
 
-CMonster_A::CMonster_A(CObj * _player)
+CMonster_A::CMonster_A(CObj *& _player)
 	: CMonster(_player)
 {
 }
@@ -38,7 +38,7 @@ void CMonster_A::Update(void)
 	Update_Rect();
 }
 
-void CMonster_A::Render(HDC _hDC)
+void CMonster_A::Render(HDC& _hDC)
 {
 	Ellipse(_hDC, m_tRC.left + (15 * m_iReverse), m_tRC.top + 10, m_tRC.right - (5 * m_iReverse), m_tRC.bottom - 10);
 

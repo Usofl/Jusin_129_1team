@@ -330,8 +330,15 @@ void CMaingame::Render(void)
 }
 	
 void CMaingame::Release(void)
-
 {
+	for (auto& List_iter : m_Objlist)
+	{
+		for (auto iter = List_iter.begin(); iter != List_iter.end();)
+		{
+			Safe_Delete<CObj*>(*iter);
+			iter = List_iter.erase(iter);
+		}
+	}
 }
 
 void CMaingame::Key_Input(void)

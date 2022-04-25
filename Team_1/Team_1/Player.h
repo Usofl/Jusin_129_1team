@@ -12,13 +12,14 @@ class CPlayer :
 {
 public:
 	CPlayer();
+	CPlayer(CPlayer & _rObj);
 	virtual ~CPlayer();
 
 public:
 	virtual void Initialize(void) override;
 	virtual void Update(void) override;
 	virtual void Late_Update(void) override;
-	virtual void Render(HDC _hDC) override;
+	virtual void Render(HDC& _hDC) override;
 	virtual void Release(void) override;
 
 	inline void Set_BulletList(std::list<CObj*>* _pBulletList) { m_pBulletList = _pBulletList; }

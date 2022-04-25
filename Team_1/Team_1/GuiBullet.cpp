@@ -59,7 +59,7 @@ void CGuiBullet::Late_Update(void)
 	}
 }
 
-void CGuiBullet::Render(HDC _hDC)
+void CGuiBullet::Render(HDC& _hDC)
 {
 	Ellipse(_hDC, (int)m_tRC.left, (int)m_tRC.top, (int)m_tRC.right, (int)m_tRC.bottom);
 

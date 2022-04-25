@@ -6,7 +6,7 @@ CMonster_C::CMonster_C()
 {
 }
 
-CMonster_C::CMonster_C(CObj * _player)
+CMonster_C::CMonster_C(CObj *& _player)
 	: CMonster(_player)
 {
 }
@@ -39,7 +39,7 @@ void CMonster_C::Update(void)
 	{
 		float m_MonPlr_Angle = 0.f;
 
-		Mon_Bulletlist->push_back(CAbstractFactory<CBulletMonster>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, m_MonPlr_Angle, MONSTERTYPE_C));
+		Mon_Bulletlist->push_back(CAbstractFactory<CBulletMonster>::Create(m_tInfo.fX, m_tInfo.fY, m_MonPlr_Angle, MONSTERTYPE_C));
 
 		dwTime_bullet = GetTickCount();
 	}
@@ -51,7 +51,7 @@ void CMonster_C::Update(void)
 //{
 //}
 
-void CMonster_C::Render(HDC _hDC)
+void CMonster_C::Render(HDC& _hDC)
 {
 	// «œ√º
 	Rectangle(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.1f) * m_iReverse, m_tRC.top + (int)(m_tInfo.fCY * 0.5f)

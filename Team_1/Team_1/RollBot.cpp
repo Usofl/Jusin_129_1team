@@ -36,12 +36,12 @@ void CRollBot::Late_Update(void)
 	{
 		m_dwTime = GetTickCount();
 
-		m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, 0.f));
+		m_pBulletList->push_back(CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, 0.f));
 		--m_iHP;
 	}
 }
 
-void CRollBot::Render(HDC _hDC)
+void CRollBot::Render(HDC& _hDC)
 {
 	Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
 	Rectangle(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);

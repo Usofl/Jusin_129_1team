@@ -4,13 +4,14 @@ class CObj abstract
 public:
 	CObj();
 	CObj(const CObj& _rObj);
+	CObj(CObj* _rObj);
 	virtual ~CObj();
 
 public:
 	virtual void Initialize(void) PURE;
 	virtual void Update(void) PURE;
 	virtual void Late_Update(void) PURE;
-	virtual void Render(HDC _hDC) PURE;
+	virtual void Render(HDC& _hDC) PURE;
 	virtual void Release(void) PURE;
 
 	inline const POINT& Get_POINT(void) { return m_tPoint; }
@@ -25,8 +26,8 @@ public:
 
 	inline void Set_HP(const int& _hp) { m_iHP = _hp; }
 	inline void Set_POINT(const POINT& p) { m_tPoint = p; }
-	inline void Set_Pos(float _fX, float _fY){ m_tInfo.fX = _fX; m_tInfo.fY = _fY; }
-	inline void Set_Angle(float _fAngle) { m_fAngle = _fAngle; }
+	inline void Set_Pos(float& _fX, float& _fY){ m_tInfo.fX = _fX; m_tInfo.fY = _fY; }
+	inline void Set_Angle(const float& _fAngle) { m_fAngle = _fAngle; }
 	inline void Set_Hit_Ult(void) { m_iHP -= 50; } // 얼티메이트 타격 시 데미지
 
 	inline void Make_POINT(POINT& p) { m_tInfo.fX = (float)p.x; m_tInfo.fY = (float)p.y; }

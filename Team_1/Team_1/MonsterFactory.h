@@ -20,7 +20,7 @@ public:
 	}
 
 public:
-	static CObj* Create_Mon_BOSS(CObj* _player)
+	static CObj* Create_Mon_BOSS(CObj*& _player)
 	{
 		CObj*    pObj = new CMonster_Boss;
 		pObj->Initialize();
@@ -33,7 +33,7 @@ public:
 		return pObj;
 	}
 
-	static CObj* Create_Mon_A(POINT& _tPoint, CObj* _player)
+	static CObj* Create_Mon_A(POINT& _tPoint, CObj*& _player)
 	{
 		CObj*    pObj = new CMonster_A(_player);
 		pObj->Initialize();
@@ -43,7 +43,7 @@ public:
 		return pObj;
 	}
 
-	static CObj* Create_Mon_B(POINT& _tPoint, CObj* _player)
+	static CObj* Create_Mon_B(POINT& _tPoint, CObj*& _player)
 	{
 		CObj*    pObj = new CMonster_B;
 		pObj->Initialize();
@@ -53,7 +53,7 @@ public:
 		return pObj;
 	}
 
-	static CObj* Create_Mon_C(POINT& _tPoint, CObj* _player)
+	static CObj* Create_Mon_C(POINT& _tPoint, CObj*& _player)
 	{
 		CObj*    pObj = new CMonster_C;
 		pObj->Initialize();

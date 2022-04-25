@@ -22,6 +22,15 @@ CObj::CObj(const CObj & _rObj)
 {
 }
 
+CObj::CObj(CObj * _rObj)
+	: m_iHP(_rObj->m_iHP)
+	, m_fSpeed(_rObj->m_fSpeed)
+	, m_fAngle(_rObj->m_fAngle)
+	, m_tInfo(_rObj->m_tInfo)
+	, m_tRC(_rObj->m_tRC)
+	, m_tPoint(_rObj->m_tPoint)
+{
+}
 
 CObj::~CObj()
 {

@@ -17,7 +17,7 @@ CItem_Shield::~CItem_Shield()
 {
 }
 
-void CItem_Shield::Render(HDC _hDC)
+void CItem_Shield::Render(HDC& _hDC)
 {
 	Ellipse(_hDC, m_tRC.left - 2, m_tRC.top - 2, m_tRC.right + 1, m_tRC.bottom + 1);
 	DrawText(_hDC, L"S", 1, &m_tRC, DT_CENTER);

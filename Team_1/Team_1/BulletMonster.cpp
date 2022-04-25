@@ -64,7 +64,7 @@ void CBulletMonster::Late_Update(void)
 	}
 }
 
-void CBulletMonster::Render(HDC _hDC)
+void CBulletMonster::Render(HDC& _hDC)
 {
 	Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
 
@@ -75,7 +75,7 @@ void CBulletMonster::Release(void)
 {
 }
 
-void CBulletMonster::Set_Size(float fa, float fb)  //  또는 총알의 기타 information을 바꿈.(initialiaze안의 변수)
+void CBulletMonster::Set_Size(const float& fa, const float& fb)  //  또는 총알의 기타 information을 바꿈.(initialiaze안의 변수)
 {
 	m_tInfo.fCX = fa;
 	m_tInfo.fCY = fb;

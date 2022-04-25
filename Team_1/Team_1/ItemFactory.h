@@ -18,62 +18,62 @@ public:
 	}
 
 public:
-	static CObj*    Create_Item_Bullet(const float& fA, const float& fB)
+	static CObj*    Create_Item_Bullet(const float& _fX, const float& _fY, const float& _fAngle = 45.f)
 	{
 		CObj*    pObj = new CItem_Bullet();
 		pObj->Initialize();
 
-		POINT p{ (long)fA, (long)fB };
+		POINT p{ (long)_fX, (long)_fY };
 		pObj->Make_POINT(p);
-		pObj->Set_Angle(45.f);
+		pObj->Set_Angle(_fAngle);
 
 		return pObj;
 	}
 
-	static CObj*    Create_Item_Shield(const float& fA, const float& fB)
+	static CObj*    Create_Item_Shield(const float& _fX, const float& _fY, const float& _fAngle = 45.f)
 	{
 		CObj*    pObj = new CItem_Shield();
 		pObj->Initialize();
 
-		POINT p{ (long)fA, (long)fB };
+		POINT p{ (long)_fX, (long)_fY };
 		pObj->Make_POINT(p);
-		pObj->Set_Angle(45.f);
+		pObj->Set_Angle(_fAngle);
 
 		return pObj;
 	}
 
-	static CObj*    Create_Item_RollBot(const float& fA, const float& fB)
+	static CObj*    Create_Item_RollBot(const float& _fX, const float& _fY, const float& _fAngle = 45.f)
 	{
 		CObj*    pObj = new CItem_RollBot();
 		pObj->Initialize();
 
-		POINT p{ (long)fA, (long)fB };
+		POINT p{ (long)_fX, (long)_fY };
 		pObj->Make_POINT(p);
-		pObj->Set_Angle(45.f);
+		pObj->Set_Angle(_fAngle);
 
 		return pObj;
 	}
 
-	static CObj*    Create_Item_UltiMate(const float& fA, const float& fB)
+	static CObj*    Create_Item_UltiMate(const float& _fX, const float& _fY, const float& _fAngle = 45.f)
 	{
 		CObj*    pObj = new CItem_UltiMate();
 		pObj->Initialize();
 
-		POINT p{ (long)fA, (long)fB };
+		POINT p{ (long)_fX, (long)_fY };
 		pObj->Make_POINT(p);
-		pObj->Set_Angle(45.f);
+		pObj->Set_Angle(_fAngle);
 
 		return pObj;
 	}
 
-	static CObj*    Create_Item_Guided(const float& fA, const float& fB)
+	static CObj*    Create_Item_Guided(const float& _fX, const float& _fY, const float& _fAngle = 45.f)
 	{
 		CObj*    pObj = new CItem_Guided();
 		pObj->Initialize();
 
-		POINT p{ (long)fA, (long)fB };
+		POINT p{ (long)_fX, (long)_fY };
 		pObj->Make_POINT(p);
-		pObj->Set_Angle(45.f);
+		pObj->Set_Angle(_fAngle);
 
 		return pObj;
 	}

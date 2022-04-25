@@ -11,7 +11,7 @@ public:
 	virtual void Initialize(void);
 	virtual void Update(void);
 	virtual void Late_Update(void);
-	virtual void Render(HDC _hDC);
+	virtual void Render(HDC& _hDC);
 	virtual void Release(void);
 
 private:
