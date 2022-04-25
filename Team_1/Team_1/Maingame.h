@@ -50,6 +50,8 @@ private:
 	TCHAR       m_szMonHP[64]; // 몬스터의 Hp 출력.
 	bool        m_bBossCheck;
 
+	bool        m_bGameOver;
+
 	/*CObj* m_pPlayer;
 	CObj* m_pUlt;*/
 	std::list<CObj*> m_Objlist[OBJ_END];
