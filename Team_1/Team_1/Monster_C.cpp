@@ -21,8 +21,8 @@ void CMonster_C::Initialize(void)
 	dwTime_bullet = 0;
 	theta = 0.f;
 
-	m_tInfo.fCX = Monster_C;
-	m_tInfo.fCY = Monster_C;
+	m_tInfo.fCX = MonsterCSIZE;
+	m_tInfo.fCY = MonsterCSIZE;
 
 	m_iHP = 2;
 
@@ -39,10 +39,11 @@ void CMonster_C::Update(void)
 	{
 		float m_MonPlr_Angle = 0.f;
 
-		Mon_Bulletlist->push_back(CAbstractFactory<CBulletMonster>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, m_MonPlr_Angle, m_MonType));
+		Mon_Bulletlist->push_back(CAbstractFactory<CBulletMonster>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, m_MonPlr_Angle, MONSTERTYPE_C));
 
 		dwTime_bullet = GetTickCount();
 	}
+
 	Update_Rect();
 }
 
@@ -52,9 +53,29 @@ void CMonster_C::Update(void)
 
 void CMonster_C::Render(HDC _hDC)
 {
-	Rectangle(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
+	// 하체
+	Rectangle(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.1f), m_tRC.top + (int)(m_tInfo.fCY * 0.5f)
+					, m_tRC.right, m_tRC.bottom - (int)(m_tInfo.fCY * 0.2f));
 
-	Update_Rect();
+	// 머리
+	Rectangle(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.3f), m_tRC.top + (int)(m_tInfo.fCY * 0.2f)
+					, m_tRC.right - (int)(m_tInfo.fCY * 0.1f), m_tRC.top + (int)(m_tInfo.fCY * 0.5f));
+
+	// 포신
+	Rectangle(_hDC, m_tRC.left, m_tRC.top + (int)(m_tInfo.fCY * 0.3f)
+		, m_tRC.left + (int)(m_tInfo.fCY * 0.3f), m_tRC.bottom - (int)(m_tInfo.fCY * 0.6f));
+
+	Ellipse(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.1f), m_tRC.bottom - (int)(m_tInfo.fCY * 0.2f)
+		, m_tRC.left + (int)(m_tInfo.fCY * 0.3f), m_tRC.bottom);
+
+	Ellipse(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.35f), m_tRC.bottom - (int)(m_tInfo.fCY * 0.2f)
+		, m_tRC.left + (int)(m_tInfo.fCY * 0.55f), m_tRC.bottom);
+
+	Ellipse(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.6f), m_tRC.bottom - (int)(m_tInfo.fCY * 0.2f)
+		, m_tRC.left + (int)(m_tInfo.fCY * 0.8f), m_tRC.bottom);
+
+	Ellipse(_hDC, m_tRC.left + (int)(m_tInfo.fCY * 0.85f), m_tRC.bottom - (int)(m_tInfo.fCY * 0.2f)
+		, m_tRC.left + (int)(m_tInfo.fCY * 1.05f), m_tRC.bottom);
 }
 
 void CMonster_C::Release(void)
@@ -64,11 +85,11 @@ void CMonster_C::Release(void)
 void CMonster_C::Move_Monster(void)
 {
 	// 오른쪽 화면에서의 포물선 총알. 몬스터 타입 : C
-	if (((m_tInfo.fY + 0.5*Monster_C) >= (WINCY - GAMESIZE)) || ((m_tInfo.fY - 0.5*Monster_C) <= GAMESIZE))
+	if (((m_tInfo.fY + 0.5*MonsterCSIZE) >= (WINCY - GAMESIZE)) || ((m_tInfo.fY - 0.5*MonsterCSIZE) <= GAMESIZE))
 	{
 		m_fSpeed *= -1.f;
 	}
-	if (((m_tInfo.fX + 0.5*Monster_C) >= (WINCX - GAMESIZE)) || ((m_tInfo.fX - 0.5*Monster_C) <= 0.6 * WINCX))
+	if (((m_tInfo.fX + 0.5*MonsterCSIZE) >= (WINCX - GAMESIZE)) || ((m_tInfo.fX - 0.5*MonsterCSIZE) <= 0.6 * WINCX))
 	{
 		m_fSpeed *= -1.f;
 	}

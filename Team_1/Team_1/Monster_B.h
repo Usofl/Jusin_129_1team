@@ -1,6 +1,7 @@
 #pragma once
 #include "Monster.h"
-class CMonster_B :
+
+class CMonster_B final:
 	public CMonster
 {
 public:

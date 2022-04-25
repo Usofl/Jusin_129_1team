@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Monster_B.h"
-
+#include "BulletMonster.h"
 
 CMonster_B::CMonster_B()
 {
@@ -40,7 +40,7 @@ void CMonster_B::Update(void)
 	{
 		float m_MonPlr_Angle = 0.f;
 
-		Mon_Bulletlist->push_back(CAbstractFactory<CBulletMonster>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, m_MonPlr_Angle, m_MonType));
+		Mon_Bulletlist->push_back(CAbstractFactory<CBulletMonster>::Create((float)m_tInfo.fX, (float)m_tInfo.fY, m_MonPlr_Angle, MONSTERTYPE_B));
 
 		dwTime_bullet = GetTickCount();
 	}
@@ -62,10 +62,10 @@ void CMonster_B::Render(HDC _hDC)
 	MoveToEx(_hDC, m_tRC.left + (22 * m_iReverse), m_tRC.bottom - 3, nullptr);
 	LineTo(_hDC, m_tRC.right, m_tRC.bottom);
 
-	MoveToEx(_hDC, m_tRC.left + (22 * m_iReverse), m_tInfo.fY, nullptr);
-	LineTo(_hDC, m_tRC.left + (3 * m_iReverse), m_tInfo.fY);
-	MoveToEx(_hDC, m_tRC.left + (22 * m_iReverse), m_tInfo.fY + 5, nullptr);
-	LineTo(_hDC, m_tRC.left + (8 * m_iReverse), m_tInfo.fY);
+	MoveToEx(_hDC, m_tRC.left + (22 * m_iReverse), (int)m_tInfo.fY, nullptr);
+	LineTo(_hDC, m_tRC.left + (3 * m_iReverse), (int)m_tInfo.fY);
+	MoveToEx(_hDC, m_tRC.left + (22 * m_iReverse), (int)m_tInfo.fY + 5, nullptr);
+	LineTo(_hDC, m_tRC.left + (8 * m_iReverse), (int)m_tInfo.fY);
 }
 
 void CMonster_B::Release(void)

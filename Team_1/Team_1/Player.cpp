@@ -6,6 +6,8 @@ CPlayer::CPlayer()
 	, m_pBulletList(nullptr)
 	, m_fGetUlt(0.f)
 	, m_fBulletAngle(0)
+	, m_BulletType(BULLETTYPE_DEFULT)
+	, m_Gui(nullptr)
 {
 }
 
@@ -36,6 +38,15 @@ void CPlayer::Update(void)
 {
 	Key_Input();
 
+	if (m_Gui != nullptr)
+	{
+		if (0 >= m_Gui->Get_HP())
+		{
+			delete m_Gui;
+			m_Gui = nullptr;
+		}
+	}
+	
 	Update_Rect();
 }
 
@@ -44,15 +55,48 @@ void CPlayer::Late_Update(void)
 	m_tPoint.x = (long)(m_tInfo.fX + m_fBSize * cosf(m_fAngle * DEGREE));
 	m_tPoint.y = (long)(m_tInfo.fY - m_fBSize * sinf(m_fAngle * DEGREE));
 
+	if (m_Gui != nullptr)
+	{
+		if (m_dwUsing + 1000 < GetTickCount())
+		{
+			m_dwUsing = GetTickCount();
+
+			m_Gui->Set_HP(m_Gui->Get_HP() - 1);
+		}
+	}
+
 	Collision_Wall();
 }
 
 void CPlayer::Render(HDC _hDC)
 {
-	Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
-
 	MoveToEx(_hDC, (int)m_tInfo.fX, (int)m_tInfo.fY, nullptr);
 	LineTo(_hDC, (int)m_tPoint.x, (int)m_tPoint.y);
+
+	MoveToEx(_hDC, (int)m_tPoint.x, (int)m_tPoint.y, nullptr);
+	LineTo(_hDC, (int)(m_tInfo.fX - (m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY - (m_tInfo.fCY * 0.5f)));
+
+	MoveToEx(_hDC, (int)(m_tInfo.fX - (m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY - (m_tInfo.fCY * 0.5f)), nullptr);
+	LineTo(_hDC, (int)m_tInfo.fX, (int)m_tInfo.fY);
+
+	MoveToEx(_hDC, m_tInfo.fX, m_tInfo.fY, nullptr);
+	LineTo(_hDC, (int)(m_tInfo.fX - (m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY + (m_tInfo.fCY * 0.5f)));
+
+	MoveToEx(_hDC, (int)(m_tInfo.fX - (m_tInfo.fCX * 0.5f)), (int)(m_tInfo.fY + (m_tInfo.fCY * 0.5f)), nullptr);
+	LineTo(_hDC, (int)m_tPoint.x, (int)m_tPoint.y);
+
+	MoveToEx(_hDC, (int)m_tPoint.x, (int)m_tPoint.y, nullptr);
+	LineTo(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY - (m_tInfo.fCY * 0.5f)));
+
+	MoveToEx(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY - (m_tInfo.fCY * 0.5f)), nullptr);
+	LineTo(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY + (m_tInfo.fCY * 0.5f)));
+
+	MoveToEx(_hDC, (int)m_tInfo.fX, (int)(m_tInfo.fY + (m_tInfo.fCY * 0.5f)), nullptr);
+	LineTo(_hDC, (int)m_tPoint.x, (int)m_tPoint.y);
+
+	Ellipse(_hDC, m_tPoint.x - (int)(m_tInfo.fCX * 1.5f), m_tRC.top + (int)(m_tInfo.fCY * 0.25f), m_tPoint.x, m_tRC.bottom - (int)(m_tInfo.fCY * 0.25f));
+
+	/*Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);*/
 
 	for (auto& iter : m_Item_List)
 	{
@@ -62,6 +106,14 @@ void CPlayer::Render(HDC _hDC)
 	for (auto& iter : m_Ult_List)
 	{
 		iter->Render(_hDC);
+	}
+
+	if (m_Gui != nullptr)
+	{
+		m_Gui->Render(_hDC);
+
+		swprintf_s(m_szUsingGui, L": %d", m_Gui->Get_HP());
+		TextOutW(_hDC, (WINCX * 0.5f), WINCY - OUTGAMESIZE, m_szUsingGui, lstrlen(m_szUsingGui));
 	}
 }
 
@@ -76,6 +128,23 @@ void CPlayer::Release(void)
 		}
 
 		iter = m_Item_List.erase(iter);
+	}
+
+	for (auto iter = m_Ult_List.begin(); iter != m_Ult_List.end();)
+	{
+		if (*iter != nullptr)
+		{
+			delete *iter;
+			*iter = nullptr;
+		}
+
+		iter = m_Ult_List.erase(iter);
+	}
+
+	if (m_Gui != nullptr)
+	{
+		delete m_Gui;
+		m_Gui = nullptr;
 	}
 }
 
@@ -99,10 +168,22 @@ void CPlayer::Pick_Up_Ult(CObj * _Ult)
 	m_Ult_List.push_back(item);
 }
 
+void CPlayer::Pick_Up_Gui(CObj * _Gui)
+{
+	if (nullptr == m_Gui)
+	{
+		m_Gui = new CItem(*static_cast<CItem*>(_Gui));
+		static_cast<CItem*>(m_Gui)->Pick_Up_Set_Gui();
+
+		m_dwUsing = GetTickCount();
+	}
+	
+	m_Gui->Set_HP(m_Gui->Get_HP() + 60);
+}
+
 const bool CPlayer::Use_Ult(void)
 {
 	{
-
 		bool bEmpty = m_Ult_List.empty();
 
 		if (!bEmpty)
@@ -195,14 +276,14 @@ void CPlayer::Key_Input(void)
 		{
 			if (m_Item_List.empty()) // 아이템 리스트 비어있을 때
 			{
-				m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle));
+				m_pBulletList->push_back(CAbstractFactory<CBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle, m_BulletType));
 			}
 			else 
 			{
 				m_fBulletAngle = m_Item_List.size();
 				for (unsigned int i = 0; i <= m_Item_List.size(); ++i)
 				{
-					m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle));
+					m_pBulletList->push_back(CAbstractFactory<CBullet>::Create_Bullet((float)m_tPoint.x, (float)m_tPoint.y, m_fBulletAngle, m_BulletType));
 					m_fBulletAngle -= 2 ;
 				}
 			}
@@ -212,13 +293,13 @@ void CPlayer::Key_Input(void)
 
 	if (GetAsyncKeyState('E'))
 	{
-		if (m_dwTime + 100 < GetTickCount())
+		if (m_BulletType == BULLETTYPE_DEFULT)
 		{
-			m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle - 3));
-			m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle - 1));
-			m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle + 1));
-			m_pBulletList->push_back(CAbstractFactory<CBullet>::Create((float)m_tPoint.x, (float)m_tPoint.y, m_fAngle + 3));
-			m_dwTime = GetTickCount();
+			m_BulletType = BULLETTYPE_SCREW;
+		}
+		else if (m_BulletType == BULLETTYPE_SCREW)
+		{
+			m_BulletType = BULLETTYPE_DEFULT;
 		}
 	}
 }

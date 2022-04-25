@@ -22,10 +22,10 @@ public:
 
 	void Pick_Up_Item(CObj* _Item);
 	void Pick_Up_Ult(CObj* _Ult);
-
+	void Pick_Up_Gui(CObj* _Gui);
+	
 	const bool Use_Ult(void);
 	
-
 public:
 	void Key_Input(void);
 	void Collision_Wall(void); // 벽에 충돌시 이벤트 변경하려면 여기로
@@ -37,9 +37,14 @@ private:
 	std::list<CObj*> m_Ult_List;
 	float m_fGetUlt;
 
+	CObj* m_Gui;
+	TCHAR m_szUsingGui[64];
+	DWORD m_dwUsing;
+
 	float m_fBSize; // 총신 길이
 	std::list<CObj*>* m_pBulletList;
 	DWORD m_dwTime;
 	float m_fBulletAngle; // 총알 앵글 각도 
+	BULLETTYPE m_BulletType;
 	
 };

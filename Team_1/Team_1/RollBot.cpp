@@ -44,6 +44,19 @@ void CRollBot::Late_Update(void)
 void CRollBot::Render(HDC _hDC)
 {
 	Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
+	Rectangle(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
+
+	MoveToEx(_hDC, m_tRC.left, m_tRC.top, nullptr);
+	LineTo(_hDC, m_tRC.left + (m_tInfo.fCX * 0.5), m_tRC.top - 8);
+	MoveToEx(_hDC, m_tRC.right, m_tRC.top, nullptr);
+	LineTo(_hDC, m_tRC.right - (m_tInfo.fCX * 0.5), m_tRC.top - 8);
+
+	MoveToEx(_hDC, m_tRC.left, m_tRC.bottom, nullptr);
+	LineTo(_hDC, m_tRC.left + (m_tInfo.fCX* 0.5), m_tRC.bottom + 8);
+	MoveToEx(_hDC, m_tRC.right, m_tRC.bottom, nullptr);
+	LineTo(_hDC, m_tRC.right - (m_tInfo.fCX* 0.5), m_tRC.bottom + 8);
+
+	Rectangle(_hDC, m_tRC.right, m_tRC.top + 5, m_tRC.right+10, m_tRC.bottom - 5);
 }
 
 void CRollBot::Release(void)
