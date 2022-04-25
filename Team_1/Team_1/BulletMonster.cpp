@@ -40,8 +40,8 @@ void CBulletMonster::Update(void)
 	}
 	else if (m_TYPE == MONSTERTYPE_BOSS)
 	{
-		m_tInfo.fCX = 8.f;
-		m_tInfo.fCY = 8.f;
+		m_tInfo.fCX = 20.f;
+		m_tInfo.fCY = 20.f;
 
 		//1. 스크류 총알 나가기.
 		m_tInfo.fX -= (m_fSpeed + m_tInfo.fCX * cosf(m_fAngle * DEGREE));
