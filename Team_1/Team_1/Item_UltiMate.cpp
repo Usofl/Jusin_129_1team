@@ -6,6 +6,7 @@ int CItem_UltiMate::m_GetUlt = 0;
 CItem_UltiMate::CItem_UltiMate()
 	: CItem(ITEM_ULTIMATE)
 {
+	m_GetUlt += 25;
 }
 
 CItem_UltiMate::CItem_UltiMate(const CItem & _rObj)

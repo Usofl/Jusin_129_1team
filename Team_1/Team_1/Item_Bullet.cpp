@@ -6,6 +6,7 @@ int CItem_Bullet::m_GetBullet = 0;
 CItem_Bullet::CItem_Bullet()
 	: CItem(ITEM_BULLET)
 {
+	m_GetBullet += 25;
 }
 
 CItem_Bullet::CItem_Bullet(const CItem & _rObj)
