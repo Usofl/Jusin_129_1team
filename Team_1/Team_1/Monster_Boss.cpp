@@ -36,24 +36,24 @@ void CMonster_Boss::Update(void)
 	{
 		if (dwTime_bullet + 1000 < GetTickCount())
 		{
-			
+
 			//1. 스크류 총알.
 			if (200 < m_iHP)
 			{
 				float m_MonPlr_Angle = 90.f;
 				Mon_Bulletlist->push_back(CAbstractFactory<CBulletMonster>::Create(m_tInfo.fX, m_tInfo.fY, m_MonPlr_Angle, MONSTERTYPE_BOSS));// 총알 생성시 난수 받기.
 			}
-			else if ((200 >= m_iHP)&&(50 < m_iHP))
+			else if ((200 >= m_iHP) && (50 < m_iHP))
 			{
 				float m_MonPlr_Angle = 0.f;
 				Mon_Bulletlist->push_back(CAbstractFactory<CBulletMonster>::Create(m_tInfo.fX, m_tInfo.fY, m_MonPlr_Angle, MONSTERTYPE_BOSS));
 			}
-			
+
 
 			dwTime_bullet = GetTickCount();
 		}
 	}
-	
+
 	Update_Rect();
 }
 
@@ -76,8 +76,8 @@ void CMonster_Boss::Render(HDC _hDC)
 
 	//LineTo(_hDC, m_tRC.left + 2.f * (m_tRC.right - m_tRC.left) / 3.f, m_tRC.top + (m_tRC.bottom - m_tRC.top) / 3.f);
 
-	MoveToEx(_hDC, m_tRC.left + 2 * (m_tRC.right - m_tRC.left) / 3 + 30, m_tRC.top + (m_tRC.bottom - m_tRC.top) / 3,nullptr);
-	LineTo(_hDC, m_tRC.right,m_tRC.top);
+	MoveToEx(_hDC, m_tRC.left + 2 * (m_tRC.right - m_tRC.left) / 3 + 30, m_tRC.top + (m_tRC.bottom - m_tRC.top) / 3, nullptr);
+	LineTo(_hDC, m_tRC.right, m_tRC.top);
 	LineTo(_hDC, m_tRC.left + 2 * (m_tRC.right - m_tRC.left) / 3, m_tRC.top);
 	LineTo(_hDC, m_tRC.left + (m_tRC.right - m_tRC.left) / 3, m_tRC.top + (m_tRC.bottom - m_tRC.top) / 3);
 	//불
@@ -135,8 +135,8 @@ void CMonster_Boss::Move_Monster(void)
 	{
 		int rand_motion = 0;
 		rand_motion = rand() % 30 + 60;
-		
-		m_tInfo.fX -= 0.5f * m_fSpeed * sinf ((float)rand_motion);
+
+		m_tInfo.fX -= 0.5f * m_fSpeed * sinf((float)rand_motion);
 	}
 
 	// 기본 움직임.

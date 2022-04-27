@@ -52,10 +52,10 @@ void CScrewBullet::Render(HDC _hDC)
 
 	Ellipse(_hDC, m_tRC.left, m_tRC.top, m_tRC.right, m_tRC.bottom);
 
-	Rectangle(_hDC, (int)(m_tRC.left - (m_tInfo.fCX * 0.5f)), (int)(m_tRC.top), 
+	Rectangle(_hDC, (int)(m_tRC.left - (m_tInfo.fCX * 0.5f)), (int)(m_tRC.top),
 		(int)(m_tRC.right - (m_tInfo.fCX * 0.5f)), (int)(m_tRC.bottom));
 
-	Rectangle(_hDC, (int)(m_tRC.left - (m_tInfo.fCX * 0.5f) - 3.f), (int)(m_tRC.top - 1.f), 
+	Rectangle(_hDC, (int)(m_tRC.left - (m_tInfo.fCX * 0.5f) - 3.f), (int)(m_tRC.top - 1.f),
 		(int)(m_tRC.left - (m_tInfo.fCX * 0.5f)), (int)(m_tRC.bottom + 1.f));
 }
 

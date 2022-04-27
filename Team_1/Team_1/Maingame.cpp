@@ -35,19 +35,19 @@ void CMaingame::Initialize(void)
 	m_iLife = 3;
 
 	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Bullet
-		(m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 200.f)));
+	(m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 200.f)));
 
 	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Shield
-		(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 200.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+	(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 200.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
 
 	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_RollBot
 	(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 50.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
 
 	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Guided
-		(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 100.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+	(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 100.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
 
 	m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_UltiMate
-		(m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+	(m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
 
 
 	Get_MONPOINT();
@@ -97,7 +97,7 @@ void CMaingame::Update(void)
 	}
 	else
 	{
-		if ((m_Objlist[OBJ_MONSTER].size() < 2) && (350 >= m_iScore) &&(!m_bBossCheck) ) // 스코어 판단 부호 바꾸기 xxx
+		if ((m_Objlist[OBJ_MONSTER].size() < 2) && (350 >= m_iScore) && (!m_bBossCheck)) // 스코어 판단 부호 바꾸기 xxx
 		{
 			if (m_dwTime + 1000 < GetTickCount())
 			{
@@ -121,7 +121,7 @@ void CMaingame::Update(void)
 	for (auto& iter = m_Objlist[OBJ_MONSTER].begin(); iter != m_Objlist[OBJ_MONSTER].end();)
 	{
 		//if (static_cast<CMonster_Boss*>(*iter)->Get_Mon_Type != MONSTERTYPE_BOSS)
-		    static_cast<CMonster*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);
+		static_cast<CMonster*>(*iter)->Set_BulletList_Mon(&m_Objlist[OBJ_BULLETMONSTER]);
 
 		if (0 >= (*iter)->Get_HP())
 		{
@@ -132,14 +132,14 @@ void CMaingame::Update(void)
 			/*if (static_cast<CMonster_Boss*>(m_Objlist[OBJ_MONSTER].front())->Get_Mon_Type() == MONSTERTYPE_BOSS)
 			{
 				Safe_Delete<CObj*>(*iter);
-				
+
 			}*/
 			//else
 			//{
-				Safe_Delete<CObj*>(*iter);
-				iter = m_Objlist[OBJ_MONSTER].erase(iter); //  보스가 죽을때 iter넘길 대상 없음.  xxxxxxxxxxxxxxxxxxx
+			Safe_Delete<CObj*>(*iter);
+			iter = m_Objlist[OBJ_MONSTER].erase(iter); //  보스가 죽을때 iter넘길 대상 없음.  xxxxxxxxxxxxxxxxxxx
 
-			//}
+		//}
 		}
 		else
 		{
@@ -351,7 +351,7 @@ void CMaingame::Render(void)
 		m_dwTime = GetTickCount();
 	}
 }
-	
+
 void CMaingame::Release(void)
 {
 	for (auto& List_iter : m_Objlist)
@@ -376,28 +376,28 @@ void CMaingame::Key_Input(void)
 		m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Bullet
 		(m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 200.f)));
 
-		
+
 	}
 	if (GetAsyncKeyState('K')) // 라이프 카운트 추가
 	{
 		m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Shield
 		(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 200.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
 
-		
+
 	}
 	if (GetAsyncKeyState('L')) // 라이프 카운트 추가
 	{
 		m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_RollBot
 		(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 50.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
 
-		
+
 	}
 	if (GetAsyncKeyState('Y')) // 라이프 카운트 추가
 	{
 		m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Guided
 		(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 100.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
 
-		
+
 	}
 	if (GetAsyncKeyState('U')) // 라이프 카운트 추가
 	{
@@ -440,15 +440,15 @@ void CMaingame::Create_Item(const float& _fA, const float& _fB)
 	{
 	case 1:
 	{
-		if(0 < iRanItem && 25 >= iRanItem)
+		if (0 < iRanItem && 25 >= iRanItem)
 		{
 			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Bullet(_fA, _fB));
 		}
-		else if(25 < iRanItem && 50 >= iRanItem)
+		else if (25 < iRanItem && 50 >= iRanItem)
 		{
 			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Shield(_fA, _fB));
 		}
-		else if(50 < iRanItem && 75 >= iRanItem)
+		else if (50 < iRanItem && 75 >= iRanItem)
 		{
 			m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_RollBot(_fA, _fB));
 		}

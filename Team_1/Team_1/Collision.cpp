@@ -13,7 +13,7 @@ CCollision::~CCollision()
 void CCollision::Collision_Rect(std::list<CObj*>& _Temp, std::list<CObj*>& _Dest)
 {
 	RECT rc{};
-	
+
 	for (auto& Temp : _Temp)
 	{
 		if (0 < Temp->Get_HP())
