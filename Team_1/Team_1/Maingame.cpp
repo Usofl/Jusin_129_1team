@@ -371,6 +371,39 @@ void CMaingame::Key_Input(void)
 	{
 		++m_iLife;
 	}
+	if (GetAsyncKeyState('J')) // 라이프 카운트 추가
+	{
+		m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Bullet
+		(m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() - 200.f)));
+
+		
+	}
+	if (GetAsyncKeyState('K')) // 라이프 카운트 추가
+	{
+		m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Shield
+		(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 200.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+
+		
+	}
+	if (GetAsyncKeyState('L')) // 라이프 카운트 추가
+	{
+		m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_RollBot
+		(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 50.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+
+		
+	}
+	if (GetAsyncKeyState('Y')) // 라이프 카운트 추가
+	{
+		m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_Guided
+		(m_Objlist[OBJ_PLAYER].front()->Get_fX() + 100.f, (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+
+		
+	}
+	if (GetAsyncKeyState('U')) // 라이프 카운트 추가
+	{
+		m_Objlist[OBJ_ITEM].push_back(CItemFactory::Create_Item_UltiMate
+		(m_Objlist[OBJ_PLAYER].front()->Get_fX(), (m_Objlist[OBJ_PLAYER].front()->Get_fY() + 200.f)));
+	}
 
 	if (GetAsyncKeyState(VK_SPACE)) // 얼티메이트 사용 데미지 50
 	{
